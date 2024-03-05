@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .btn-edit {
+        background: orange;
+        border: none;
+        outline: none;
+        height: 26px;
+        width: 60px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background: #d64d5f;
+        border: none;
+        outline: none;
+        height: 26px;
+        width: 60px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <table style="width:100%">
+        <tr>
+            <th>Tài khoản</th>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Hành động</th>
+        </tr>
+
+
+        <% for(let i=0; i < dataTable.length; i++) { %>
+            <tr>
+                <td>
+                    <%= dataTable[i].taiKhoan %>
+                </td>
+                <td>
+                    <%= dataTable[i].hoTen %>
+                </td>
+                <td>
+                    <%= dataTable[i].dienThoai %>
+                </td>
+                <td>
+                    <%= dataTable[i].diaChi %>
+                </td>
+                <td>
+                    <a href="/edit-crud?id=<%= dataTable[i].id %>" class="btn-edit" type="button">Sửa</a>
+                    <a href="/delete-crud?id=<%= dataTable[i].id %>" class="btn-delete" type="button">Xóa</a>
+                </td>
+            </tr>
+            <% } %>
+
+    </table>
+</body>
+
+</html>
