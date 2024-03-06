@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-class ModalUser extends Component {
+import _ from 'lodash'
+
+class ModalEditUser extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            id:'',
             taiKhoan: '',
             matKhau: '',
             hoTen: '',
@@ -16,6 +19,18 @@ class ModalUser extends Component {
     }
 
     componentDidMount() {
+        let user = this.props.userEdit;
+        if (user && !_.isEmpty(user)) {
+            this.setState({
+                id: user.id,
+                taiKhoan: user.taiKhoan,
+                matKhau: 'hascode',
+                hoTen: user.hoTen,
+                diaChi: user.diaChi,
+                dienThoai: user.dienThoai
+            })
+        }
+        console.log('did mount edit modal: ', this.props.userEdit);
     }
 
     toggle = () => {
@@ -35,17 +50,17 @@ class ModalUser extends Component {
         return isValid;
     }
 
-    handleThemUser = () => {
+    handleSaveUser = () => {
         let valid = this.checkValideInput();
         if (valid === true) {
-            this.props.createUser(this.state)
-            this.setState({
-                taiKhoan: '',
-                matKhau: '',
-                hoTen: '',
-                diaChi: '',
-                dienThoai: ''
-            })
+            this.props.editUser(this.state)
+            // this.setState({
+            //     taiKhoan: '',
+            //     matKhau: '',
+            //     hoTen: '',
+            //     diaChi: '',
+            //     dienThoai: ''
+            // })
         }
     }
 
@@ -67,7 +82,7 @@ class ModalUser extends Component {
                 centered
                 className={'modal-user-container'}
             >
-                <ModalHeader toggle={() => this.toggle()}>Thêm người dùng</ModalHeader>
+                <ModalHeader toggle={() => this.toggle()}>Sửa người dùng</ModalHeader>
                 <ModalBody>
                     <div className='modal-user-body'>
                         <div className='input-container'>
@@ -76,6 +91,7 @@ class ModalUser extends Component {
                                 onChange={(event) => this.isChange(event, 'taiKhoan')}
                                 type='text'
                                 value={this.state.taiKhoan}
+                                disabled
                             />
                         </div>
                         <div className='input-container'>
@@ -84,6 +100,7 @@ class ModalUser extends Component {
                                 onChange={(event) => this.isChange(event, 'matKhau')}
                                 type='password'
                                 value={this.state.matKhau}
+                                disabled
                             />
                         </div>
                         <div className='input-container'>
@@ -101,8 +118,8 @@ class ModalUser extends Component {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className='px-3' onClick={() => this.handleThemUser()}>
-                        Xác nhận
+                    <Button color="primary" className='px-3' onClick={() => this.handleSaveUser()}>
+                        Lưu
                     </Button>{' '}
                     <Button color="secondary" className='px-3' onClick={() => this.toggle()}>
                         Thoát
@@ -124,7 +141,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalUser);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditUser);
 
 
 
