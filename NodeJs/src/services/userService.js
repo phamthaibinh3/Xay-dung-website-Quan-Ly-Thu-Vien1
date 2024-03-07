@@ -161,7 +161,7 @@ let updateUser = (data) => {
             if (user) {
                 user.hoTen = data.hoTen;
                 user.diaChi = data.diaChi;
-
+                user.dienThoai = data.dienThoai
                 await user.save();
                 
                 resolve({

@@ -1,4 +1,26 @@
 {
+    "homeheader": {
+        "loaiSach": "Loại sách",
+        "loaiSach1": "Chìa khóa tri thức, sách của bạn!",
+        "taiLieu": "Tài liệu",
+        "taiLieu1": "Chọn tài liệu học tập",
+        "nhanVien": "Nhân viên",
+        "nhanVien1": "Chọn nhân viên giỏi",
+        "goiThue": "Gói thuê",
+        "goiThue1": "Gói thuê: Tiện lợi, dễ dàng",
+        "hoTro": "Hỗ trợ"
+    },
+
+    "banner":{
+        "tieuDe1": "DỊCH VỤ QUẢN LÝ THƯ VIỆN",
+        "tieuDe2": "KHÁM PHÁ TRI THỨC MỚI MẺ",
+        "chuyenMuc1": "Mượn - Trả sách",
+        "chuyenMuc2": "Tư vấn",
+        "chuyenMuc3": "Sách mới",
+        "chuyenMuc4": "Mua sắm sách",
+        "chuyenMuc5": "Bảo quản",
+        "chuyenMuc6": "Phân loại"
+    },
     "common": {
         "add": "Thêm",
         "edit": "Sửa",

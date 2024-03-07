@@ -1,4 +1,25 @@
 {
+    "homeheader": {
+        "loaiSach": "Kind of book",
+        "loaiSach1": "The key to knowledge, your books!",
+        "taiLieu": "Document",
+        "taiLieu1": "Choose study materials",
+        "nhanVien": "Staff",
+        "nhanVien1": "Choose good employees",
+        "goiThue": "Rental package",
+        "goiThue1": "Rental package: Convenient and easy",
+        "hoTro": "Support"
+    },
+    "banner": {
+        "tieuDe1": "LIBRARY MANAGEMENT SERVICES",
+        "tieuDe2": "DISCOVER NEW KNOWLEDGE",
+        "chuyenMuc1": "Borrow books",
+        "chuyenMuc2": "Advise",
+        "chuyenMuc3": "New book",
+        "chuyenMuc4": "Book shopping",
+        "chuyenMuc5": "Preserve",
+        "chuyenMuc6": "Classify"
+    },
     "common": {
         "add": "Add",
         "edit": "Edit",
