@@ -19,4 +19,8 @@ const updateUserService = (inpuData) => {
     return axios.put('/api/update-user', inpuData)
 }
 
-export { handleLoginApi, getAllUsers, createNewUserService, delteUserService, updateUserService }
+const getAllCodeService = (inputType) => {
+    return axios.get(`/api/allcode?type=${inputType}`)
+}
+
+export { handleLoginApi, getAllUsers, createNewUserService, delteUserService, updateUserService, getAllCodeService }

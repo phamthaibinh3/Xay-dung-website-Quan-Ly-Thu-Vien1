@@ -21,7 +21,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      gioTinh: {
+      gioiTinh: {
         type: Sequelize.BOOLEAN
       },
       diaChi: {

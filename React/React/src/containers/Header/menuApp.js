@@ -1,15 +1,60 @@
 export const adminMenu = [
-    { //hệ thống
-        name: 'menu.system.header', menus: [
+    { //quan ly nguoi dung
+        name: 'menu.admin.quan-ly-nguoi-dung',
+        menus: [
             {
-                name: 'menu.system.system-administrator.header',
-                subMenus: [
-                    { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
-                    { name: 'menu.system.system-administrator.product-manage', link: '/system/product-manage' },
-                    { name: 'menu.system.system-administrator.register-package-group-or-account', link: '/system/register-package-group-or-account' },
-                ]
+                name: 'menu.admin.crud', link: '/system/user-manage',
             },
-            // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
+            {
+                name: 'menu.admin.crud-redux', link: '/system/user-redux',
+            },
+            {
+                name: 'menu.admin.quan-ly-nhan-vien', link: '/system/user-doctor',
+                // subMenus: [
+                //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
+                //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
+                // ]
+            },
+            {
+                name: 'menu.admin.quan-ly-admin', link: '/system/user-admin',
+            },
+
+        ]
+    },
+    { //quan ly chuyen muc
+        name: 'menu.admin.chuyen-muc',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-chuyen-muc', link: '/system/quan-ly-chuyen-muc',
+            },
+
+        ]
+    },
+    { //quan ly chuyen muc
+        name: 'menu.admin.chuyen-muc',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-chuyen-muc', link: '/system/quan-ly-chuyen-muc',
+            },
+
+        ]
+    },
+    { //quan ly sách
+        name: 'menu.admin.sach',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-sach', link: '/system/quan-ly-sach',
+            },
+
+        ]
+    },
+    { //quan ly tai lieu moi
+        name: 'menu.admin.docNew',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-docNew', link: '/system/quan-ly-docNew',
+            },
+
         ]
     },
 ];

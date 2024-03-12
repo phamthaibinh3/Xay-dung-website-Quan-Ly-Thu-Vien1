@@ -59,10 +59,25 @@ let handleUpdateUser = async (req, res) => {
     return res.status(200).json(message)
 }
 
+let getAllcode = async (req, res) => {
+    try {
+        let data = await userService.getAllCodeService(req.query.type);
+        return res.status(200).json(data);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server',
+        })
+    }
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateUser: handleCreateUser,
     handleDeleteUser: handleDeleteUser,
     handleUpdateUser: handleUpdateUser,
+
+    getAllcode: getAllcode,
 }

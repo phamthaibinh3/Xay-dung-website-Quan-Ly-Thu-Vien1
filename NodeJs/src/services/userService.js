@@ -11,6 +11,7 @@ let handleUserLogin = (taiKhoan, matKhau) => {
             let tonTai = await checkTaiKhoan(taiKhoan);
             if (tonTai) {
                 let user = await db.User.findOne({
+                    attributes: ['taiKhoan', 'vaiTro', 'matKhau', 'hoTen'],
                     where: { taiKhoan: taiKhoan }
                 })
                 if (user) {
@@ -18,6 +19,8 @@ let handleUserLogin = (taiKhoan, matKhau) => {
                     if (check) {
                         userData.errCode = 0;
                         userData.message = 'thanh cong';
+
+                        delete user.matKhau;
                         userData.user = user;
                     } else {
                         userData.errCode = 3;
@@ -163,7 +166,7 @@ let updateUser = (data) => {
                 user.diaChi = data.diaChi;
                 user.dienThoai = data.dienThoai
                 await user.save();
-                
+
                 resolve({
                     errCode: 0,
                     errMessage: 'Cap nhap thanh cong',
@@ -180,10 +183,37 @@ let updateUser = (data) => {
     })
 }
 
+let getAllCodeService = (typeInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!typeInput) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Chua truyen type'
+                })
+
+            } else {
+                let res = {};
+                let allcode = await db.Allcode.findAll({
+                    where: { type: typeInput }
+                });
+                res.errCode = 0;
+                res.data = allcode;
+                resolve(res);
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
     createUser: createUser,
     deleteUser: deleteUser,
     updateUser: updateUser,
+
+    getAllCodeService: getAllCodeService,
 }

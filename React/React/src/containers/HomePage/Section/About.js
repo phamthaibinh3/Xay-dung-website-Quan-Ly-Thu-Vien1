@@ -20,9 +20,9 @@ class About extends Component {
                             height="400px"
                             src="https://www.youtube.com/embed/Aj1zoxOx270"
                             title="Dự Án TVC Giới thiệu nhà sách và nhân viên Nhà sách Tiến Thọ | TVC"
-                            frameborder="0"
+                            frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
+                            allowFullScreen></iframe>
 
                     </div>
                     <div className='content-right'>

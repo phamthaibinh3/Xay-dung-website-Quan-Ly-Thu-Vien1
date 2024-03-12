@@ -14,7 +14,6 @@ class HomeHeader extends Component {
 
     render() {
         let language = this.props.language
-        console.log('check language:', language);
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -101,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeLanguageAppredux: (languge) => dispatch(changeLanguageApp(languge)) 
+        changeLanguageAppredux: (language) => dispatch(changeLanguageApp(language))
     };
 };
 

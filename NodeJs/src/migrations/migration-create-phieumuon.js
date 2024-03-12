@@ -15,6 +15,9 @@ module.exports = {
             maSach: {
                 type: Sequelize.DATE
             },
+            tinhTrang: {
+                type: Sequelize.STRING
+            },
             ngayTraDuKien: {
                 type: Sequelize.DATE
             },

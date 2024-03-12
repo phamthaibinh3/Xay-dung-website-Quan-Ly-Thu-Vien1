@@ -1,33 +1,44 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    adminInfo: null
+    genders: [],
+    roles: [],
 }
 
-const appReducer = (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADMIN_LOGIN_SUCCESS:
+        case actionTypes.FETCH_GENDER_START:
+            console.log('hehashdhasdh START: ', action);
             return {
                 ...state,
-                isLoggedIn: true,
-                adminInfo: action.adminInfo
             }
-        case actionTypes.ADMIN_LOGIN_FAIL:
+        case actionTypes.FETCH_GENDER_SUCCESS:
+            state.genders = action.data
+            console.log('hehashdhasdh SUCCESS: ', action);
             return {
                 ...state,
-                isLoggedIn: false,
-                adminInfo: null
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.FETCH_GENDER_FAILED:
+            console.log('hehashdhasdh FAILED: ', action);
             return {
                 ...state,
-                isLoggedIn: false,
-                adminInfo: null
             }
+
+        case actionTypes.FETCH_VAITRO_SUCCESS:
+            state.roles = action.data
+            console.log('hehashdhasdh SUCCESS: ', action);
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_VAITRO_FAIL:
+            console.log('hehashdhasdh FAILED: ', action);
+            return {
+                ...state,
+            }
+
         default:
             return state;
     }
 }
 
-export default appReducer;
+export default adminReducer;
