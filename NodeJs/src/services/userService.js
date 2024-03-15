@@ -109,9 +109,10 @@ let createUser = (data) => {
                     matKhau: hashMatKhau,
                     hoTen: data.hoTen,
                     diaChi: data.diaChi,
+                    email: data.email,
                     dienThoai: data.dienThoai,
-                    gioTinh: data.gioiTinh === 1 ? true : false,
-                    vaiTro: data.vaiTro
+                    gioiTinh: data.gioiTinh,
+                    vaiTro: data.vaiTro,
                 })
                 resolve({
                     errCode: 0,
@@ -123,6 +124,8 @@ let createUser = (data) => {
         }
     })
 }
+
+
 
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {

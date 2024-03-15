@@ -6,7 +6,8 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('quanlythuvien', 'root', null, {
     host: 'localhost',
     dialect: "mysql",
-    logging: false
+    logging: false,
+
 });
 
 let connetDB = async () => {

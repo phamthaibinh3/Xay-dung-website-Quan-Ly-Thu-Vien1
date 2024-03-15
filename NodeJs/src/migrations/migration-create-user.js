@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       gioiTinh: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
       diaChi: {
         type: Sequelize.STRING

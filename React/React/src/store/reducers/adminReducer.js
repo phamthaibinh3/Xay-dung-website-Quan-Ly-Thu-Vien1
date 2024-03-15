@@ -3,6 +3,7 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     genders: [],
     roles: [],
+    users: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -34,6 +35,17 @@ const adminReducer = (state = initialState, action) => {
             console.log('hehashdhasdh FAILED: ', action);
             return {
                 ...state,
+            }
+
+        case action.FETCH_ALL_USER_SUCCESS:
+            state.users = action.users;
+            return {
+                ...state
+            }
+        case action.FETCH_ALL_USER_FAIL:
+            state.users = [];
+            return {
+                ...state
             }
 
         default:

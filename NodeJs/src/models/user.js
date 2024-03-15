@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     diaChi: DataTypes.STRING,
     dienThoai: DataTypes.INTEGER,
     vaiTro: DataTypes.STRING,
-    gioiTinh: DataTypes.BOOLEAN
+    gioiTinh: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
