@@ -51,6 +51,7 @@
         "nu": "Female",
         "khac": "Other",
         "nhanVien": "Employee",
-        "nguoiDung": "User"
+        "nguoiDung": "User",
+        "sua": "Sửa người dùng"
     }
 }

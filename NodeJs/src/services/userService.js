@@ -160,6 +160,12 @@ let deleteUser = (userId) => {
 let updateUser = (data) => {
     return new Promise(async (resolve, res) => {
         try {
+            if (!data.id || !data.vaiTro || !data.gioiTinh) {
+                resolve({
+                    errCode:2,
+                    errMessage: 'Bạn chưa đầy đủ thông tin'
+                })
+            }
             let user = await db.User.findOne({
                 where: { id: data.id },
                 raw: false,
@@ -167,7 +173,12 @@ let updateUser = (data) => {
             if (user) {
                 user.hoTen = data.hoTen;
                 user.diaChi = data.diaChi;
-                user.dienThoai = data.dienThoai
+                user.dienThoai = data.dienThoai;
+                user.email = data.email;
+                user.gioiTinh = data.gioiTinh;
+                user.vaiTro = data.vaiTro;
+
+
                 await user.save();
 
                 resolve({

@@ -33,6 +33,9 @@ module.exports = {
       vaiTro: {
         type: Sequelize.STRING
       },
+      anh: {
+        type: Sequelize.STRING
+      },
 
       createdAt: {
         allowNull: false,

@@ -46,11 +46,12 @@
         "gioiTinh": "Giới tính",
         "vaiTro": "Vị trí",
         "anh": "Ảnh",
-        "luu": "Lưu",
+        "luu": "Lưu người dùng",
         "nam": "Nam",
         "nu": "Nữ",
         "khac": "Khác",
         "nhanVien": "Nhân viên",
-        "nguoiDung": "Người dùng"
+        "nguoiDung": "Người dùng",
+        "sua": "Sửa người dùng"
     }
 }

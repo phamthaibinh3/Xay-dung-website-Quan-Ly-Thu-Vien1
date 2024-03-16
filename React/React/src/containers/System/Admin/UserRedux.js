@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
-import { LANGUAGES } from '../../../utils'
+import { LANGUAGES, CRUD_ACTIONS } from '../../../utils'
 import * as actions from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
@@ -27,7 +27,10 @@ class UserRedux extends Component {
             gioiTinh: '',
             vaiTro: '',
             anh: '',
-            email: ''
+            email: '',
+
+            action: '',
+            userEditId: ''
         }
     }
 
@@ -60,6 +63,12 @@ class UserRedux extends Component {
             this.setState({
                 vaiTroArr: arrvaiTro,
                 vaiTro: arrvaiTro && arrvaiTro.length > 0 ? arrvaiTro[0].key : ''
+            })
+        }
+
+        if (prevProps.listUser !== this.props.listUser) {
+            this.setState({
+                action: CRUD_ACTIONS.CREATE
             })
         }
     }
@@ -96,27 +105,60 @@ class UserRedux extends Component {
         let valid = this.checkValidateInput();
         if (valid === false) return; //thoat khoai ham` nay`
 
+        let { action } = this.state;
+
         //true thi` day data len redux
-        this.props.createNewUser({
-            taiKhoan: this.state.taiKhoan,
-            matKhau: this.state.matKhau,
-            hoTen: this.state.hoTen,
-            diaChi: this.state.diaChi,
-            dienThoai: this.state.dienThoai,
-            gioiTinh: this.state.gioiTinh,
-            vaiTro: this.state.vaiTro,
-            email: this.state.email
-        })
-        alert('Thêm user thanh cong');
+        if (action === CRUD_ACTIONS.CREATE) {
+            this.props.createNewUser({
+                taiKhoan: this.state.taiKhoan,
+                matKhau: this.state.matKhau,
+                hoTen: this.state.hoTen,
+                diaChi: this.state.diaChi,
+                dienThoai: this.state.dienThoai,
+                gioiTinh: this.state.gioiTinh,
+                vaiTro: this.state.vaiTro,
+                email: this.state.email
+            })
+        }
+        if (action === CRUD_ACTIONS.EDIT) {
+            this.props.updateUserRedux({
+                id: this.state.userEditId,
+                taiKhoan: this.state.taiKhoan,
+                matKhau: this.state.matKhau,
+                hoTen: this.state.hoTen,
+                diaChi: this.state.diaChi,
+                dienThoai: this.state.dienThoai,
+                gioiTinh: this.state.gioiTinh,
+                vaiTro: this.state.vaiTro,
+                email: this.state.email,
+                // avatar: ''
+            })
+        }
+        // this.setState({
+        //     taiKhoan: '',
+        //     matKhau: '',
+        //     hoTen: '',
+        //     diaChi: '',
+        //     dienThoai: '',
+        //     gioiTinh: '',
+        //     vaiTro: '',
+        //     email: ''
+        // })
+
+    }
+
+    handleEditUserFromParent = (user) => {
         this.setState({
-            taiKhoan: '',
-            matKhau: '',
-            hoTen: '',
-            diaChi: '',
-            dienThoai: '',
-            gioiTinh: '',
-            vaiTro: '',
-            email: ''
+            taiKhoan: user.taiKhoan,
+            matKhau: 'HARDCODE',
+            hoTen: user.hoTen,
+            diaChi: user.diaChi,
+            dienThoai: user.dienThoai,
+            gioiTinh: user.gioiTinh,
+            vaiTro: user.vaiTro,
+            email: user.vaiTro,
+            action: CRUD_ACTIONS.EDIT,
+            userEditId: user.id
         })
     }
 
@@ -154,6 +196,7 @@ class UserRedux extends Component {
                                 <input className='form-control' type='text'
                                     value={taiKhoan}
                                     onChange={(event) => this.handleOnChangeInput(event, 'taiKhoan')}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
                                 />
                             </div>
                             <div className='col-4'>
@@ -161,6 +204,7 @@ class UserRedux extends Component {
                                 <input className='form-control' type='password'
                                     value={matKhau}
                                     onChange={(event) => this.handleOnChangeInput(event, 'matKhau')}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
                                 />
                             </div>
                             <div className='col-4'>
@@ -194,6 +238,7 @@ class UserRedux extends Component {
                             <div className='col-4'>
                                 <label><FormattedMessage id="manage-user.gioiTinh" /></label>
                                 <select className="form-select"
+                                    value={gioiTinh}
                                     onChange={(event) => this.handleOnChangeInput(event, 'gioiTinh')}
                                 >
                                     {genders && genders.length > 0 && genders.map((item, index) => {
@@ -210,6 +255,7 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.vaiTro" /></label>
                                 <select className="form-select"
                                     onChange={(event) => this.handleOnChangeInput(event, 'vaiTro')}
+                                    value={vaiTro}
                                 >
                                     {vaiTroArr && vaiTroArr.length > 0 &&
                                         vaiTroArr.map((item, index) => {
@@ -241,16 +287,24 @@ class UserRedux extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className='col-12 my-3'>
-                                <button className='btn btn-primary px-3'
+                            <div className='col-12 my-3 '>
+                                <button className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning px-3' : 'btn btn-primary px-3'}
                                     onClick={() => this.handleSaveUser()}
+
                                 >
-                                    <FormattedMessage id="manage-user.luu" />
+                                    {this.action === CRUD_ACTIONS.EDIT ?
+                                        <FormattedMessage id="manage-user.luu" />
+                                        :
+                                        <FormattedMessage id="manage-user.luu" />
+                                    }
                                 </button>
                             </div>
 
                             <div className='col-12'>
-                                <TableMangeUser />
+                                <TableMangeUser
+                                    handleEditUserFromParent={this.handleEditUserFromParent}
+                                    action={this.state.action}
+                                />
                             </div>
                         </div>
                     </div>
@@ -272,7 +326,8 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
-        vaiTroRedux: state.admin.roles
+        vaiTroRedux: state.admin.roles,
+        listUser: state.admin.users
     };
 };
 
@@ -280,7 +335,8 @@ const mapDispatchToProps = dispatch => {
     return {
         getGenderStart: () => dispatch(actions.fetchGenderStart()),
         fetchVaiTroStart: () => dispatch(actions.fetchVaiTroStart()),
-        createNewUser: (data) => dispatch(actions.createNewUser(data))
+        createNewUser: (data) => dispatch(actions.createNewUser(data)),
+        updateUserRedux: (data) => dispatch(actions.updateUser(data))
     };
 };
 

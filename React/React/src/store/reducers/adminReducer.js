@@ -3,7 +3,6 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     genders: [],
     roles: [],
-    users: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -31,23 +30,22 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case actionTypes.FETCH_VAITRO_FAIL:
-            console.log('hehashdhasdh FAILED: ', action);
+        case actionTypes.FETCH_vaitro_FAILED:
             return {
                 ...state,
             }
 
-        case action.FETCH_ALL_USER_SUCCESS:
-            state.users = action.users;
+        case actionTypes.FETCH_ALL_USER_SUCCESS:
+            state.users = action.users
             return {
-                ...state
-            }
-        case action.FETCH_ALL_USER_FAIL:
-            state.users = [];
-            return {
-                ...state
+                ...state,
             }
 
+        case actionTypes.FETCH_ALL_USER_FAIL:
+            state.users = [];
+            return {
+                ...state,
+            }
         default:
             return state;
     }
