@@ -1,6 +1,7 @@
 import express from 'express';
 import homeController from '../controller/homeController'
 import userController from '../controller/userController'
+import staffController from '../controller/staffController'
 
 let router = express.Router();
 
@@ -19,6 +20,8 @@ const initWebRoutes = (app) => {
     router.post('/api/create-user', userController.handleCreateUser);
     router.put('/api/update-user', userController.handleUpdateUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);
+
+    router.get('/api/top-staff-home', staffController.getTopStaffHome);
 
     router.get('/api/allcode', userController.getAllcode)
 

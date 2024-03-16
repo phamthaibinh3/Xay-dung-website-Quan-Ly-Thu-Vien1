@@ -113,6 +113,7 @@ let createUser = (data) => {
                     dienThoai: data.dienThoai,
                     gioiTinh: data.gioiTinh,
                     vaiTro: data.vaiTro,
+                    anh: data.avatar
                 })
                 resolve({
                     errCode: 0,
@@ -162,7 +163,7 @@ let updateUser = (data) => {
         try {
             if (!data.id || !data.vaiTro || !data.gioiTinh) {
                 resolve({
-                    errCode:2,
+                    errCode: 2,
                     errMessage: 'Bạn chưa đầy đủ thông tin'
                 })
             }
@@ -177,7 +178,9 @@ let updateUser = (data) => {
                 user.email = data.email;
                 user.gioiTinh = data.gioiTinh;
                 user.vaiTro = data.vaiTro;
-
+                if (data.avatar) {
+                    user.anh = data.avatar;
+                }
 
                 await user.save();
 

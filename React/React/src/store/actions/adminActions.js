@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes'
 import {
     getAllCodeService, createNewUserService, getAllUsers,
-    delteUserService, updateUserService
+    delteUserService, updateUserService, getTopStaffHomeService
 }
     from '../../services/userService';
 import { toast } from "react-toastify";
@@ -161,3 +161,27 @@ export const updateSuccess = () => ({
 export const updateFailed = () => ({
     type: actionTypes.EDIT_USER_SUCCESS
 })
+
+export const fetchTopStaff = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopStaffHomeService('');
+            console.log('check: ', res);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_STAFF_SUCCESS,
+                    dataStaff: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_STAFF_FAIL,
+                })
+            }
+        } catch (error) {
+            console.log('FETCH_TOP_STAFF_FAIL: ', error);
+            dispatch({
+                type: actionTypes.FETCH_TOP_STAFF_FAIL
+            })
+        }
+    }
+}

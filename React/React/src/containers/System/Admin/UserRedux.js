@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
-import { LANGUAGES, CRUD_ACTIONS } from '../../../utils'
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../../utils'
 import * as actions from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
@@ -55,20 +55,32 @@ class UserRedux extends Component {
             let arrgender = this.props.genderRedux
             this.setState({
                 genderArr: arrgender,
-                gioiTinh: arrgender && arrgender.length > 0 ? arrgender[0].key : ''
+                gioiTinh: arrgender && arrgender.length > 0 ? arrgender[0].keyMap : ''
             })
         }
         if (prevProps.vaiTroRedux !== this.props.vaiTroRedux) {
             let arrvaiTro = this.props.vaiTroRedux
             this.setState({
                 vaiTroArr: arrvaiTro,
-                vaiTro: arrvaiTro && arrvaiTro.length > 0 ? arrvaiTro[0].key : ''
+                vaiTro: arrvaiTro && arrvaiTro.length > 0 ? arrvaiTro[0].keyMap : ''
             })
         }
 
         if (prevProps.listUser !== this.props.listUser) {
+            let arrvaiTro = this.props.vaiTroRedux
+            let arrgender = this.props.genderRedux
             this.setState({
-                action: CRUD_ACTIONS.CREATE
+                taiKhoan: '',
+                matKhau: '',
+                hoTen: '',
+                dienThoai: '',
+                diaChi: '',
+                gioiTinh: arrgender && arrgender.length > 0 ? arrgender[0].keyMap : '',
+                vaiTro: arrvaiTro && arrvaiTro.length > 0 ? arrvaiTro[0].keyMap : '',
+                anh: '',
+                email: '',
+                action: CRUD_ACTIONS.CREATE,
+                previewImgUrl: ''
             })
         }
     }
@@ -81,14 +93,15 @@ class UserRedux extends Component {
         })
     }
 
-    handleOnchangeImage = (event) => {
+    handleOnchangeImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
+            let base64 = await CommonUtils.getBase64(file);
             let objectUrl = URL.createObjectURL(file);
             this.setState({
                 previewImgUrl: objectUrl,
-                anh: file
+                anh: base64
             })
 
         }
@@ -117,7 +130,8 @@ class UserRedux extends Component {
                 dienThoai: this.state.dienThoai,
                 gioiTinh: this.state.gioiTinh,
                 vaiTro: this.state.vaiTro,
-                email: this.state.email
+                email: this.state.email,
+                avatar: this.state.anh
             })
         }
         if (action === CRUD_ACTIONS.EDIT) {
@@ -131,23 +145,16 @@ class UserRedux extends Component {
                 gioiTinh: this.state.gioiTinh,
                 vaiTro: this.state.vaiTro,
                 email: this.state.email,
-                // avatar: ''
+                avatar: this.state.anh
             })
         }
-        // this.setState({
-        //     taiKhoan: '',
-        //     matKhau: '',
-        //     hoTen: '',
-        //     diaChi: '',
-        //     dienThoai: '',
-        //     gioiTinh: '',
-        //     vaiTro: '',
-        //     email: ''
-        // })
-
     }
 
     handleEditUserFromParent = (user) => {
+        let imageBase64 = '';
+        if (user.anh) {
+            imageBase64 = new Buffer(user.anh, 'base64').toString('binary')
+        }
         this.setState({
             taiKhoan: user.taiKhoan,
             matKhau: 'HARDCODE',
@@ -156,9 +163,10 @@ class UserRedux extends Component {
             dienThoai: user.dienThoai,
             gioiTinh: user.gioiTinh,
             vaiTro: user.vaiTro,
-            email: user.vaiTro,
+            email: user.email,
             action: CRUD_ACTIONS.EDIT,
-            userEditId: user.id
+            userEditId: user.id,
+            previewImgUrl: imageBase64
         })
     }
 
@@ -243,7 +251,7 @@ class UserRedux extends Component {
                                 >
                                     {genders && genders.length > 0 && genders.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>
+                                            <option key={index} value={item.keyMap}>
                                                 {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                             </option>
 
@@ -260,7 +268,7 @@ class UserRedux extends Component {
                                     {vaiTroArr && vaiTroArr.length > 0 &&
                                         vaiTroArr.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
 
