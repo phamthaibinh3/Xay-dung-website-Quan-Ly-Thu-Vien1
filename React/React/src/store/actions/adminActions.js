@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes'
 import {
     getAllCodeService, createNewUserService, getAllUsers,
-    delteUserService, updateUserService, getTopStaffHomeService
+    delteUserService, updateUserService, getTopStaffHomeService,
+    getAllStaff, saveDetailStaff
 }
     from '../../services/userService';
 import { toast } from "react-toastify";
@@ -166,7 +167,6 @@ export const fetchTopStaff = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getTopStaffHomeService('');
-            console.log('check: ', res);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_TOP_STAFF_SUCCESS,
@@ -181,6 +181,53 @@ export const fetchTopStaff = () => {
             console.log('FETCH_TOP_STAFF_FAIL: ', error);
             dispatch({
                 type: actionTypes.FETCH_TOP_STAFF_FAIL
+            })
+        }
+    }
+}
+export const fetchAllStaff = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllStaff();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_STAFF_SUCCESS,
+                    dataSt: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_STAFF_FAIL,
+                })
+            }
+        } catch (error) {
+            console.log('FETCH_ALL_STAFF_FAIL: ', error);
+            dispatch({
+                type: actionTypes.FETCH_ALL_STAFF_FAIL
+            })
+        }
+    }
+}
+
+export const saveDetailStaff1 = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailStaff(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thêm thông tin nhân viên thanh công')
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_STAFF_SUCCESS,
+                })
+            } else {
+                toast.error('Thêm thông tin nhân viên không thành công2')
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_STAFF_FAIL,
+                })
+            }
+        } catch (error) {
+            console.log('SAVE_DETAIL_STAFF_FAIL: ', error);
+            toast.error('Thêm thông tin nhân viên không thành công1')
+            dispatch({
+                type: actionTypes.SAVE_DETAIL_STAFF_FAIL
             })
         }
     }

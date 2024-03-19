@@ -11,7 +11,7 @@ module.exports = {
       diaChi: 'Đà Nẵng',
       dienThoai: '0796782810',
       vaitro: 'R1',
-      gioTinh: '1',
+      gioiTinh: '1',
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

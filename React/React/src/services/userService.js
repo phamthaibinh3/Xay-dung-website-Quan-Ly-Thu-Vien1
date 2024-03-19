@@ -24,11 +24,19 @@ const getAllCodeService = (inputType) => {
 }
 
 const getTopStaffHomeService = (limit) => {
-    return axios.get(`/api/top-staff-home?limit=${limit}` )
+    return axios.get(`/api/top-staff-home?limit=${limit}`)
+}
+
+const getAllStaff = () => {
+    return axios.get('/api/get-all-staff')
+}
+
+const saveDetailStaff = (data) => {
+    return axios.post('/api/save-infor-staff', data)
 }
 
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
-    getTopStaffHomeService
+    getTopStaffHomeService, getAllStaff, saveDetailStaff
 }

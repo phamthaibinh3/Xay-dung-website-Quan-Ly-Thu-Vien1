@@ -1,14 +1,8 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('markdown', {
-            // noiDungHTML: DataTypes.TEXT('long'),
-            // noiDungMarkdown: DataTypes.TEXT('long'),
-            // moTa: DataTypes.TEXT('long'),
-            // nhanVienId: DataTypes.INTEGER,
-            // sachId: DataTypes.INTEGER,
-            // chuyenMucId: DataTypes.INTEGER,
-            // theLoaiSachId: DataTypes.INTEGER
+        await queryInterface.createTable('Markdowns', {
+            
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -16,22 +10,32 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             noiDungHTML: {
+                allowNull: false,
+                type: Sequelize.TEXT('long')
+            },
+            noiDungMarkdown: {
+                allowNull: false,
                 type: Sequelize.TEXT('long')
             },
             moTa: {
-                noiDungMarkdown: Sequelize.TEXT('long')
+                allowNull: true,
+                type: Sequelize.TEXT('long')
             },
             nhanVienId: {
-                noiDungMarkdown: Sequelize.INTEGER
+                allowNull: true,
+                type: Sequelize.INTEGER
             },
             sachId: {
-                noiDungMarkdown: Sequelize.INTEGER
+                allowNull: true,
+                type: Sequelize.INTEGER
             },
             chuyenMucId: {
-                noiDungMarkdown: Sequelize.INTEGER
+                allowNull: true,
+                type: Sequelize.INTEGER
             },
             theLoaiSachId: {
-                noiDungMarkdown: Sequelize.INTEGER
+                allowNull: true,
+                type: Sequelize.INTEGER
             },
 
 
@@ -46,6 +50,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('markdown');
+        await queryInterface.dropTable('Markdowns');
     }
 };

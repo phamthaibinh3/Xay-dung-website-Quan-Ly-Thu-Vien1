@@ -28,6 +28,52 @@ let getTopStaffHome = (limitInput) => {
     })
 }
 
+let getAllStaff = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let staff = await db.User.findAll({
+                where: { vaiTro: 'R2' },
+                attributes: {
+                    exclude: ['matKhau', 'anh']
+                }
+            })
+            resolve({
+                errCode: 0,
+                data: staff
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let postSaveInforSt = (inputData) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputData.nhanVienId || !inputData.noiDungHTML || !inputData.noiDungMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Tôi chưa nhận thông tin'
+                })
+            } else {
+                await db.Markdown.create({
+                    noiDungHTML: inputData.noiDungHTML,
+                    noiDungMarkdown: inputData.noiDungMarkdown,
+                    moTa: inputData.moTa,
+                    nhanVienId: inputData.nhanVienId,
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Them thanh cong'
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
-    getTopStaffHome: getTopStaffHome
+    getTopStaffHome: getTopStaffHome,
+    getAllStaff: getAllStaff, postSaveInforSt
 }

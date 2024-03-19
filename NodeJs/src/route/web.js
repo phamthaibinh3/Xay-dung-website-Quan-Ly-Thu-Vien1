@@ -23,7 +23,11 @@ const initWebRoutes = (app) => {
 
     router.get('/api/top-staff-home', staffController.getTopStaffHome);
 
-    router.get('/api/allcode', userController.getAllcode)
+    router.get('/api/allcode', userController.getAllcode);
+
+    router.get('/api/get-all-staff', staffController.getAllStaff);
+
+    router.post('/api/save-infor-staff', staffController.postSaveInfoStaff);
 
     return app.use('/', router);
 }

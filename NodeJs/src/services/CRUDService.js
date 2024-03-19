@@ -12,7 +12,7 @@ let createNewUser = (data) => {
                 hoTen: data.hoTen,
                 diaChi: data.diaChi,
                 dienThoai: data.dienThoai,
-                gioTinh: data.gioiTinh === '1' ? true : false,
+                gioiTinh: data.gioiTinh === '1' ? true : false,
                 vaiTro: data.vaiTro,
             })
             resolve('oke moi tao thanh cong 1 user');
