@@ -41,8 +41,22 @@ let postSaveInfoStaff = async (req, res) => {
     }
 }
 
+let getDetailStaffById = async (req,res) => {
+    try {
+        let infor = await staffService.getDetailStaffById(req.query.id);
+        return res.status(200).json(infor)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            message: 'Loi server',
+        })
+    }
+}
+
 module.exports = {
     getTopStaffHome: getTopStaffHome,
     getAllStaff: getAllStaff,
-    postSaveInfoStaff: postSaveInfoStaff
+    postSaveInfoStaff: postSaveInfoStaff,
+    getDetailStaffById: getDetailStaffById
 }

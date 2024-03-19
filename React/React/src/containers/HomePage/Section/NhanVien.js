@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as actions from '../../../store/actions'
 import { LANGUAGES } from '../../../utils'
+import { withRouter } from 'react-router'
 
 
 class NhanVien extends Component {
@@ -27,6 +28,11 @@ class NhanVien extends Component {
 
     componentDidMount() {
         this.props.loadTopStaff();
+    }
+
+    handleViewDetailStaff = (staff) => {
+        console.log('check: ', staff);
+        this.props.history.push(`/detail-staff/${staff.id}`)
     }
 
     render() {
@@ -51,7 +57,7 @@ class NhanVien extends Component {
                                     let nameVi = `${item.vaiTroData.valueVi}, ${item.hoTen}`
                                     let nameEn = `${item.vaiTroData.valueEn}, ${item.hoTen}`
                                     return (
-                                        <div className='section-customize' key={index}>
+                                        <div className='section-customize' key={index} onClick={() => this.handleViewDetailStaff(item)}>
                                             <div className='customize-border'>
                                                 <div className='outer-bg'>
                                                     <div className='bg-image section-nhanVien'
@@ -93,4 +99,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NhanVien);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NhanVien));

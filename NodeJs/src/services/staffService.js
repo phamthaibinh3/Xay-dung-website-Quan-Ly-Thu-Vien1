@@ -73,7 +73,49 @@ let postSaveInforSt = (inputData) => {
     })
 }
 
+let getDetailStaffById = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Bạn chưa truyền id'
+                })
+            } else {
+                let data = await db.User.findOne({
+                    where: { id: inputId },
+                    attributes: {
+                        exclude: ['matKhau']
+                    },
+                    include: [
+                        { model: db.Markdown, attributes: ['moTa', 'noiDungHTML', 'noiDungMarkdown'] },
+                        { model: db.Allcode, as: 'vaiTroData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: false,
+                    nest: true
+                })
+
+                if (data && data.anh) {
+                    data.anh = new Buffer(data.anh, 'base64').toString('binary')
+                }
+
+                if (!data) {
+                    data = {}
+                }
+
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopStaffHome: getTopStaffHome,
-    getAllStaff: getAllStaff, postSaveInforSt
+    getAllStaff: getAllStaff, postSaveInforSt,
+    getDetailStaffById: getDetailStaffById
 }

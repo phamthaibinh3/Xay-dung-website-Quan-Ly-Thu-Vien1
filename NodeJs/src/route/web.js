@@ -20,14 +20,13 @@ const initWebRoutes = (app) => {
     router.post('/api/create-user', userController.handleCreateUser);
     router.put('/api/update-user', userController.handleUpdateUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);
-
-    router.get('/api/top-staff-home', staffController.getTopStaffHome);
-
     router.get('/api/allcode', userController.getAllcode);
 
+    router.get('/api/top-staff-home', staffController.getTopStaffHome);
     router.get('/api/get-all-staff', staffController.getAllStaff);
-
     router.post('/api/save-infor-staff', staffController.postSaveInfoStaff);
+    router.get('/api/get-detail-staff-by-id', staffController.getDetailStaffById);
+
 
     return app.use('/', router);
 }

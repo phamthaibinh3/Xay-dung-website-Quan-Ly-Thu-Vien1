@@ -47,44 +47,46 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='home-header-banner'>
-                    <div className='content-up'>
-                        <div className='title1'><FormattedMessage id="banner.tieuDe1" /></div>
-                        <div className='title2'><FormattedMessage id="banner.tieuDe2" /></div>
-                        <div className='search'>
-                            <i className="fas fa-search"></i>
-                            <input type='text' placeholder='tìm kiếm' />
-                        </div>
-                    </div>
-                    <div className='content-down'>
-                        <div className='options'>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-book-open"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc1" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-book-open"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc2" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-book-open"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc3" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-flask"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc4" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-book-open"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc5" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-user-md"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.chuyenMuc6" /></div>
+                {this.props.isShowBanner === true &&
+                    <div className='home-header-banner'>
+                        <div className='content-up'>
+                            <div className='title1'><FormattedMessage id="banner.tieuDe1" /></div>
+                            <div className='title2'><FormattedMessage id="banner.tieuDe2" /></div>
+                            <div className='search'>
+                                <i className="fas fa-search"></i>
+                                <input type='text' placeholder='tìm kiếm' />
                             </div>
                         </div>
+                        <div className='content-down'>
+                            <div className='options'>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-book-open"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc1" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-book-open"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc2" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-book-open"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc3" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-flask"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc4" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-book-open"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc5" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-user-md"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.chuyenMuc6" /></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                }
             </React.Fragment >
         );
     }

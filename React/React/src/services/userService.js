@@ -35,8 +35,13 @@ const saveDetailStaff = (data) => {
     return axios.post('/api/save-infor-staff', data)
 }
 
+const getDetailStaff = (inputId) => {
+    return axios.get(`/api/get-detail-staff-by-id?id=${inputId}`)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
-    getTopStaffHomeService, getAllStaff, saveDetailStaff
+    getTopStaffHomeService, getAllStaff, saveDetailStaff,
+    getDetailStaff,
 }
