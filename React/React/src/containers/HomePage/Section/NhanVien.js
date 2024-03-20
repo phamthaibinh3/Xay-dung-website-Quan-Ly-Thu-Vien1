@@ -38,7 +38,6 @@ class NhanVien extends Component {
     render() {
         let arrStaff = this.state.arrStaff;
         let { language } = this.props;
-        arrStaff = arrStaff.concat(arrStaff).concat(arrStaff);
         return (
             <div className='section-share section-nhanVien'>
                 <div className='section-container'>

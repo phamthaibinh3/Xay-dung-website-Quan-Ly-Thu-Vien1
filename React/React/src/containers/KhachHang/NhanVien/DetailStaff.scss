@@ -1,11 +1,9 @@
 .staff-detail-container {
     height: 500px;
-    border: 1px solid red;
     margin: 0 100px;
 
     .intro-staff {
         display: flex;
-        border: 1px solid gray;
 
         .content-left {
             width: 20%;
@@ -31,6 +29,19 @@
             .down {
                 padding-top: 10px;
             }
+        }
+    }
+
+    .detail-infor-staff {
+        background-color: #ccc;
+        padding: 10px 100px;
+
+        h3 {
+            font-size: 17px;
+        }
+
+        img {
+            width: 100%;
         }
     }
 }

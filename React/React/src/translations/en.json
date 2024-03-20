@@ -34,6 +34,9 @@
             "quan-ly-sach": "Book management",
             "docNew": "Latest documents",
             "quan-ly-docNew": "Book new management"
+        },
+        "staff": {
+            "quan-ly-ke-hoach": "Manage Staff's schedule"
         }
     },
     "manage-user": {

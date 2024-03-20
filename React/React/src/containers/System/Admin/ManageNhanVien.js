@@ -10,7 +10,8 @@ import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-import { LANGUAGES } from '../../../utils';
+import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
+import { getDetailStaff } from '../../../services/userService'
 
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -23,8 +24,9 @@ class ManageNhanVien extends Component {
             noiDungMarkdown: '',
             noiDungHTML: '',
             selectedOption: '',
-            description: '',
+            moTa: '',
             listStaff: [],
+            hasOldData: false
         }
     }
 
@@ -60,37 +62,53 @@ class ManageNhanVien extends Component {
     // Finish!
     handleEditorChange = ({ html, text }) => {
         this.setState({
-            noiDungMarkdown: html,
-            noiDungHTML: text,
+            noiDungMarkdown: text,
+            noiDungHTML: html,
         })
-        console.log('handleEditorChange', html, text);
     }
 
     handleSaveContentMarkdown = () => {
+        let { hasOldData } = this.state;
         this.props.saveDetailStaff1({
             noiDungHTML: this.state.noiDungHTML,
             noiDungMarkdown: this.state.noiDungMarkdown,
-            moTa: this.state.description,
-            nhanVienId: this.state.selectedOption.value
+            moTa: this.state.moTa,
+            nhanVienId: this.state.selectedOption.value,
+            action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
         })
     }
 
-    handleChange = (selectedOption) => {
+    handleChangeSelect = async (selectedOption) => {
         this.setState({ selectedOption })
-        // this.setState({ selectedOption }, () =>
-        //     console.log(`Option selected:`, this.state.selectedOption)
-        // );
+
+        let res = await getDetailStaff(selectedOption.value)
+        if (res && res.errCode === 0 && res.data && res.data.Markdown) {
+            let markdown = res.data.Markdown
+            this.setState({
+                noiDungHTML: markdown.noiDungHTML,
+                noiDungMarkdown: markdown.noiDungMarkdown,
+                moTa: markdown.moTa,
+                hasOldData: true
+            })
+        } else {
+            this.setState({
+                noiDungHTML: '',
+                noiDungMarkdown: '',
+                moTa: '',
+                hasOldData: false
+            })
+        }
+        console.log('check cho vui: ', res);
     };
 
     handleOnChangeDesc = (event) => {
         this.setState({
-            description: event.target.value
+            moTa: event.target.value
         })
     }
 
     render() {
-        console.log(this.state);
-        console.log('check list staff: ', this.state.listStaff);
+        let { hasOldData } = this.state;
         return (
             <div className='manage-nhanvien-container'>
                 <div className='manage-nhanvien-title'>
@@ -101,7 +119,7 @@ class ManageNhanVien extends Component {
                         <label>Chon nhan vien</label>
                         <Select
                             value={this.state.selectedOption}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeSelect}
                             options={this.state.listStaff}
                         />
                     </div>
@@ -110,7 +128,7 @@ class ManageNhanVien extends Component {
                         <label>Thong tin gioi thieu: </label>
                         <textarea
                             onChange={(event) => this.handleOnChangeDesc(event)}
-                            value={this.state.description}
+                            value={this.state.moTa}
                             rows="4"
                             className='form-control'>
 
@@ -122,15 +140,16 @@ class ManageNhanVien extends Component {
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
                         onChange={this.handleEditorChange}
+                        value={this.state.noiDungMarkdown}
                     />
                 </div>
                 <button
                     onClick={() => this.handleSaveContentMarkdown()}
-                    className='save-content-nhanvien'
+                    className={hasOldData === true ? 'save-content-nhanvien' : 'create-content-nhanvien'}
                 >
-                    Luu thong tin
+                    {hasOldData === true ? <span>Lưu thông tin</span> : <span>Tạo thông tin</span>}
                 </button>
-            </div>
+            </div >
         );
     }
 

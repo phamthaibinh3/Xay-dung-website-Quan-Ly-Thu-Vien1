@@ -15,10 +15,14 @@ export const adminMenu = [
                 //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
                 // ]
             },
-            {
-                name: 'menu.admin.quan-ly-admin', link: '/system/user-admin',
-            },
+            // {
+            //     name: 'menu.admin.quan-ly-admin', link: '/system/user-admin',
+            // },
 
+            { //quan ly kế hoạch ddatwj sach
+
+                name: 'menu.staff.quan-ly-ke-hoach', link: '/staff/manage-schedule',
+            },
         ]
     },
     { //quan ly chuyen muc
@@ -57,4 +61,17 @@ export const adminMenu = [
 
         ]
     },
+];
+
+export const staffMenu = [
+    {
+        name: 'menu.admin.quan-ly-nguoi-dung',
+        menus: [
+            { //quan ly kế hoạch ddatwj sach
+
+                name: 'menu.staff.quan-ly-ke-hoach', link: '/staff/manage-schedule',
+            },
+        ]
+    }
+
 ];

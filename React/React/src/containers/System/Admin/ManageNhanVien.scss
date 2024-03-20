@@ -24,6 +24,22 @@
         }
     }
 
+    .create-content-nhanvien {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        padding: 5px;
+        background: rgb(7, 50, 192);
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
     .more-infor {
         display: flex;
         gap: 15px;

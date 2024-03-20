@@ -50,18 +50,35 @@ let getAllStaff = () => {
 let postSaveInforSt = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputData.nhanVienId || !inputData.noiDungHTML || !inputData.noiDungMarkdown) {
+            if (!inputData.nhanVienId || !inputData.noiDungHTML || !inputData.noiDungMarkdown
+                || !inputData.action
+            ) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Tôi chưa nhận thông tin'
                 })
             } else {
-                await db.Markdown.create({
-                    noiDungHTML: inputData.noiDungHTML,
-                    noiDungMarkdown: inputData.noiDungMarkdown,
-                    moTa: inputData.moTa,
-                    nhanVienId: inputData.nhanVienId,
-                })
+                if (inputData.action === 'CREATE') {
+                    await db.Markdown.create({
+                        noiDungHTML: inputData.noiDungHTML,
+                        noiDungMarkdown: inputData.noiDungMarkdown,
+                        moTa: inputData.moTa,
+                        nhanVienId: inputData.nhanVienId,
+                    })
+                } else if (inputData === 'EDIT') {
+                    let staffMarkdown = await db.Markdown.findOne({
+                        where: { nhanVienId: inputData.nhanVienId },
+                        raw: false
+                    })
+                    if (staffMarkdown) {
+                        staffMarkdown.noiDungHTML = inputData.noiDungHTML;
+                        staffMarkdown.noiDungMarkdown = inputData.noiDungMarkdown;
+                        staffMarkdown.moTa = inputData.moTa;
+
+                        await staffMarkdown.save()
+                    }
+                }
+
                 resolve({
                     errCode: 0,
                     errMessage: 'Them thanh cong'
