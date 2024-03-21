@@ -6,7 +6,9 @@ import Select from 'react-select';
 import * as actions from '../../../store/actions'
 import DatePicker from '../../../components/Input/DatePicker'
 import moment from 'moment';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, dateFormat } from '../../../utils';
+import { toast } from 'react-toastify'
+import _ from 'lodash';
 
 class ManageSchedule extends Component {
 
@@ -33,8 +35,12 @@ class ManageSchedule extends Component {
             })
         }
         if (prevProps.allSchedule !== this.props.allSchedule) {
+            let data = this.props.allSchedule;
+            if (data && data.length > 0) {
+                data = data.map(item => ({ ...item, isSeleted: false }))
+            }
             this.setState({
-                rangeTime: this.props.allSchedule,
+                rangeTime: data,
             })
         }
     }
@@ -60,6 +66,51 @@ class ManageSchedule extends Component {
         this.setState({
             currentDate: date[0]
         })
+    }
+
+    handleClickBtnTim = (time) => {
+        let { rangeTime } = this.state;
+        if (rangeTime && rangeTime.length > 0) {
+            rangeTime = rangeTime.map(item => {
+                if (item.id === time.id) { item.isSeleted = !item.isSeleted };
+                return item
+            })
+            this.setState({
+                rangeTime: rangeTime
+            })
+        }
+    }
+
+    handleSaveSchedule = () => {
+        let { rangeTime, selectedStaff, currentDate } = this.state;
+        let result = [];
+
+        if (!currentDate) {
+            toast.error('Bạn bỏ lỡ thông tin ngày');
+            return;
+        }
+        if (!selectedStaff && !_.isEmpty(selectedStaff)) {
+            toast.error('Bạn bỏ lỡ thông tin nhân viên');
+            return;
+        }
+        let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+
+        if (rangeTime && rangeTime.length > 0) {
+            let selectTime = rangeTime.filter(item => item.isSeleted === true);
+            if (selectTime && selectTime.length > 0) {
+                selectTime.map((item, index) => {
+                    let object = {};
+                    object.nhanvienId = selectedStaff.value;
+                    object.date = formatedDate;
+                    object.time = item.keyMap;
+                    result.push(object);
+                })
+            } else {
+                toast.error('Bạn chưa nhập thông tin thời gian');
+                return;
+            }
+        }
+        console.log('hehajshdjashdja: ', result);
     }
 
     render() {
@@ -94,19 +145,28 @@ class ManageSchedule extends Component {
                             {rangeTime && rangeTime.length > 0 &&
                                 rangeTime.map((item, index) => {
                                     return (
-                                        <button className='btn btn-time' key={index}>
-                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                        <button
+                                            onClick={() => this.handleClickBtnTim(item)}
+                                            className={item.isSeleted === true ? 'btn btn-schedule active' : 'btn btn-schedule'}
+                                            key={index}
+                                        >
+                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn
+                                            }
                                         </button>
                                     )
                                 })
                             }
                         </div>
                         <div className='col-12'>
-                            <button className='btn btn-primary'>Lưu thông tin</button>
+                            <button
+                                onClick={() => this.handleSaveSchedule()}
+                                className='btn btn-primary'>
+                                Lưu thông tin
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }
