@@ -5,6 +5,7 @@ const initialState = {
     roles: [],
     topStaff: [],
     allStaff: [],
+    allSchedule: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -62,6 +63,18 @@ const adminReducer = (state = initialState, action) => {
             }
 
         case actionTypes.FETCH_ALL_STAFF_FAIL:
+            state.allStaff = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ALLCODE_SCHEDULE_SUCCESS:
+            state.allSchedule = action.dataTime;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ALLCODE_SCHEDULE_FAIL:
             state.allStaff = [];
             return {
                 ...state,

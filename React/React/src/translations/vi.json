@@ -56,5 +56,8 @@
         "nhanVien": "Nhân viên",
         "nguoiDung": "Người dùng",
         "sua": "Sửa người dùng"
+    },
+    "manage-schedule": {
+        "tieuDe": "Quản lý kế hoạch thuê sách"
     }
 }

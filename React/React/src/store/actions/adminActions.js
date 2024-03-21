@@ -232,3 +232,27 @@ export const saveDetailStaff1 = (data) => {
         }
     }
 }
+
+export const fetchAllSchedule = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('THOIGIAN');
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: 'FETCH_ALLCODE_SCHEDULE_SUCCESS',
+                    dataTime: res.data
+                })
+            } else {
+                dispatch({
+                    type: 'FETCH_ALLCODE_SCHEDULE_FAIL',
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_ALLCODE_SCHEDULE_FAIL', e);
+            toast.error('FETCH_ALLCODE_SCHEDULE_FAIL')
+            dispatch({
+                type: actionTypes.FETCH_ALLCODE_SCHEDULE_FAIL
+            })
+        }
+    }
+}

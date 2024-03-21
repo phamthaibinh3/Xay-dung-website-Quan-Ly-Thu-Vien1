@@ -56,5 +56,8 @@
         "nhanVien": "Employee",
         "nguoiDung": "User",
         "sua": "Sửa người dùng"
+    },
+    "manage-schedule": {
+        "tieuDe": "Manage book rental plans "
     }
 }
