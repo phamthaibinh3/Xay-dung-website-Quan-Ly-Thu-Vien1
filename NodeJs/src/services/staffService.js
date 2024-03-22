@@ -1,5 +1,8 @@
 import db from '../models/index';
+require('dotenv').config();
+import _ from 'lodash';
 
+const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 let getTopStaffHome = (limitInput) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -131,8 +134,59 @@ let getDetailStaffById = (inputId) => {
     })
 }
 
+let bulkCreateSchedule = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.arrSchedule || !data.nhanVienId || !data.formatedDate) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Bạn chưa truyền đủ thông tin',
+                })
+            } else {
+                let schedule = data.arrSchedule;
+                if (schedule && schedule.length > 0) {
+                    schedule = schedule.map(item => {
+                        item.maxSoLuong = MAX_NUMBER_SCHEDULE;
+                        return item;
+                    })
+                }
+
+                let existing = await db.LichLam.findAll({
+                    where: { nhanVienId: data.nhanVienId, ngay: data.formatedDate },
+                    attributes: ['timeType', 'ngay', 'nhanVienId', 'maxSoLuong'],
+                    raw: true
+                })
+
+                if (existing && existing.length > 0) {
+                    existing = existing.map(item => {
+                        item.ngay = new Date(item.ngay).getTime();
+                        return item;
+                    })
+                }
+
+                let toCreate = _.differenceWith(schedule, existing, (a, b) => {
+                    return a.timeType === b.timeType && a.ngay === b.ngay;
+                });
+
+
+                if (toCreate && toCreate.length > 0) {
+                    await db.LichLam.bulkCreate(toCreate);
+                }
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Ok',
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopStaffHome: getTopStaffHome,
     getAllStaff: getAllStaff, postSaveInforSt,
-    getDetailStaffById: getDetailStaffById
+    getDetailStaffById: getDetailStaffById,
+    bulkCreateSchedule: bulkCreateSchedule
 }

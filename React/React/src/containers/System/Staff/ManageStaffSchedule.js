@@ -9,6 +9,7 @@ import moment from 'moment';
 import { LANGUAGES, dateFormat } from '../../../utils';
 import { toast } from 'react-toastify'
 import _ from 'lodash';
+import { saveBulkScheduleStaff } from '../../../services/userService'
 
 class ManageSchedule extends Component {
 
@@ -81,7 +82,7 @@ class ManageSchedule extends Component {
         }
     }
 
-    handleSaveSchedule = () => {
+    handleSaveSchedule = async () => {
         let { rangeTime, selectedStaff, currentDate } = this.state;
         let result = [];
 
@@ -93,16 +94,18 @@ class ManageSchedule extends Component {
             toast.error('Bạn bỏ lỡ thông tin nhân viên');
             return;
         }
-        let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        // = moment(currentDate).unix();
+        let formatedDate = new Date(currentDate).getTime();
 
         if (rangeTime && rangeTime.length > 0) {
             let selectTime = rangeTime.filter(item => item.isSeleted === true);
             if (selectTime && selectTime.length > 0) {
                 selectTime.map((item, index) => {
                     let object = {};
-                    object.nhanvienId = selectedStaff.value;
-                    object.date = formatedDate;
-                    object.time = item.keyMap;
+                    object.nhanVienId = selectedStaff.value;
+                    object.ngay = formatedDate;
+                    object.timeType = item.keyMap;
                     result.push(object);
                 })
             } else {
@@ -110,6 +113,13 @@ class ManageSchedule extends Component {
                 return;
             }
         }
+
+        let res = await saveBulkScheduleStaff({
+            arrSchedule: result,
+            nhanVienId: selectedStaff.value,
+            formatedDate: formatedDate
+        })
+        console.log('check res ',res);
         console.log('hehajshdjashdja: ', result);
     }
 

@@ -26,6 +26,8 @@ const initWebRoutes = (app) => {
     router.get('/api/get-all-staff', staffController.getAllStaff);
     router.post('/api/save-infor-staff', staffController.postSaveInfoStaff);
     router.get('/api/get-detail-staff-by-id', staffController.getDetailStaffById);
+    router.post('/api/bulk-create-schedule', staffController.bulkCreateSchedule);
+
 
 
     return app.use('/', router);
