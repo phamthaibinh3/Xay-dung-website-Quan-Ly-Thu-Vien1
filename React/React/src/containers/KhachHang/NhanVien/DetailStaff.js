@@ -5,7 +5,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailStaff.scss'
 import { getDetailStaff } from '../../../services/userService'
-
+import StaffSchedule from './StaffSchedule'
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -14,17 +14,21 @@ class ManageNhanVien extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            detailStaff: {}
+            detailStaff: {},
+            currentStaffId: -1,
         }
     }
 
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
-            let id = this.props.match.params.id
+            let id = this.props.match.params.id;
+            this.setState({
+                currentStaffId: id
+            })
             let response = await getDetailStaff(id);
             if (response && response.errCode === 0) {
                 this.setState({
-                    detailStaff: response.data
+                    detailStaff: response.data,
                 })
             }
         }
@@ -64,7 +68,14 @@ class ManageNhanVien extends Component {
                         </div>
                     </div>
                     <div className='schedule-staff'>
+                        <div className='content-left'>
+                            <StaffSchedule
+                                staffIdFromCustomer={this.state.currentStaffId}
+                            />
+                        </div>
+                        <div className='content-right'>
 
+                        </div>
                     </div>
                     <div className='detail-infor-staff'>
                         {detailStaff && detailStaff.Markdown && detailStaff.Markdown.noiDungHTML

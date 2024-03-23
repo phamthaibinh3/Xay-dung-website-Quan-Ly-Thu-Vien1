@@ -11,15 +11,18 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            LichLam.belongsTo(models.Allcode, {
+                foreignKey: 'timeType', targetKey: 'keyMap',as: 'timeTypeData'
+            })
         }
     };
     LichLam.init({
         soLuongDangKi: DataTypes.INTEGER,
         maxSoLuong: DataTypes.INTEGER,
-        ngay: DataTypes.DATE,
+        ngay: DataTypes.STRING,
         timeType: DataTypes.STRING,
         nhanVienId: DataTypes.INTEGER,
-        
+
     }, {
         sequelize,
         modelName: 'LichLam',

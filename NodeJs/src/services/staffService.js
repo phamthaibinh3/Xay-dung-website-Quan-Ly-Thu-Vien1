@@ -157,15 +157,9 @@ let bulkCreateSchedule = (data) => {
                     raw: true
                 })
 
-                if (existing && existing.length > 0) {
-                    existing = existing.map(item => {
-                        item.ngay = new Date(item.ngay).getTime();
-                        return item;
-                    })
-                }
 
                 let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-                    return a.timeType === b.timeType && a.ngay === b.ngay;
+                    return a.timeType === b.timeType && +a.ngay === +b.ngay;
                 });
 
 
@@ -184,9 +178,43 @@ let bulkCreateSchedule = (data) => {
     })
 }
 
+let getScheduleByDate = (nhanVienId, ngay) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!nhanVienId || !ngay) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Bạn chưa truyền đủ thông tin nhân viên hoặc ngày',
+                })
+            } else {
+                let dataSchedule = await db.LichLam.findAll({
+                    where: {
+                        nhanVienId: nhanVienId,
+                        ngay: ngay
+                    },
+                    include: [
+                        { model: db.Allcode, as: 'timeTypeData', attributes: ['valueVi', 'valueEn'] }
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                if (!dataSchedule) dataSchedule = [];
+
+                resolve({
+                    errCode: 0,
+                    data: dataSchedule
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getTopStaffHome: getTopStaffHome,
     getAllStaff: getAllStaff, postSaveInforSt,
     getDetailStaffById: getDetailStaffById,
-    bulkCreateSchedule: bulkCreateSchedule
+    bulkCreateSchedule: bulkCreateSchedule,
+    getScheduleByDate: getScheduleByDate
 }

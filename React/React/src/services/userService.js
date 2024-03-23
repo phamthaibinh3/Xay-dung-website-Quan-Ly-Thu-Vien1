@@ -42,9 +42,13 @@ const saveBulkScheduleStaff = (data) => {
     return axios.post('/api/bulk-create-schedule', data);
 }
 
+const getScheduleStaffByDate = (nhanVienId,ngay) => {
+    return axios.get(`/api/get-schedule-staff-by-date?nhanVienId=${nhanVienId}&ngay=${ngay}`)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
-    getDetailStaff, saveBulkScheduleStaff
+    getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate
 }

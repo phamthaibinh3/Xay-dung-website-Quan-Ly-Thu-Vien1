@@ -67,10 +67,24 @@ let bulkCreateSchedule = async (req, res) => {
     }
 }
 
+let getScheduleByDate = async (req, res) => {
+    try {
+        let infor = await staffService.getScheduleByDate(req.query.nhanVienId, req.query.ngay);
+        return res.status(200).json(infor);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            message: 'Loi server',
+        })
+    }
+}
+
 module.exports = {
     getTopStaffHome: getTopStaffHome,
     getAllStaff: getAllStaff,
     postSaveInfoStaff: postSaveInfoStaff,
     getDetailStaffById: getDetailStaffById,
-    bulkCreateSchedule: bulkCreateSchedule
+    bulkCreateSchedule: bulkCreateSchedule,
+    getScheduleByDate: getScheduleByDate,
 }
