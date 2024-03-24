@@ -2,7 +2,7 @@ import actionTypes from './actionTypes'
 import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
-    getAllStaff, saveDetailStaff
+    getAllStaff, saveDetailStaff, getAllSBook
 }
     from '../../services/userService';
 import { toast } from "react-toastify";
@@ -252,6 +252,32 @@ export const fetchAllSchedule = () => {
             toast.error('FETCH_ALLCODE_SCHEDULE_FAIL')
             dispatch({
                 type: actionTypes.FETCH_ALLCODE_SCHEDULE_FAIL
+            })
+        }
+    }
+}
+
+export const fetchAllBook = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllSBook();
+            if (res && res.errCode === 0) {
+                console.log('GET_ALL_BOOK_SUCCESS');
+                dispatch({
+                    type: actionTypes.GET_ALL_BOOK_SUCCESS,
+                    dataAllBook: res.data
+                })
+            } else {
+                console.log('GET_ALL_BOOK_FAIL');
+                dispatch({
+                    type: actionTypes.GET_ALL_BOOK_FAIL,
+                })
+            }
+        } catch (e) {
+            console.log('GET_ALL_BOOK_FAIL', e);
+            toast.error('GET_ALL_BOOK_FAIL')
+            dispatch({
+                type: actionTypes.GET_ALL_BOOK_FAIL
             })
         }
     }

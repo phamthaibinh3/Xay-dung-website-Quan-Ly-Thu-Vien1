@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         namXuatBan: DataTypes.STRING,
         maDanhMuc: DataTypes.INTEGER,
         soLuong: DataTypes.INTEGER,
-        maHoaDon: DataTypes.INTEGER
+        maHoaDon: DataTypes.INTEGER,
+        gia: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Sach',

@@ -24,22 +24,22 @@ import DetailStaff from './KhachHang/NhanVien/DetailStaff.js'
 import Staff from '../routes/Staff.js';
 class App extends Component {
 
-    handlePersistorState = () => {
-        const { persistor } = this.props;
-        let { bootstrapped } = persistor.getState();
-        if (bootstrapped) {
-            if (this.props.onBeforeLift) {
-                Promise.resolve(this.props.onBeforeLift())
-                    .then(() => this.setState({ bootstrapped: true }))
-                    .catch(() => this.setState({ bootstrapped: true }));
-            } else {
-                this.setState({ bootstrapped: true });
-            }
-        }
-    };
+    // handlePersistorState = () => {
+    //     const { persistor } = this.props;
+    //     let { bootstrapped } = persistor.getState();
+    //     if (bootstrapped) {
+    //         if (this.props.onBeforeLift) {
+    //             Promise.resolve(this.props.onBeforeLift())
+    //                 .then(() => this.setState({ bootstrapped: true }))
+    //                 .catch(() => this.setState({ bootstrapped: true }));
+    //         } else {
+    //             this.setState({ bootstrapped: true });
+    //         }
+    //     }
+    // };
 
     componentDidMount() {
-        this.handlePersistorState();
+        // this.handlePersistorState();
     }
 
     render() {
@@ -47,7 +47,6 @@ class App extends Component {
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
-
                         <div className="content-container">
                             <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                                 <Switch>

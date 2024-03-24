@@ -2,6 +2,7 @@ import express from 'express';
 import homeController from '../controller/homeController'
 import userController from '../controller/userController'
 import staffController from '../controller/staffController'
+import bookController from '../controller/bookController'
 
 let router = express.Router();
 
@@ -28,6 +29,11 @@ const initWebRoutes = (app) => {
     router.get('/api/get-detail-staff-by-id', staffController.getDetailStaffById);
     router.post('/api/bulk-create-schedule', staffController.bulkCreateSchedule);
     router.get('/api/get-schedule-staff-by-date', staffController.getScheduleByDate);
+
+
+
+    //test
+    router.get('/api/get-all-book',bookController.getAllBook);
 
 
 

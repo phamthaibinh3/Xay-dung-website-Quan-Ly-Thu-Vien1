@@ -49,7 +49,6 @@ export const adminMenu = [
             {
                 name: 'menu.admin.quan-ly-sach', link: '/system/quan-ly-sach',
             },
-
         ]
     },
     { //quan ly tai lieu moi

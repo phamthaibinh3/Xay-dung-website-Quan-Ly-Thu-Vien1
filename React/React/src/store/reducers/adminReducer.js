@@ -6,6 +6,7 @@ const initialState = {
     topStaff: [],
     allStaff: [],
     allSchedule: [],
+    allbook: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -76,6 +77,17 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_ALLCODE_SCHEDULE_FAIL:
             state.allStaff = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALL_BOOK_SUCCESS:
+            state.allbook = action.dataAllBook;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_BOOK_FAIL:
+            state.allbook = [];
             return {
                 ...state,
             }
