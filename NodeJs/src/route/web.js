@@ -33,7 +33,8 @@ const initWebRoutes = (app) => {
 
 
     //test
-    router.get('/api/get-all-book',bookController.getAllBook);
+    router.get('/api/get-all-book', bookController.getAllBook);
+    router.post('/api/create-book', bookController.CreateBook);
 
 
 

@@ -50,10 +50,14 @@ const getAllSBook = () => {
     return axios.get('/api/get-all-book')
 }
 
+const createBook = (data) => {
+    return axios.post('/api/create-book',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
-    getAllSBook
+    getAllSBook, createBook
 }
