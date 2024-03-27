@@ -54,10 +54,18 @@ const createBook = (data) => {
     return axios.post('/api/create-book',data)
 }
 
+const deleteBook = (id) => {
+    return axios.delete(`/api/delete-book?id=${id}`)
+}
+
+const updateBook = (data) => {
+    return axios.put(`/api/update-book`,data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
-    getAllSBook, createBook
+    getAllSBook, createBook, deleteBook, updateBook
 }

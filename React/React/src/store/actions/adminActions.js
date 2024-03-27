@@ -2,7 +2,8 @@ import actionTypes from './actionTypes'
 import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
-    getAllStaff, saveDetailStaff, getAllSBook, createBook
+    getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
+    updateBook
 }
     from '../../services/userService';
 import { toast } from "react-toastify";
@@ -262,7 +263,6 @@ export const fetchAllBook = (data) => {
         try {
             let res = await getAllSBook();
             if (res && res.errCode === 0) {
-                console.log('GET_ALL_BOOK_SUCCESS');
                 dispatch({
                     type: actionTypes.GET_ALL_BOOK_SUCCESS,
                     dataAllBook: res.data
@@ -301,6 +301,50 @@ export const createBook1 = (data) => {
             console.log('CREATE_BOOK_FAIL', e);
             dispatch({
                 type: actionTypes.CREATE_BOOK_FAIL
+            })
+        }
+    }
+}
+
+export const deleteBook1 = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteBook(id)
+            if (res && res.errCode === 0) {
+                toast.success('Xóa sách thành công');
+                dispatch({
+                    type: actionTypes.DELETE_BOOK_SUCCESS
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.DELETE_BOOK_FAIL
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.DELETE_BOOK_FAIL
+            })
+        }
+    }
+}
+
+export const updateBook1 = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteBook(id)
+            if (res && res.errCode === 0) {
+                toast.success('Sửa sách thành công');
+                dispatch({
+                    type: actionTypes.UPDATE_BOOK_SUCCESS
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.UPDATE_BOOK_FAIL
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.UPDATE_BOOK_FAIL
             })
         }
     }

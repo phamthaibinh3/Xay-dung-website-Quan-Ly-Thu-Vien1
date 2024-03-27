@@ -35,7 +35,8 @@ const initWebRoutes = (app) => {
     //test
     router.get('/api/get-all-book', bookController.getAllBook);
     router.post('/api/create-book', bookController.CreateBook);
-
+    router.delete('/api/delete-book',bookController.deleteBook);
+    router.put('/api/update-book', bookController.updateBook);
 
 
     return app.use('/', router);

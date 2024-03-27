@@ -1,3 +1,4 @@
+import { reject } from 'lodash';
 import db from '../models/index';
 import bcrypt from 'bcryptjs'
 
@@ -18,29 +19,101 @@ let getAllBook = () => {
 let CreateBook = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let existingBooks = await db.Sach.findAll({
-                where: { tieuDe: data.tieuDe }
-            });
-
-            if (existingBooks.length > 0) {
-                let existingBook = existingBooks[0]; // Lấy sách đầu tiên trong danh sách
-                let updatedQuantity = +existingBook.soLuong + +data.soLuong;// Cộng số lượng mới vào số lượng hiện có
-                await db.Sach.update({ soLuong: updatedQuantity }, { where: { tieuDe: data.tieuDe } }); // Lưu lại vào cơ sở dữ liệu
-            } else {
+            if (!data) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chu dien day du thong tin'
+                })
+            }
+            else {
                 await db.Sach.create({
                     tieuDe: data.tieuDe,
-                    maNXB: data.maNXB,
-                    namXuatBan: data.namXuatBan,
                     soLuong: data.soLuong,
-                    gia: data.gia
-                });
+                    gia: data.gia,
+                    tacGia: data.tacGia,
+                    maDanhMuc: data.maDanhMuc,
+                })
+
+
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Thanh cong'
+                })
             }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
-            resolve({
-                errCode: 0,
-                message: 'Thêm thành công'
-            });
+let deleteBook = (idInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!idInput) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id',
+                })
+            } else {
+                let res = await db.Sach.findOne({
+                    where: { id: idInput },
+                })
+                if (!res) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'id khong co trong he thong'
+                    })
+                } else {
+                    await db.Sach.destroy({
+                        where: { id: idInput }
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Xóa thành công'
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
+let updateBook = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id'
+                })
+            } else {
+                let book = await db.Sach.findOne({
+                    where: { id: data.id },
+                    raw: false
+                })
+                if (book) {
+                    book.tieuDe = data.tieuDe;
+                    book.maNXB = data.maNXB;
+                    book.namXuatBan = data.namXuatBan;
+                    book.soLuong = data.soLuong;
+                    book.gia = data.gia;
+                    book.tacGia = data.tacGia;
+
+                    await book.save();
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thanh cong'
+                    })
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Id k co trong he thong'
+                    })
+                }
+            }
         } catch (e) {
             reject(e);
         }
@@ -50,4 +123,6 @@ let CreateBook = (data) => {
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
+    deleteBook: deleteBook,
+    updateBook: updateBook
 }

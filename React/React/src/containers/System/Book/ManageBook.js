@@ -1,124 +1,180 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-import './ManageBook.scss'
-import Select from 'react-select';
-import * as actions from '../../../store/actions'
-import DatePicker from '../../../components/Input/DatePicker'
-import moment from 'moment';
-import { LANGUAGES, dateFormat } from '../../../utils';
-import { toast } from 'react-toastify'
-import _ from 'lodash';
-import { saveBulkScheduleStaff } from '../../../services/userService'
-import ModalBook from './ModalBook';
+import { connect } from 'react-redux';
+import { getAllSBook, createBook, deleteBook, updateBook } from '../../../services/userService'
+import Modalbook from './ModalBook'
+import ModalEditbook from './ModalEdit'
 
 class ManageBook extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dataBook: [],
-            isOpenModal: false,
+            arrbook: [],
+            isOpenModalbook: false,
+            isOpenModalEidtbook: false,
+            bookEdit: {}
         }
     }
 
-    componentDidMount() {
-        this.props.fetchAllBook();
+    async componentDidMount() {
+        await this.getAllbookFormReact();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.allbook !== this.props.allbook) {
+    getAllbookFormReact = async () => {
+        let response = await getAllSBook();
+        if (response && response.errCode === 0) {
             this.setState({
-                dataBook: this.props.allbook
+                arrbook: response.data
             })
         }
-        
+        console.log('data tu Nodejs: ', response);
     }
 
-    handleCreateBook = () => {
+    handleAddNewbook = () => {
         this.setState({
-            isOpenModal: true
+            isOpenModalbook: true
         })
     }
 
-    toggleUserModal = () => {
+    togglebookModal = () => {
         this.setState({
-            isOpenModal: !this.state.isOpenModal
+            isOpenModalbook: !this.state.isOpenModalbook
         })
+    }
+
+    togglebookEditModal = () => {
+        this.setState({
+            isOpenModalEidtbook: !this.state.isOpenModalEidtbook
+        })
+    }
+
+    createbook = async (data) => {
+        try {
+            let response = await createBook(data)
+            if (response && response.errCode !== 0) {
+                alert(response.errMessage)
+            } else {
+                await this.getAllbookFormReact();
+                this.setState({
+                    isOpenModalbook: false
+                })
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    handleDeletebook = async (book) => {
+        try {
+            let res = await deleteBook(book.id);
+            if (res && res.errCode === 0) {
+                this.getAllbookFormReact();
+                this.setState({
+
+                })
+            } else {
+                alert(res.errMessage)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    handleEditbook = async (book) => {
+        this.setState({
+            isOpenModalEidtbook: true,
+            bookEdit: book
+        })
+    }
+
+    doEditbook = async (book) => {
+        try {
+            let res = await updateBook(book);
+            if (res && res.errCode === 0) {
+                await this.getAllbookFormReact();
+                this.setState({
+                    isOpenModalEidtbook: false
+                })
+            } else {
+                alert(res.errMessage);
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
-        let { dataBook } = this.state;
-        console.log('check state: ', this.state.dataBook);
+        console.log('check: ', this.state.arrbook);
+        let arrbook = this.state.arrbook;
         return (
             <>
-                <ModalBook
-                    isOpen={this.state.isOpenModal}
-                    toggleUserModal={this.toggleUserModal}
-                />
                 <div className='book-container'>
-                    <div className='title mb-4'>Quản lý sách</div>
-                    <div className='book-body'>
-                        <div className='container'>
-                            <div className='mx-2'>
-                                <button
-                                    onClick={() => this.handleCreateBook()}
-                                >
-                                    <i className="fas fa-plus"></i>
-                                    Thêm sách
-                                </button>
-                            </div>
-                            <div className='book-content mx-2 mt-4'>
-                                <table id='TableMangeUser'>
-                                    <tr>
-                                        <th>Ảnh</th>
-                                        <th>Tên sách</th>
-                                        <th>Số lượng</th>
-                                        <th>Giá</th>
-                                        <th>Tác giả</th>
-                                        <th>Hành động</th>
-                                    </tr>
+                    <Modalbook
+                        isOpen={this.state.isOpenModalbook}
+                        togglebookModal={this.togglebookModal}
+                        createbook={this.createbook}
+                    />
+                    {this.state.isOpenModalEidtbook &&
+                        <ModalEditbook
+                            isOpen={this.state.isOpenModalEidtbook}
+                            togglebookModal={this.togglebookEditModal}
+                            bookEdit={this.state.bookEdit}
+                            editbook={this.doEditbook}
+                        />
+                    }
+                    <div className='title mt-3'>Danh sách Sách</div>
+                    <div className="mx-3">
+                        <button
+                            onClick={() => this.handleAddNewbook()}
+                            className='btn btn-primary px-2'
+                        > <i className="fas fa-plus"></i> Thêm người dùng
+                        </button>
+                    </div>
+                    <div className='book-content mt-4 mx-3'>
+                        <table id="customers">
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>Tên sách</th>
+                                <th>số lượng</th>
+                                <th>giá</th>
+                                <th>Tác giả</th>
+                                <th>Hành động</th>
+                            </tr>
+                            {arrbook && arrbook.map((item, index) => {
+                                return (
                                     <>
-                                        {dataBook && dataBook.length > 0 &&
-                                            dataBook.map((item, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{item.tieuDe}</td>
-                                                        <td>{item.tieuDe}</td>
-                                                        <td>{item.soLuong}</td>
-                                                        <td>{item.gia}</td>
-                                                        <td>{item.gia}</td>
-                                                        <td>
-                                                            <button
-                                                                className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
-                                                            <button
-                                                                className='btn-delete'><i className="fas fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-
+                                        <tr>
+                                            <td>{item.tieuDe}</td>
+                                            <td>{item.tieuDe}</td>
+                                            <td>{item.soLuong}</td>
+                                            <td>{item.gia}</td>
+                                            <td>{item.tacGia}</td>
+                                            <td>
+                                                <button onClick={() => this.handleEditbook(item)} className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
+                                                <button onClick={() => this.handleDeletebook(item)} className='btn-delete'><i className="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
                                     </>
-                                </table>
-                            </div>
-                        </div>
+                                )
+                            })}
+
+                        </table>
                     </div>
                 </div>
             </>
         );
     }
+
 }
 
 const mapStateToProps = state => {
     return {
-        allbook: state.admin.allbook
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllBook: () => dispatch(actions.fetchAllBook()),
     };
 };
 

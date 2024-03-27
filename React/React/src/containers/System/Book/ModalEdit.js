@@ -2,22 +2,35 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import './ModalBook.scss'
+import _ from 'lodash'
 
-class ModalBook extends Component {
+class ModalEditUser extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             tieuDe: '',
             soLuong: '',
-            tacGia: '',
             gia: '',
+            tacGia: '',
             maDanhMuc: ''
         }
     }
 
     componentDidMount() {
+        let book = this.props.bookEdit;
+        if (book && !_.isEmpty(book)) {
+            this.setState({
+                id: book.id,
+                tieuDe: book.tieuDe,
+                soLuong: book.soLuong,
+                gia: book.gia,
+                tacGia: book.tacGia,
+                maDanhMuc: book.maDanhMuc
+            })
+        }
+        console.log('did mount edit modal: ', this.props.userEdit);
     }
 
     toggle = () => {
@@ -26,7 +39,7 @@ class ModalBook extends Component {
 
     checkValideInput = () => {
         let isValid = true;
-        let arrInput = ['tieuDe', 'soLuong', 'tacGia', 'gia', 'maDanhMuc'];
+        let arrInput = ['tieuDe', 'soLuong', 'gia', 'tacGia', 'maDanhMuc'];
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
                 isValid = false;
@@ -37,18 +50,18 @@ class ModalBook extends Component {
         return isValid;
     }
 
-    handleThemUser = () => {
-        let valid = this.checkValideInput();
-        if (valid === true) {
-            this.props.createbook(this.state)
-            this.setState({
-                tieuDe: '',
-                soLuong: '',
-                tacGia: '',
-                gia: '',
-                maDanhMuc: ''
-            })
-        }
+    handleSaveUser = () => {
+        // let valid = this.checkValideInput();
+        // if (valid === true) {
+        this.props.editbook(this.state)
+        // this.setState({
+        //     tieuDe: '',
+        //     soLuong: '',
+        //     gia: '',
+        //     tacGia: '',
+        //     maDanhMuc: ''
+        // })
+        // }
     }
 
     isChange = (event, id) => {
@@ -61,51 +74,50 @@ class ModalBook extends Component {
 
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
+        console.log('check: ', this.props.bookEdit);
         return (
             <Modal
                 isOpen={this.props.isOpen}
                 toggle={() => this.toggle()}
                 size="lg"
                 centered
-                className={'modal-user-container'}
+                className={'modal-book-container'}
             >
-                <ModalHeader toggle={() => this.toggle()}>Thêm Sách</ModalHeader>
+                <ModalHeader toggle={() => this.toggle()}>Sửa thôn tin sách</ModalHeader>
                 <ModalBody>
-                    <div className='modal-user-body'>
+                    <div className='modal-book-body'>
                         <div className='input-container'>
-                            <label>Tên Sách:</label>
+                            <label>Tiêu đề:</label>
                             <input
+                                className='form-control'
                                 onChange={(event) => this.isChange(event, 'tieuDe')}
                                 type='text'
                                 value={this.state.tieuDe}
                             />
                         </div>
-                        <div className='input-container'>
+                        <div className='input-container '>
                             <label>Số lượng:</label>
                             <input
+                                className='form-control'
                                 onChange={(event) => this.isChange(event, 'soLuong')}
                                 type='text'
                                 value={this.state.soLuong}
                             />
                         </div>
                         <div className='input-container'>
-                            <label>Tác giả:</label>
-                            <input value={this.state.tacGia} type='text' onChange={(event) => this.isChange(event, 'tacGia')} />
-                        </div>
-                        <div className='input-container'>
-                            <label>Danh mục:</label>
-                            <input value={this.state.maDanhMuc} type='number' onChange={(event) => this.isChange(event, 'maDanhMuc')} />
-                        </div>
-                        <div className='input-container'>
                             <label>Giá:</label>
-                            <input value={this.state.gia} type='number' onChange={(event) => this.isChange(event, 'gia')} />
+                            <input className='form-control' value={this.state.gia} type='text' onChange={(event) => this.isChange(event, 'gia')} />
+                        </div>
+                        <div className='input-container'>
+                            <label>Tác giả:</label>
+                            <input className='form-control' value={this.state.tacGia} type='text' onChange={(event) => this.isChange(event, 'tacGia')} />
                         </div>
 
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className='px-3' onClick={() => this.handleThemUser()}>
-                        Xác nhận
+                    <Button color="primary" className='px-3' onClick={() => this.handleSaveUser()}>
+                        Lưu
                     </Button>{' '}
                     <Button color="secondary" className='px-3' onClick={() => this.toggle()}>
                         Thoát
@@ -127,7 +139,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalBook);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditUser);
 
 
 
