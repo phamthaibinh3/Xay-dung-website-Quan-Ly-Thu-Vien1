@@ -3,11 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllSBook, createBook, deleteBook, updateBook } from '../../../services/userService'
 import Modalbook from './ModalBook'
+import { CommonUtils } from '../../../utils'
 import ModalEditbook from './ModalEdit'
 import { toast } from "react-toastify";
 import * as actions from '../../../store/actions'
 
 class ManageBook extends Component {
+
 
     constructor(props) {
         super(props);
@@ -67,6 +69,7 @@ class ManageBook extends Component {
 
     createbook = async (data) => {
         try {
+
             let response = await createBook(data)
             if (response && response.errCode !== 0) {
                 alert(response.errMessage)
@@ -124,6 +127,8 @@ class ManageBook extends Component {
         }
     }
 
+
+
     render() {
         let arrbook = this.state.arrbook;
         return (
@@ -162,11 +167,20 @@ class ManageBook extends Component {
                                 <th>Hành động</th>
                             </tr>
                             {arrbook && arrbook.map((item, index) => {
+                                let imageBase64 = '';
+                                if (item.anh) {
+                                    imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
+                                }
+                                console.log('check anh: ', imageBase64);
                                 return (
                                     <>
-                                        <tr>
+                                        {console.log('hehe', item)}
+                                        <tr key={index}>
                                             <td>
-                                                <img src={item.anh} alt="Ảnh sách" />
+                                                <div
+                                                    className='book-image'
+                                                    style={{ backgroundImage: `url(${imageBase64})`,width:'100px',height:'200px' }}
+                                                ></div>
                                             </td>
                                             <td>{item.tieuDe}</td>
                                             <td>{item.soLuong}</td>

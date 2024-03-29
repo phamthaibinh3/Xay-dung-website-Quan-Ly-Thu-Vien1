@@ -147,13 +147,13 @@ class ModalEditUser extends Component {
                         </div>
                         <div className='input-container'>
                             <label htmlFor='anh'>Ảnh:</label>
-                            <input
-                                id='anh'
-                                className='form-control'
-                                type='file'
-                                onChange={this.handleFileChange}
-                            />
+                            
                         </div>
+                        {this.state.previewImgUrl && (
+                            <div className='input-container'>
+                                <img src={this.state.previewImgUrl} alt="Ảnh xem trước" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                            </div>
+                        )}
 
                     </div>
                 </ModalBody>

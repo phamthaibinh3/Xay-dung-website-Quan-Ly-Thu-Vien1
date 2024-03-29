@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'DanhMucData',
             });
 
-           
+
         }
     };
     Sach.init({

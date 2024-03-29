@@ -22,7 +22,7 @@ module.exports = {
                 type: Sequelize.STRING
             },
             maDanhMuc: {
-                type: Sequelize.INTEGER
+                type: Sequelize.STRING
             },
             soLuong: {
                 type: Sequelize.INTEGER

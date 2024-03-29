@@ -19,6 +19,7 @@ class ModalBook extends Component {
             maDanhMuc: '',
             anh: '',
 
+            previewImgUrl: '',
             allChuyenMuc: [],
         }
     }
@@ -53,7 +54,7 @@ class ModalBook extends Component {
         return isValid;
     }
 
-    handleThemUser = () => {
+    handleThemUser = async (data) => {
         let valid = this.checkValideInput();
         if (valid === true) {
             this.props.createbook(this.state)
@@ -157,10 +158,15 @@ class ModalBook extends Component {
                                 onChange={(event) => this.handleFileChange(event)}
                             />
                         </div>
+                        {this.state.previewImgUrl && (
+                            <div className='input-container'>
+                                <img src={this.state.previewImgUrl} alt="Ảnh xem trước" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                            </div>
+                        )}
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className='px-3' onClick={() => this.handleThemUser()}>
+                    <Button color="primary" className='px-3' onClick={(data) => this.handleThemUser(data)}>
                         Xác nhận
                     </Button>{' '}
                     <Button color="secondary" className='px-3' onClick={() => this.toggle()}>

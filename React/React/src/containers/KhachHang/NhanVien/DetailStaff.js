@@ -49,6 +49,7 @@ class ManageNhanVien extends Component {
                 <HomeHeader isShowBanner={false} />
                 <div className='staff-detail-container'>
                     <div className='intro-staff'>
+                        {console.log('detailStaff.anh',detailStaff.anh)}
                         <div
                             style={{ backgroundImage: `url(${detailStaff.anh ? detailStaff.anh : ''})` }}
                             className='content-left'>

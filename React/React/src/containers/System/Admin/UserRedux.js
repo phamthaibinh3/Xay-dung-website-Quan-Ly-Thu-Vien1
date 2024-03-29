@@ -184,6 +184,7 @@ class UserRedux extends Component {
     }
 
     render() {
+        console.log('check state: ', this.state.anh);
         let vaiTroArr = this.state.vaiTroArr;
         let genders = this.state.genderArr;
         let language = this.props.language;
