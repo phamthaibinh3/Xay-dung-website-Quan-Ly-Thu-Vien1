@@ -37,6 +37,7 @@ const initWebRoutes = (app) => {
     router.post('/api/create-book', bookController.CreateBook);
     router.delete('/api/delete-book',bookController.deleteBook);
     router.put('/api/update-book', bookController.updateBook);
+    router.get('api/get-danh-muc',bookController.getDanhMuc)
 
 
     return app.use('/', router);

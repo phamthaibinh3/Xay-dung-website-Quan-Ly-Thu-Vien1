@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
+import * as actions from '../../../store/actions'
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './ModalBook.scss'
+import { toast } from "react-toastify";
+import { CommonUtils, LANGUAGES } from '../../../utils';
 
 class ModalBook extends Component {
 
@@ -13,15 +16,28 @@ class ModalBook extends Component {
             soLuong: '',
             tacGia: '',
             gia: '',
-            maDanhMuc: ''
+            maDanhMuc: '',
+            anh: '',
+
+            allChuyenMuc: [],
         }
     }
 
     componentDidMount() {
+        this.props.fetchChuyenMucStart();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.chuyenMuc !== this.props.chuyenMuc) {
+            this.setState({
+                allChuyenMuc: this.props.chuyenMuc,
+                maDanhMuc: this.props.chuyenMuc[0].keyMap
+            })
+        }
     }
 
     toggle = () => {
-        this.props.togglebookModal()
+        this.props.togglebookModal();
     }
 
     checkValideInput = () => {
@@ -46,9 +62,11 @@ class ModalBook extends Component {
                 soLuong: '',
                 tacGia: '',
                 gia: '',
-                maDanhMuc: ''
+                maDanhMuc: [],
+                anh: ''
             })
         }
+        this.toggle()
     }
 
     isChange = (event, id) => {
@@ -59,8 +77,25 @@ class ModalBook extends Component {
         })
     }
 
+    handleFileChange = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let base64 = await CommonUtils.getBase64(file);
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImgUrl: objectUrl,
+                anh: base64
+            })
+
+        }
+    }
+
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
+        console.log('check state: ', this.state);
+        let { language } = this.props
+        let { allChuyenMuc } = this.state
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -93,14 +128,35 @@ class ModalBook extends Component {
                             <input value={this.state.tacGia} type='text' onChange={(event) => this.isChange(event, 'tacGia')} />
                         </div>
                         <div className='input-container'>
-                            <label>Danh mục:</label>
-                            <input value={this.state.maDanhMuc} type='number' onChange={(event) => this.isChange(event, 'maDanhMuc')} />
+                            <label htmlFor='maDanhMuc'>Danh mục:</label>
+                            <select className="form-select"
+                                value={this.state.maDanhMuc}
+                                onChange={(event) => this.isChange(event, 'maDanhMuc')}
+                            >
+                                {allChuyenMuc && allChuyenMuc.length > 0 && allChuyenMuc.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.keyMap}>
+                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                        </option>
+
+                                    )
+                                })}
+                            </select>
+
                         </div>
                         <div className='input-container'>
                             <label>Giá:</label>
                             <input value={this.state.gia} type='number' onChange={(event) => this.isChange(event, 'gia')} />
                         </div>
-
+                        <div className='input-container'>
+                            <label htmlFor='anh'>Ảnh:</label>
+                            <input
+                                id='anh'
+                                className='form-control'
+                                type='file'
+                                onChange={(event) => this.handleFileChange(event)}
+                            />
+                        </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -119,11 +175,14 @@ class ModalBook extends Component {
 
 const mapStateToProps = state => {
     return {
+        chuyenMuc: state.admin.chuyenMuc,
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart())
     };
 };
 

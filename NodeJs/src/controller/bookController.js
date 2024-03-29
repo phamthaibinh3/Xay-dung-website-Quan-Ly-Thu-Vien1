@@ -52,9 +52,23 @@ let updateBook = async(req,res) => {
     }
 }
 
+let getDanhMuc = async (req,res) => {
+    try {
+        let data = await bookService.getDanhMuc(req.body)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode:-1,
+            errMessage: 'Loi server',
+        })
+    }
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
     deleteBook: deleteBook,
     updateBook: updateBook,
+    getDanhMuc: getDanhMuc,
 }

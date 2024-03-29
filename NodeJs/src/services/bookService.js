@@ -5,7 +5,17 @@ import bcrypt from 'bcryptjs'
 let getAllBook = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let data = await db.Sach.findAll();
+            let data = await db.Sach.findAll({
+                include: [
+                    {
+                        model: db.Allcode,
+                        as: 'DanhMucData',
+                        attributes: ['valueEn', 'valueVi'], // Chọn các trường bạn muốn lấy từ bảng Allcode
+                    }
+                ],
+                raw: true,
+                nest: true
+            });
             resolve({
                 errCode: 0,
                 data: data,
@@ -26,20 +36,25 @@ let CreateBook = (data) => {
                 })
             }
             else {
-                await db.Sach.create({
-                    tieuDe: data.tieuDe,
-                    soLuong: data.soLuong,
-                    gia: data.gia,
-                    tacGia: data.tacGia,
-                    maDanhMuc: data.maDanhMuc,
+                let tonTai = await db.Sach.findOne({
+                    where: { tieuDe: data.tieuDe },
                 })
-
-
-
-                resolve({
-                    errCode: 0,
-                    errMessage: 'Thanh cong'
-                })
+                if (tonTai) {
+                    await db.Sach.update({ soLuong: +tonTai.soLuong + +data.soLuong }, { where: { tieuDe: data.tieuDe } });
+                } else {
+                    await db.Sach.create({
+                        tieuDe: data.tieuDe,
+                        soLuong: data.soLuong,
+                        tacGia: data.tacGia,
+                        maDanhMuc: data.maDanhMuc,
+                        gia: data.gia,
+                        anh: data.anh
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: ' thanh cong'
+                    })
+                }
             }
         } catch (e) {
             reject(e);
@@ -100,6 +115,7 @@ let updateBook = (data) => {
                     book.soLuong = data.soLuong;
                     book.gia = data.gia;
                     book.tacGia = data.tacGia;
+                    book.maDanhMuc = data.maDanhMuc;
 
                     await book.save();
 
@@ -120,9 +136,24 @@ let updateBook = (data) => {
     })
 }
 
+let getDanhMuc = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.DanhMuc.findAll();
+            resolve({
+                errCode: 0,
+                data: data,
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
     deleteBook: deleteBook,
-    updateBook: updateBook
+    updateBook: updateBook,
+    getDanhMuc: getDanhMuc
 }

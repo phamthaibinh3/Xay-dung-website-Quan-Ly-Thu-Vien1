@@ -349,3 +349,26 @@ export const updateBook1 = (id) => {
         }
     }
 }
+
+export const fetchChuyenMucStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("TENDANHMUC");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_CHUYEN_MUC_SUCCESS,
+                    dataChuyenMuc: res.data
+                });
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_CHUYEN_MUC_FAIL
+                });
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.FETCH_CHUYEN_MUC_FAIL
+            });
+            console.log('Loi start Redux', e);
+        }
+    }
+}

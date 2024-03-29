@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import _ from 'lodash'
+import * as actions from '../../../store/actions'
+import { LANGUAGES } from '../../../utils';
 
 class ModalEditUser extends Component {
 
@@ -14,7 +16,9 @@ class ModalEditUser extends Component {
             soLuong: '',
             gia: '',
             tacGia: '',
-            maDanhMuc: ''
+            maDanhMuc: '',
+
+            allChuyenMuc: [],
         }
     }
 
@@ -31,6 +35,18 @@ class ModalEditUser extends Component {
             })
         }
         console.log('did mount edit modal: ', this.props.userEdit);
+
+        this.props.fetchChuyenMucStart();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.chuyenMuc !== this.props.chuyenMuc) {
+            let a = this.props.chuyenMuc
+            this.setState({
+                allChuyenMuc: a,
+                maDanhMuc: a && a.length > 0 ? a[0].keyMap : ''
+            })
+        }
     }
 
     toggle = () => {
@@ -74,7 +90,8 @@ class ModalEditUser extends Component {
 
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
-        console.log('check: ', this.props.bookEdit);
+        let { language } = this.props
+        let { allChuyenMuc } = this.state;
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -112,6 +129,31 @@ class ModalEditUser extends Component {
                             <label>Tác giả:</label>
                             <input className='form-control' value={this.state.tacGia} type='text' onChange={(event) => this.isChange(event, 'tacGia')} />
                         </div>
+                        <div className='input-container'>
+                            <label>Danh mục:</label>
+                            <select className="form-select"
+                                value={this.state.maDanhMuc}
+                                onChange={(event) => this.isChange(event, 'maDanhMuc')}
+                            >
+                                {allChuyenMuc && allChuyenMuc.length > 0 && allChuyenMuc.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.keyMap}>
+                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                        </option>
+
+                                    )
+                                })}
+                            </select>
+                        </div>
+                        <div className='input-container'>
+                            <label htmlFor='anh'>Ảnh:</label>
+                            <input
+                                id='anh'
+                                className='form-control'
+                                type='file'
+                                onChange={this.handleFileChange}
+                            />
+                        </div>
 
                     </div>
                 </ModalBody>
@@ -131,11 +173,14 @@ class ModalEditUser extends Component {
 
 const mapStateToProps = state => {
     return {
+        chuyenMuc: state.admin.chuyenMuc,
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart())
     };
 };
 

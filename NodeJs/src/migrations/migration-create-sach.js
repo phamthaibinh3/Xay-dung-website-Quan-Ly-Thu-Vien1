@@ -36,6 +36,9 @@ module.exports = {
             tacGia: {
                 type: Sequelize.STRING
             },
+            anh: {
+                type: Sequelize.BLOB('long')
+            },
 
 
             createdAt: {

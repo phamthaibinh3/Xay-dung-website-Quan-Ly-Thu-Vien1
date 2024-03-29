@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getAllSBook, createBook, deleteBook, updateBook } from '../../../services/userService'
 import Modalbook from './ModalBook'
 import ModalEditbook from './ModalEdit'
+import { toast } from "react-toastify";
+import * as actions from '../../../store/actions'
 
 class ManageBook extends Component {
 
@@ -13,22 +15,36 @@ class ManageBook extends Component {
             arrbook: [],
             isOpenModalbook: false,
             isOpenModalEidtbook: false,
-            bookEdit: {}
+            bookEdit: {},
+
+            allChuyenMuc: '',
         }
     }
 
     async componentDidMount() {
         await this.getAllbookFormReact();
+        this.props.fetchChuyenMucStart();
     }
 
     getAllbookFormReact = async () => {
         let response = await getAllSBook();
+        console.log('ehhe: ', response);
         if (response && response.errCode === 0) {
             this.setState({
                 arrbook: response.data
             })
         }
         console.log('data tu Nodejs: ', response);
+    }
+
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.chuyenMuc !== this.props.chuyenMuc) {
+            this.setState({
+                allChuyenMuc: this.props.chuyenMuc
+
+            })
+        }
+        // await this.getAllbookFormReact();
     }
 
     handleAddNewbook = () => {
@@ -54,11 +70,13 @@ class ManageBook extends Component {
             let response = await createBook(data)
             if (response && response.errCode !== 0) {
                 alert(response.errMessage)
+
             } else {
                 await this.getAllbookFormReact();
                 this.setState({
                     isOpenModalbook: false
                 })
+                toast.success('Thêm sách thành công');
             }
         } catch (e) {
             console.log(e);
@@ -73,6 +91,7 @@ class ManageBook extends Component {
                 this.setState({
 
                 })
+                toast.success('Xóa sách thành công');
             } else {
                 alert(res.errMessage)
             }
@@ -96,6 +115,7 @@ class ManageBook extends Component {
                 this.setState({
                     isOpenModalEidtbook: false
                 })
+                toast.success('Cập nhập thành công');
             } else {
                 alert(res.errMessage);
             }
@@ -105,7 +125,6 @@ class ManageBook extends Component {
     }
 
     render() {
-        console.log('check: ', this.state.arrbook);
         let arrbook = this.state.arrbook;
         return (
             <>
@@ -128,7 +147,7 @@ class ManageBook extends Component {
                         <button
                             onClick={() => this.handleAddNewbook()}
                             className='btn btn-primary px-2'
-                        > <i className="fas fa-plus"></i> Thêm người dùng
+                        > <i className="fas fa-plus"></i> Thêm sách
                         </button>
                     </div>
                     <div className='book-content mt-4 mx-3'>
@@ -139,17 +158,21 @@ class ManageBook extends Component {
                                 <th>số lượng</th>
                                 <th>giá</th>
                                 <th>Tác giả</th>
+                                <th>Danh mục</th>
                                 <th>Hành động</th>
                             </tr>
                             {arrbook && arrbook.map((item, index) => {
                                 return (
                                     <>
                                         <tr>
-                                            <td>{item.tieuDe}</td>
+                                            <td>
+                                                <img src={item.anh} alt="Ảnh sách" />
+                                            </td>
                                             <td>{item.tieuDe}</td>
                                             <td>{item.soLuong}</td>
                                             <td>{item.gia}</td>
                                             <td>{item.tacGia}</td>
+                                            <td>{item.maDanhMuc}</td>
                                             <td>
                                                 <button onClick={() => this.handleEditbook(item)} className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
                                                 <button onClick={() => this.handleDeletebook(item)} className='btn-delete'><i className="fas fa-trash"></i></button>
@@ -170,11 +193,14 @@ class ManageBook extends Component {
 
 const mapStateToProps = state => {
     return {
+        chuyenMuc: state.admin.chuyenMuc,
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart())
     };
 };
 

@@ -5,9 +5,9 @@ module.exports = {
 
             id: {
                 allowNull: false,
-                autoIncrement: true,
+                // autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.STRING
             },
             tenDanhMuc: {
                 type: Sequelize.STRING
