@@ -34,11 +34,11 @@ export const adminMenu = [
 
         ]
     },
-    { //quan ly chuyen muc
-        name: 'menu.admin.chuyen-muc',
+    { //quan ly loai sach
+        name: 'menu.admin.loai-sach',
         menus: [
             {
-                name: 'menu.admin.quan-ly-chuyen-muc', link: '/system/quan-ly-chuyen-muc',
+                name: 'menu.admin.quan-ly-loai-sach', link: '/system/quan-ly-loai-sach',
             },
 
         ]

@@ -33,7 +33,9 @@
             "sach": "Sách",
             "quan-ly-sach": "Quản lý sách",
             "docNew": "Tài liệu mới nhất",
-            "quan-ly-docNew": "Quản lý tài liệu mới"
+            "quan-ly-docNew": "Quản lý tài liệu mới",
+            "loai-sach": "Loại sách",
+            "quan-ly-loai-sach": "Quản lý loại sách"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

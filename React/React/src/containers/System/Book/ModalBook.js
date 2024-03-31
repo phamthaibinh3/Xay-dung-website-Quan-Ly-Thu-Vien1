@@ -32,7 +32,7 @@ class ModalBook extends Component {
         if (prevProps.chuyenMuc !== this.props.chuyenMuc) {
             this.setState({
                 allChuyenMuc: this.props.chuyenMuc,
-                maDanhMuc: this.props.chuyenMuc[0].keyMap
+                maDanhMuc: this.props.chuyenMuc[0].id
             })
         }
     }
@@ -137,7 +137,7 @@ class ModalBook extends Component {
                                 {allChuyenMuc && allChuyenMuc.length > 0 && allChuyenMuc.map((item, index) => {
                                     return (
                                         <option key={index} value={item.keyMap}>
-                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                            {item.tenDanhMuc}
                                         </option>
 
                                     )

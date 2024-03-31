@@ -44,7 +44,7 @@ class ModalEditUser extends Component {
             let a = this.props.chuyenMuc
             this.setState({
                 allChuyenMuc: a,
-                maDanhMuc: a && a.length > 0 ? a[0].keyMap : ''
+                maDanhMuc: a && a.length > 0 ? a[0].id : ''
             })
         }
     }
@@ -90,6 +90,7 @@ class ModalEditUser extends Component {
 
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
+        console.log('check state: ',this.state);
         let { language } = this.props
         let { allChuyenMuc } = this.state;
         return (
@@ -138,7 +139,7 @@ class ModalEditUser extends Component {
                                 {allChuyenMuc && allChuyenMuc.length > 0 && allChuyenMuc.map((item, index) => {
                                     return (
                                         <option key={index} value={item.keyMap}>
-                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                            {item.tenDanhMuc}
                                         </option>
 
                                     )
