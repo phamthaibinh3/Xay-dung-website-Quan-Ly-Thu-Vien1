@@ -62,8 +62,20 @@ const updateBook = (data) => {
     return axios.put(`/api/update-book`, data)
 }
 
-const getDanhMuc = () => {
-    return axios.get('api/get-danh-muc');
+const getAllDanhMuc = () => {
+    return axios.get('/api/get-all-danh-muc')
+}
+
+const createDanhMuc = (data) => {
+    return axios.post('/api/add-danh-muc', data)
+}
+
+const deleteDanhMuc = (id) => {
+    return axios.delete(`/api/delete-danh-muc?id=${id}`)
+ }
+
+const updateDanhMuc = (data) => {
+    return axios.put('/api/update-danh-muc',data)
 }
 
 export {
@@ -71,5 +83,6 @@ export {
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
-    getAllSBook, createBook, deleteBook, updateBook, getDanhMuc
+    getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
+    createDanhMuc, deleteDanhMuc, updateDanhMuc
 }

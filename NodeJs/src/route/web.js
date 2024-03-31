@@ -35,9 +35,12 @@ const initWebRoutes = (app) => {
     //test
     router.get('/api/get-all-book', bookController.getAllBook);
     router.post('/api/create-book', bookController.CreateBook);
-    router.delete('/api/delete-book',bookController.deleteBook);
+    router.delete('/api/delete-book', bookController.deleteBook);
     router.put('/api/update-book', bookController.updateBook);
-    router.get('api/get-danh-muc',bookController.getDanhMuc)
+    router.get('/api/get-all-danh-muc', bookController.getAllDanhMuc);
+    router.post('/api/add-danh-muc', bookController.addDanhMuc);
+    router.delete('/api/delete-danh-muc', bookController.deleteDanhMuc);
+    router.put('/api/update-danh-muc', bookController.updateDanhMuc)
 
 
     return app.use('/', router);

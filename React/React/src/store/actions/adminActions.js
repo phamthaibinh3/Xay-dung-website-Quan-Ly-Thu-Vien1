@@ -3,7 +3,7 @@ import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
-    updateBook
+    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc
 }
     from '../../services/userService';
 import { toast } from "react-toastify";
@@ -353,22 +353,95 @@ export const updateBook1 = (id) => {
 export const fetchChuyenMucStart = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await getAllCodeService("TENDANHMUC");
+            let res = await getAllDanhMuc();
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_CHUYEN_MUC_SUCCESS,
-                    dataChuyenMuc: res.data
-                });
+                    dataChuyenMuc: res.data,
+                })
             } else {
                 dispatch({
-                    type: actionTypes.FETCH_CHUYEN_MUC_FAIL
-                });
+                    type: actionTypes.FETCH_CHUYEN_MUC_FAIL,
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_CHUYEN_MUC_FAIL', e);
+            dispatch({
+                type: actionTypes.FETCH_CHUYEN_MUC_FAIL
+            })
+        }
+    }
+}
+
+export const createCategory = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await createDanhMuc(data)
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.CREATE_CATEGORY_SUCCSESS
+                })
+            } else {
+                toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.CREATE_CATEGORY_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CREATE_CATEGORY_FAIL', e);
+            dispatch({
+                type: actionTypes.CREATE_CATEGORY_FAIL
+            })
+        }
+    }
+}
+
+export const deleteCategory = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteDanhMuc(id);
+            console.log('check res: ',res);
+            if (res && res.errCode === 0) {
+                toast.success('Xóa thành công');
+                dispatch({
+                    type: actionTypes.DELETE_CATEGORY_SUCCSESS
+                })
+            } else {
+                toast.error('Xóa thất bại');
+                dispatch({
+                    type: actionTypes.DELETE_CATEGORY_FAIL
+                })
             }
         } catch (e) {
             dispatch({
-                type: actionTypes.FETCH_CHUYEN_MUC_FAIL
-            });
-            console.log('Loi start Redux', e);
+                type: actionTypes.DELETE_CATEGORY_FAIL
+            })
+        }
+    }
+}
+
+export const updateCategory = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateDanhMuc(id)
+            if (res && res.errCode === 0) {
+                console.log('check res: ',res);
+                toast.success('Sửa thành công');
+                dispatch({
+                    type: actionTypes.UPDATE_CATEGORY_SUCCSESS
+                })
+            } else {
+                toast.error('Sửa thất bại');
+                dispatch({
+                    type: actionTypes.UPDATE_CATEGORY_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('UPDATE_CATEGORY_FAIL',e);
+            dispatch({
+                type: actionTypes.UPDATE_CATEGORY_FAIL
+            })
         }
     }
 }

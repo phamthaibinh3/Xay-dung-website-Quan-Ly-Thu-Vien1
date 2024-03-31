@@ -6,6 +6,7 @@ import UserRedux from '../containers/System/Admin/UserRedux';
 import Header from '../containers/Header/Header';
 import ManageNhanVien from '../containers/System/Admin/ManageNhanVien';
 import ManageBook from '../containers/System/Book/ManageBook';
+import ChuyenMuc from '../containers/System/ChuyenMuc/ChuyenMuc';
 
 class System extends Component {
     render() {
@@ -20,6 +21,7 @@ class System extends Component {
                             <Route path="/system/user-redux" component={UserRedux} />
                             <Route path="/system/manage-nhanvien" component={ManageNhanVien} />
                             <Route path="/system/quan-ly-sach" component={ManageBook}/>
+                            <Route path="/system/quan-ly-chuyen-muc" component={ChuyenMuc}/>
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

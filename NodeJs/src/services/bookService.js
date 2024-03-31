@@ -136,14 +136,122 @@ let updateBook = (data) => {
     })
 }
 
-let getDanhMuc = () => {
+let getAllDanhMuc = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let data = await db.DanhMuc.findAll();
+            let data = await db.DanhMuc.findAll({
+                order: [['createdAt', 'DESC']],
+            });
             resolve({
                 errCode: 0,
                 data: data,
             })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let addDanhMuc = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (data.maDanhMuc === '' || data.tenDanhMuc === '') {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua nhap data'
+                })
+            } else {
+                let tonTai = await db.DanhMuc.findOne({
+                    where: { id: data.maDanhMuc }
+                })
+
+                if (tonTai) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Mã danh mục đã tồn tại trong hệ thống'
+                    })
+                } else {
+                    await db.DanhMuc.create({
+                        id: data.maDanhMuc,
+                        tenDanhMuc: data.tenDanhMuc
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'thanh cong'
+                    })
+                }
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let deleteDanhMuc = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id de xoa',
+                })
+            } else {
+                let res = await db.DanhMuc.findOne({
+                    where: { id: inputId }
+                })
+                if (!res) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'id khong co trong he thong',
+                    })
+                }
+
+                else {
+                    await db.DanhMuc.destroy({
+                        where: { id: inputId }
+                    })
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Xoa thanh cong',
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let updateDanhMuc = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id || data.tenDanhMuc === '') {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id hoặc tên để trống'
+                })
+            } else {
+                let category = await db.DanhMuc.findOne({
+                    where: { id: data.id },
+                    raw: false
+                })
+                if (category) {
+                    category.tenDanhMuc = data.tenDanhMuc;
+                    await category.save();
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thanh cong'
+                    })
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Id k co trong he thong'
+                    })
+                }
+            }
         } catch (e) {
             reject(e);
         }
@@ -155,5 +263,8 @@ module.exports = {
     CreateBook: CreateBook,
     deleteBook: deleteBook,
     updateBook: updateBook,
-    getDanhMuc: getDanhMuc
+    getAllDanhMuc: getAllDanhMuc,
+    addDanhMuc: addDanhMuc,
+    deleteDanhMuc: deleteDanhMuc,
+    updateDanhMuc: updateDanhMuc
 }
