@@ -3,6 +3,7 @@ import homeController from '../controller/homeController'
 import userController from '../controller/userController'
 import staffController from '../controller/staffController'
 import bookController from '../controller/bookController'
+import kindOfBookController from '../controller/kindOfBookController'
 
 let router = express.Router();
 
@@ -40,7 +41,10 @@ const initWebRoutes = (app) => {
     router.get('/api/get-all-danh-muc', bookController.getAllDanhMuc);
     router.post('/api/add-danh-muc', bookController.addDanhMuc);
     router.delete('/api/delete-danh-muc', bookController.deleteDanhMuc);
-    router.put('/api/update-danh-muc', bookController.updateDanhMuc)
+    router.put('/api/update-danh-muc', bookController.updateDanhMuc);
+
+    router.get('/api/get-all-loai-sach',kindOfBookController.getLoaiSach);
+    router.post('/api/create-loai-sach',kindOfBookController.createLoaiSach)
 
 
     return app.use('/', router);

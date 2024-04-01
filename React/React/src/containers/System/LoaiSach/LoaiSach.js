@@ -11,52 +11,89 @@ class LoaiSach extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+            maLoaiSach: '',
+            tenLoaiSach: '',
+            moTa: '',
+
+            allLoaiSach: '',
+            editingIndex: -1,
         }
     }
 
     async componentDidMount() {
-       
+        this.props.fectchAllKindOfBook()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        
+        if (prevProps.loaiSach !== this.props.loaiSach) {
+            this.props.fectchAllKindOfBook()
+            this.setState({
+                allLoaiSach: this.props.loaiSach
+            })
+        }
+    }
+
+    isChange = (event,id) => {
+        let copyState = {...this.state};
+        copyState[id] = event.target.value;
+        this.setState({
+            ...copyState
+        })
+    }
+
+    handleCreateLoaiSach = () => {
+        this.props.createKindOfBook({
+            maLoaiSach: this.state.maLoaiSach,
+            tenLoaiSach: this.state.tenLoaiSach,
+            moTa: this.state.moTa
+        });
     }
 
     render() {
-        const { allChuyenMuc, maDanhMuc, tenDanhMuc, editingIndex } = this.state;
+        console.log('check state: ',this.state);
+        const { maLoaiSach, tenLoaiSach, editingIndex, allLoaiSach, moTa } = this.state;
         return (
             <div className="manage-folders">
                 <h2 className="title">Quản lý Loại Sách</h2>
                 <div className="add-folder">
                     <div>
-                        <label htmlFor="folderName">Nhập mã danh mục: </label>
+                        <label htmlFor="categoryID">Nhập mã loại sách: </label>
                         <input
                             type="text"
-                            id="folderName"
+                            id="categoryID"
                             className='form-control'
-                            value={maDanhMuc}
-                            onChange={(event) => this.isChange(event, 'maDanhMuc')}
-                            placeholder="Nhập mã danh mục"
+                            value={maLoaiSach}
+                            onChange={(event) => this.isChange(event, 'maLoaiSach')}
+                            placeholder="Nhập mã loại sách"
                         />
                     </div>
                     <div>
-                        <label htmlFor="folderName">Nhập tên danh mục: </label>
+                        <label htmlFor="categoryName">Nhập tên loại sách: </label>
                         <input
                             type="text"
-                            id="folderName"
+                            id="categoryName"
                             className='form-control'
-                            value={editingIndex === -1 ? tenDanhMuc : ''}
-                            onChange={(event) => this.isChange(event, 'tenDanhMuc')}
-                            placeholder="Nhập tên thư mục mới"
+                            value={editingIndex === -1 ? tenLoaiSach : ''}
+                            onChange={(event) => this.isChange(event, 'tenLoaiSach')}
+                            placeholder="Nhập tên loại sách mới"
                         />
                     </div>
-                    <button className="add-folder-button" onClick={() => this.handleCreateCategory()}>Thêm Thư mục</button>
+                    <div>
+                        <label htmlFor="categoryDescription">Nhập mô tả loại sách: </label>
+                        <textarea
+                            id="categoryDescription"
+                            className='form-control'
+                            value={moTa}
+                            onChange={(event) => this.isChange(event, 'moTa')}
+                            placeholder="Nhập mô tả loại sách"
+                        ></textarea>
+                    </div>
+                    <button className="add-folder-button" onClick={() => this.handleCreateLoaiSach()}>Thêm Loại sách</button>
                 </div>
 
                 <ul className="folder-list">
-                    {allChuyenMuc && allChuyenMuc.length > 0 &&
-                        allChuyenMuc.map((item, index) => {
+                    {allLoaiSach && allLoaiSach.length > 0 &&
+                        allLoaiSach.map((item, index) => {
                             return (
                                 <li key={index} className="folder-item">
                                     <div className="folder-details">
@@ -64,15 +101,22 @@ class LoaiSach extends Component {
                                             <div>
                                                 <input
                                                     type="text"
-                                                    value={tenDanhMuc}
-                                                    onChange={(event) => this.isChange(event, 'tenDanhMuc')}
+                                                    value={tenLoaiSach}
+                                                    onChange={(event) => this.isChange(event, 'tenLoaiSach')}
                                                 />
+                                                <textarea
+                                                    value={moTa}
+                                                    onChange={(event) => this.isChange(event, 'moTa')}
+                                                ></textarea>
                                                 <button className="save-btn" onClick={() => this.handleUpdateCategory(item)}>Lưu</button>
                                             </div>
                                         ) : (
-                                            <span>{item.tenDanhMuc}</span>
+                                            <div>
+                                                <span className='tenLoai'>{item.tenTheLoai}</span><br></br>
+                                                <span className='moTa'>{item.moTa}</span>
+                                            </div>
                                         )}
-                                        <div>
+                                        <div className='btn'>
                                             {editingIndex !== index && <button className="edit-btn" onClick={() => this.handleEditCategory(index)}>Sửa</button>}
                                             <button className="delete-btn" onClick={() => this.handleDeleteCategory(item)}>Xóa</button>
                                         </div>
@@ -84,22 +128,21 @@ class LoaiSach extends Component {
                 </ul>
             </div>
         )
+
     }
 
 }
 
 const mapStateToProps = state => {
     return {
-        chuyenMuc: state.admin.chuyenMuc
+        loaiSach: state.admin.loaiSach
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart()),
-        createCategory: (data) => dispatch(actions.createCategory(data)),
-        deleteCategory: (data) => dispatch(actions.deleteCategory(data)),
-        updateCategory: (data) => dispatch(actions.updateCategory(data))
+        fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
+        createKindOfBook: (data) => dispatch(actions.createKindOfBook(data))
     };
 };
 

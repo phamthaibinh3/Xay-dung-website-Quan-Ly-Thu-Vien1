@@ -8,6 +8,7 @@ const initialState = {
     allSchedule: [],
     allbook: [],
     chuyenMuc: [],
+    loaiSach: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -99,6 +100,16 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_CHUYEN_MUC_FAIL:
             state.chuyenMuc = [];
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_KINDOFBOOK_SUCCSESS:
+            state.loaiSach = action.dataLoaiSach;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_KINDOFBOOK_FAIL:
+            state.loaiSach = [];
             return {
                 ...state,
             }

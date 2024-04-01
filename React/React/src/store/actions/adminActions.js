@@ -6,6 +6,8 @@ import {
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc
 }
     from '../../services/userService';
+
+import { getAllLoaiSach, createLoaiSach } from '../../services/kindOfBook'
 import { toast } from "react-toastify";
 // export const fetchGenderStart = () => ({
 //     type: actionTypes.FETCH_GENDER_START
@@ -401,7 +403,7 @@ export const deleteCategory = (id) => {
     return async (dispatch, getState) => {
         try {
             let res = await deleteDanhMuc(id);
-            console.log('check res: ',res);
+            console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -426,7 +428,7 @@ export const updateCategory = (id) => {
         try {
             let res = await updateDanhMuc(id)
             if (res && res.errCode === 0) {
-                console.log('check res: ',res);
+                console.log('check res: ', res);
                 toast.success('Sửa thành công');
                 dispatch({
                     type: actionTypes.UPDATE_CATEGORY_SUCCSESS
@@ -438,9 +440,59 @@ export const updateCategory = (id) => {
                 })
             }
         } catch (e) {
-            console.log('UPDATE_CATEGORY_FAIL',e);
+            console.log('UPDATE_CATEGORY_FAIL', e);
             dispatch({
                 type: actionTypes.UPDATE_CATEGORY_FAIL
+            })
+        }
+    }
+}
+
+export const fectchAllKindOfBook = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllLoaiSach()
+            if (res && res.errCode === 0) {
+                // toast.success('Sửa thành công');
+                dispatch({
+                    type: actionTypes.FETCH_ALL_KINDOFBOOK_SUCCSESS,
+                    dataLoaiSach: res.data
+                })
+            } else {
+                // toast.error('Sửa thất bại');
+                dispatch({
+                    type: actionTypes.FETCH_ALL_KINDOFBOOK_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_ALL_KINDOFBOOK_FAIL', e);
+            dispatch({
+                type: actionTypes.FETCH_ALL_KINDOFBOOK_FAIL
+            })
+        }
+    }
+}
+
+export const createKindOfBook = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await createLoaiSach(data)
+            if (res && res.errCode === 0) {
+                toast.success('Thêm thành công');
+                dispatch({
+                    type: actionTypes.CREATE_KINDOFBOOK_SUCCSESS,
+                    dataLoaiSach: res.data
+                })
+            } else {
+                toast.error(res.errMessage);
+                dispatch({
+                    type: actionTypes.CREATE_KINDOFBOOK_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CREATE_KINDOFBOOK_FAIL', e);
+            dispatch({
+                type: actionTypes.CREATE_KINDOFBOOK_FAIL
             })
         }
     }
