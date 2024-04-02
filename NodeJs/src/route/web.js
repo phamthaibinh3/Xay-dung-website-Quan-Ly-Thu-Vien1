@@ -44,7 +44,8 @@ const initWebRoutes = (app) => {
     router.put('/api/update-danh-muc', bookController.updateDanhMuc);
 
     router.get('/api/get-all-loai-sach',kindOfBookController.getLoaiSach);
-    router.post('/api/create-loai-sach',kindOfBookController.createLoaiSach)
+    router.post('/api/create-loai-sach',kindOfBookController.createLoaiSach);
+    router.delete('/api/delete-loai-sach',kindOfBookController.deleteLoaiSach)
 
 
     return app.use('/', router);

@@ -25,7 +25,21 @@ let createLoaiSach = async(req,res) => {
     }
 }
 
+let deleteLoaiSach = async (req,res) => {
+    try {
+        let id = await kindOfBookService.deleteLoaiSach(req.query.id);
+        return res.status(200).json(id)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi server'
+        })
+    }
+}
+
 module.exports = {
     getLoaiSach: getLoaiSach,
-    createLoaiSach: createLoaiSach
+    createLoaiSach: createLoaiSach,
+    deleteLoaiSach: deleteLoaiSach
 }

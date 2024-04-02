@@ -164,6 +164,7 @@ class ManageBook extends Component {
                                 <th>giá</th>
                                 <th>Tác giả</th>
                                 <th>Danh mục</th>
+                                <th>Loại sách</th>
                                 <th>Hành động</th>
                             </tr>
                             {arrbook && arrbook.map((item, index) => {
@@ -174,7 +175,6 @@ class ManageBook extends Component {
                                 console.log('check anh: ', imageBase64);
                                 return (
                                     <>
-                                        {console.log('hehe', item)}
                                         <tr key={index}>
                                             <td>
                                                 <div
@@ -187,6 +187,7 @@ class ManageBook extends Component {
                                             <td>{item.gia}</td>
                                             <td>{item.tacGia}</td>
                                             <td>{item.maDanhMuc}</td>
+                                            <td>{item.maLoaiSach}</td>
                                             <td>
                                                 <button onClick={() => this.handleEditbook(item)} className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
                                                 <button onClick={() => this.handleDeletebook(item)} className='btn-delete'><i className="fas fa-trash"></i></button>

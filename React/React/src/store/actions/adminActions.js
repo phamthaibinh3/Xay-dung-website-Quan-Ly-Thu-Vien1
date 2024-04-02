@@ -7,7 +7,7 @@ import {
 }
     from '../../services/userService';
 
-import { getAllLoaiSach, createLoaiSach } from '../../services/kindOfBook'
+import { getAllLoaiSach, createLoaiSach, deleteLoaiSach } from '../../services/kindOfBook'
 import { toast } from "react-toastify";
 // export const fetchGenderStart = () => ({
 //     type: actionTypes.FETCH_GENDER_START
@@ -493,6 +493,30 @@ export const createKindOfBook = (data) => {
             console.log('CREATE_KINDOFBOOK_FAIL', e);
             dispatch({
                 type: actionTypes.CREATE_KINDOFBOOK_FAIL
+            })
+        }
+    }
+}
+export const deleteKindOfBook = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteLoaiSach(id)
+            console.log('check res: ',res);
+            if (res && res.errCode === 0) {
+                toast.success('Xóa thành công');
+                dispatch({
+                    type: actionTypes.DELETE_KINDOFBOOK_SUCCSESS,
+                })
+            } else {
+                toast.error(res.errMessage);
+                dispatch({
+                    type: actionTypes.DELETE_KINDOFBOOK_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DELETE_KINDOFBOOK_FAIL', e);
+            dispatch({
+                type: actionTypes.DELETE_KINDOFBOOK_FAIL
             })
         }
     }

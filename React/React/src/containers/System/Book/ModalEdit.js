@@ -17,8 +17,10 @@ class ModalEditUser extends Component {
             gia: '',
             tacGia: '',
             maDanhMuc: '',
+            loaiSach: '',
 
             allChuyenMuc: [],
+            allLoaiSach: [],
         }
     }
 
@@ -31,12 +33,14 @@ class ModalEditUser extends Component {
                 soLuong: book.soLuong,
                 gia: book.gia,
                 tacGia: book.tacGia,
-                maDanhMuc: book.maDanhMuc
+                maDanhMuc: book.maDanhMuc,
+                loaiSach: book.loaiSach
             })
         }
         console.log('did mount edit modal: ', this.props.userEdit);
 
         this.props.fetchChuyenMucStart();
+        this.props.fectchAllKindOfBook();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,6 +49,13 @@ class ModalEditUser extends Component {
             this.setState({
                 allChuyenMuc: a,
                 maDanhMuc: a && a.length > 0 ? a[0].id : ''
+            })
+        }
+        if (prevProps.loaiSach !== this.props.loaiSach) {
+            let a = this.props.loaiSach
+            this.setState({
+                allLoaiSach: a,
+                loaiSach: a && a.length > 0 ? a[0].id : ''
             })
         }
     }
@@ -90,9 +101,9 @@ class ModalEditUser extends Component {
 
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
-        console.log('check state: ',this.state);
+        console.log('check state12: ', this.state.allLoaiSach);
         let { language } = this.props
-        let { allChuyenMuc } = this.state;
+        let { allChuyenMuc, allLoaiSach } = this.state;
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -147,8 +158,23 @@ class ModalEditUser extends Component {
                             </select>
                         </div>
                         <div className='input-container'>
+                            <label>Loại sách:</label>
+                            <select className="form-select"
+                                value={this.state.loaiSach}
+                                onChange={(event) => this.isChange(event, 'loaiSach')}
+                            >
+                                {allLoaiSach && allLoaiSach.length > 0 && allLoaiSach.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.tenTheLoai}>
+                                            {item.tenTheLoai}
+                                        </option>
+                                    )
+                                })}
+                            </select>
+                        </div>
+                        <div className='input-container'>
                             <label htmlFor='anh'>Ảnh:</label>
-                            
+
                         </div>
                         {this.state.previewImgUrl && (
                             <div className='input-container'>
@@ -176,12 +202,14 @@ const mapStateToProps = state => {
     return {
         chuyenMuc: state.admin.chuyenMuc,
         language: state.app.language,
+        loaiSach: state.admin.loaiSach
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart())
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart()),
+        fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
     };
 };
 

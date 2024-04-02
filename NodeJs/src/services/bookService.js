@@ -48,7 +48,8 @@ let CreateBook = (data) => {
                         tacGia: data.tacGia,
                         maDanhMuc: data.maDanhMuc,
                         gia: data.gia,
-                        anh: data.anh
+                        anh: data.anh,
+                        maLoaiSach: data.loaiSach
                     })
                     resolve({
                         errCode: 0,

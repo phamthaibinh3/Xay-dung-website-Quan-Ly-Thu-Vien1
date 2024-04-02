@@ -51,7 +51,44 @@ let createLoaiSach = (data) => {
     })
 }
 
+let deleteLoaiSach = (inputId) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id de xoa',
+                })
+            } else {
+                let res = await db.TheLoaiSach.findOne({
+                    where: { id: inputId }
+                })
+                if (!res) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'id khong co trong he thong',
+                    })
+                }
+
+                else {
+                    await db.TheLoaiSach.destroy({
+                        where: { id: inputId }
+                    })
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Xoa thanh cong',
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getLoaiSach: getLoaiSach,
-    createLoaiSach: createLoaiSach
+    createLoaiSach: createLoaiSach,
+    deleteLoaiSach: deleteLoaiSach
 }

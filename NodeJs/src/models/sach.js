@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'DanhMucData',
             });
 
-
+            Sach.belongsTo(models.TheLoaiSach, {
+                foreignKey: 'maLoaiSach',
+                as: 'LoaiSachData',
+            });
         }
     };
     Sach.init({
@@ -31,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         maHoaDon: DataTypes.INTEGER,
         gia: DataTypes.INTEGER,
         tacGia: DataTypes.STRING,
+        maLoaiSach: DataTypes.STRING,
         anh: DataTypes.BLOB('long')
     }, {
         sequelize,

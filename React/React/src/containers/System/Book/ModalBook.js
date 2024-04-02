@@ -18,14 +18,17 @@ class ModalBook extends Component {
             gia: '',
             maDanhMuc: '',
             anh: '',
+            loaiSach: '',
 
             previewImgUrl: '',
             allChuyenMuc: [],
+            allLoaiSach: [],
         }
     }
 
     componentDidMount() {
         this.props.fetchChuyenMucStart();
+        this.props.fectchAllKindOfBook();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -33,6 +36,12 @@ class ModalBook extends Component {
             this.setState({
                 allChuyenMuc: this.props.chuyenMuc,
                 maDanhMuc: this.props.chuyenMuc[0].id
+            })
+        }
+        if (prevProps.loaiSach !== this.props.loaiSach) {
+            this.setState({
+                allLoaiSach: this.props.loaiSach,
+                loaiSach: this.props.loaiSach[0].id
             })
         }
     }
@@ -64,7 +73,8 @@ class ModalBook extends Component {
                 tacGia: '',
                 gia: '',
                 maDanhMuc: [],
-                anh: ''
+                anh: '',
+                loaiSach: ''
             })
         }
         this.toggle()
@@ -96,7 +106,7 @@ class ModalBook extends Component {
     render() {
         console.log('check state: ', this.state);
         let { language } = this.props
-        let { allChuyenMuc } = this.state
+        let { allChuyenMuc, allLoaiSach } = this.state
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -136,8 +146,25 @@ class ModalBook extends Component {
                             >
                                 {allChuyenMuc && allChuyenMuc.length > 0 && allChuyenMuc.map((item, index) => {
                                     return (
-                                        <option key={index} value={item.keyMap}>
+                                        <option key={index} value={item.id}>
                                             {item.tenDanhMuc}
+                                        </option>
+
+                                    )
+                                })}
+                            </select>
+
+                        </div>
+                        <div className='input-container'>
+                            <label htmlFor='loaiSach'>Loại sách:</label>
+                            <select className="form-select"
+                                value={this.state.loaiSach}
+                                onChange={(event) => this.isChange(event, 'loaiSach')}
+                            >
+                                {allLoaiSach && allLoaiSach.length > 0 && allLoaiSach.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.id}>
+                                            {item.tenTheLoai}
                                         </option>
 
                                     )
@@ -183,12 +210,14 @@ const mapStateToProps = state => {
     return {
         chuyenMuc: state.admin.chuyenMuc,
         language: state.app.language,
+        loaiSach: state.admin.loaiSach
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart())
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart()),
+        fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
     };
 };
 

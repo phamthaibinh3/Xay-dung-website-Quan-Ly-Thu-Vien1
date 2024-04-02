@@ -49,6 +49,10 @@ class LoaiSach extends Component {
         });
     }
 
+    handleDeleteKindOfBook = (item) => {
+        this.props.deleteKindOfBook(item.id)
+    }
+
     render() {
         console.log('check state: ',this.state);
         const { maLoaiSach, tenLoaiSach, editingIndex, allLoaiSach, moTa } = this.state;
@@ -118,7 +122,7 @@ class LoaiSach extends Component {
                                         )}
                                         <div className='btn'>
                                             {editingIndex !== index && <button className="edit-btn" onClick={() => this.handleEditCategory(index)}>Sửa</button>}
-                                            <button className="delete-btn" onClick={() => this.handleDeleteCategory(item)}>Xóa</button>
+                                            <button className="delete-btn" onClick={() => this.handleDeleteKindOfBook(item)}>Xóa</button>
                                         </div>
                                     </div>
                                 </li>
@@ -142,7 +146,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
-        createKindOfBook: (data) => dispatch(actions.createKindOfBook(data))
+        createKindOfBook: (data) => dispatch(actions.createKindOfBook(data)),
+        deleteKindOfBook: (id) => dispatch(actions.deleteKindOfBook(id)),
     };
 };
 
