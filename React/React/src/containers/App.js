@@ -22,6 +22,7 @@ import CustomScrollbars from '../components/CustomScrollbars.js'
 
 import DetailStaff from './KhachHang/NhanVien/DetailStaff.js'
 import Staff from '../routes/Staff.js';
+import ChiTietLoaiSach from './System/LoaiSach/ChiTietLoaiSach.js';
 class App extends Component {
 
     // handlePersistorState = () => {
@@ -56,6 +57,7 @@ class App extends Component {
                                     <Route path={'/staff/'} component={userIsAuthenticated(Staff)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_STAFF} component={DetailStaff} />
+                                    <Route path={path.DETAIL_KIND_OF_BOOK_ADMIN} component={ChiTietLoaiSach} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

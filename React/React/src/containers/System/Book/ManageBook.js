@@ -8,6 +8,8 @@ import ModalEditbook from './ModalEdit'
 import { toast } from "react-toastify";
 import * as actions from '../../../store/actions'
 
+import './ManageBook.scss'
+
 class ManageBook extends Component {
 
 
@@ -133,7 +135,7 @@ class ManageBook extends Component {
         let arrbook = this.state.arrbook;
         return (
             <>
-                <div className='book-container'>
+                {/* <div className='book-container'>
                     <Modalbook
                         isOpen={this.state.isOpenModalbook}
                         togglebookModal={this.togglebookModal}
@@ -199,7 +201,76 @@ class ManageBook extends Component {
 
                         </table>
                     </div>
+                </div> */}
+                <Modalbook
+                    isOpen={this.state.isOpenModalbook}
+                    togglebookModal={this.togglebookModal}
+                    createbook={this.createbook}
+                />
+                {this.state.isOpenModalEidtbook &&
+                    <ModalEditbook
+                        isOpen={this.state.isOpenModalEidtbook}
+                        togglebookModal={this.togglebookEditModal}
+                        bookEdit={this.state.bookEdit}
+                        editbook={this.doEditbook}
+                    />
+                }
+                <div className="contener">
+                    <div className="header-page">KHO SÁCH MIỄN PHÍ</div>
+                    <div className="btn-addbook">
+                        <button
+                            onClick={() => this.handleAddNewbook()}
+                            className='btn btn-primary px-2'
+                        > <i className="fas fa-plus"></i> Thêm sách
+                        </button>
+                    </div>
+                    <div className="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ảnh</th>
+                                    <th>Tên Sách</th>
+                                    <th>Số Lượng</th>
+                                    <th>Giá</th>
+                                    <th>Tác Giả</th>
+                                    <th>Danh Mục</th>
+                                    <th>Loại sách</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {arrbook && arrbook.length > 0 &&
+                                    arrbook.map((item, index) => {
+                                        let imageBase64 = '';
+                                        if (item.anh) {
+                                            imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
+                                        }
+                                        return (
+                                            <tr>
+                                                <td>
+                                                    {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
+                                                </td>
+                                                <td>{item.tieuDe}</td>
+                                                <td>{item.soLuong}</td>
+                                                <td>{item.gia}</td>
+                                                <td>{item.tacGia}</td>
+                                                <td>{item.maDanhMuc}</td>
+                                                <td>{item.maLoaiSach}</td>
+                                                <td>
+                                                    <div className="icon-product">
+                                                        <button onClick={() => this.handleEditbook(item)} className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
+                                                        <button onClick={() => this.handleDeletebook(item)} className='btn-delete'><i className="fas fa-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </>
         );
     }

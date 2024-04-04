@@ -1,71 +1,109 @@
-// .book-container {
-//     .title {
-//         margin-top: 20px;
-//         font-size: 24px;
-//         font-weight: bold;
-//     }
+// Variables
+$primary-color: blue;
+$secondary-color: red;
 
-//     .btn-add {
-//         margin-left: 20px;
-//         margin-top: 10px;
-//         padding: 5px 10px;
-//         background-color: #007bff;
-//         color: #fff;
-//         border: none;
-//         border-radius: 4px;
-//         cursor: pointer;
-//         transition: background-color 0.3s ease;
+// Styles
+.contener {
+    .header-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        background: linear-gradient(30deg, #4ca9df, #292e91);
+        padding: 10px 0;
+        margin-bottom: 30px;
+    }
 
-//         i {
-//             margin-right: 5px;
-//         }
+    .btn-addbook {
+        display: flex;
+        justify-content: left;
+        margin-bottom: 20px;
 
-//         &:hover {
-//             background-color: #0056b3;
-//         }
-//     }
+        button {
+            padding: 5px 10px;
+            background-color: $primary-color;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease, transform 0.3s ease;
 
-//     .book-content {
-//         margin-top: 20px;
+            i {
+                margin-right: 5px;
+            }
 
-//         table {
-//             width: 100%;
-//             border-collapse: collapse;
+            &:hover {
+                background-color: $secondary-color;
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+        }
+    }
 
-//             th,
-//             td {
-//                 padding: 8px;
-//                 text-align: left;
-//                 border-bottom: 1px solid #ddd;
-//             }
+    .table-container {
+        table {
+            width: 100%;
+            border-collapse: collapse;
 
-//             th {
-//                 background-color: #f2f2f2;
-//             }
+            th,
+            td {
+                padding: 10px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
 
-//             tr:nth-child(even) {
-//                 background-color: #f9f9f9;
-//             }
+            th {
+                background-color: #76bb68;
+                color: #fff;
+            }
 
-//             .btn-edit,
-//             .btn-delete {
-//                 background: none;
-//                 border: none;
-//                 cursor: pointer;
-//                 transition: color 0.3s ease;
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
 
-//                 &:hover {
-//                     color: #007bff;
-//                 }
-//             }
+            tr:hover {
+                background-color: #ebffe7;
+            }
+        }
 
-//             .book-image {
-//                 width: 100px;
-//                 height: 100px;
-//                 background-size: cover;
-//                 background-position: center;
-//                 border-radius: 5px;
-//             }
-//         }
-//     }
-// }
+        .product-img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .icon-product {
+            display: flex;
+            justify-content: center;
+
+            button {
+                background: none;
+                border: none;
+                cursor: pointer;
+
+                i {
+                    font-size: 14px;
+                    transition: font-size 0.3s ease;
+                }
+
+                &:hover {
+                    i {
+                        font-size: 18px;
+                    }
+                }
+            }
+
+            .btn-edit {
+                color: $primary-color;
+                margin-right: 10px;
+            }
+
+            .btn-delete {
+                color: red;
+            }
+        }
+    }
+}

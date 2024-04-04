@@ -12,6 +12,15 @@ let deleteLoaiSach = (id) => {
     return axios.delete(`/api/delete-loai-sach?id=${id}`)
 }
 
+let getLoaiSachId = (id) => {
+    return axios.get(`/api/get-loai-sach-id?id=${id}`)
+}
+
+let updateLoaiSach = (data) => {
+    return axios.put('/api/update-loai-sach',data)
+}
+
 export {
-    getAllLoaiSach, createLoaiSach, deleteLoaiSach
+    getAllLoaiSach, createLoaiSach, deleteLoaiSach, getLoaiSachId,
+    updateLoaiSach
 }

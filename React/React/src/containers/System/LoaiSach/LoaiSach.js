@@ -5,6 +5,7 @@ import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../../utils'
 import * as actions from '../../../store/actions'
 import 'react-image-lightbox/style.css';
 import './LoaiSach.scss'
+import { withRouter } from 'react-router'
 
 class LoaiSach extends Component {
 
@@ -33,8 +34,8 @@ class LoaiSach extends Component {
         }
     }
 
-    isChange = (event,id) => {
-        let copyState = {...this.state};
+    isChange = (event, id) => {
+        let copyState = { ...this.state };
         copyState[id] = event.target.value;
         this.setState({
             ...copyState
@@ -53,8 +54,12 @@ class LoaiSach extends Component {
         this.props.deleteKindOfBook(item.id)
     }
 
+    handleEditKindOfBook = (item) => {
+        this.props.history.push(`/detail-kind-of-book-admin/${item.id}`)
+    }
+
     render() {
-        console.log('check state: ',this.state);
+        // console.log('check state: ', this.state);
         const { maLoaiSach, tenLoaiSach, editingIndex, allLoaiSach, moTa } = this.state;
         return (
             <div className="manage-folders">
@@ -121,7 +126,7 @@ class LoaiSach extends Component {
                                             </div>
                                         )}
                                         <div className='btn'>
-                                            {editingIndex !== index && <button className="edit-btn" onClick={() => this.handleEditCategory(index)}>Sửa</button>}
+                                            <button className="edit-btn" onClick={() => this.handleEditKindOfBook(item)}>Chi tiết</button>
                                             <button className="delete-btn" onClick={() => this.handleDeleteKindOfBook(item)}>Xóa</button>
                                         </div>
                                     </div>
@@ -151,4 +156,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoaiSach);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoaiSach));

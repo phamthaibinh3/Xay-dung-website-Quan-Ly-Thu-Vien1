@@ -52,7 +52,7 @@ let createLoaiSach = (data) => {
 }
 
 let deleteLoaiSach = (inputId) => {
-    return new Promise(async(resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             if (!inputId) {
                 resolve({
@@ -87,8 +87,71 @@ let deleteLoaiSach = (inputId) => {
     })
 }
 
+let getLoaiSachId = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua truyen id'
+                })
+            } else {
+                let loaiSachId = await db.TheLoaiSach.findOne({
+                    where: { id: inputId }
+                })
+
+                resolve({
+                    errCode: 0,
+                    data: loaiSachId
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let updateLoaiSach = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Chua truyen data'
+                })
+            } else {
+                let update = await db.TheLoaiSach.findOne({
+                    where: { id: data.id },
+                    raw: false
+                })
+                if (update) {
+                    update.tenTheLoai = data.tenLoaiSach;
+                    update.moTa = data.moTa;
+
+
+                    await update.save();
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thanh cong'
+                    })
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Id k co trong he thong'
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     getLoaiSach: getLoaiSach,
     createLoaiSach: createLoaiSach,
-    deleteLoaiSach: deleteLoaiSach
+    deleteLoaiSach: deleteLoaiSach,
+    getLoaiSachId: getLoaiSachId,
+    updateLoaiSach: updateLoaiSach
 }
