@@ -1,0 +1,58 @@
+/* CSS for HomeDanhMuc component */
+.home-contaner {
+    background-color: #f5f5f5;
+    color: var(--text-color);
+    font-size: 14px;
+    display: flex;
+}
+
+.contaner-category__text {
+    width: 100%;
+    font-size: 20px;
+    padding: 0 14px 0;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.contaner-category {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--white-color);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contaner-category__items {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    padding: 0;
+    margin: 0;
+}
+
+.contaner-category__list {
+    width: 12.5%; /* Hiển thị 4 items trên mỗi hàng */
+    padding: 0 8px; /* Tạo khoảng cách giữa các item */
+    box-sizing: border-box;
+    float: left; /* Đảm bảo các item được xếp vào hàng ngang */
+}
+
+.contaner-category__link {
+    display: block;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    border: 1px solid #f1f1f1;
+    width: 100%; /* Chỉnh width của các ô chứa hình ảnh */
+    height: auto;
+    text-align: center; /* Canh giữa hình ảnh trong ô chứa */
+    overflow: hidden; /* Đảm bảo hình ảnh không tràn ra khỏi phần tử cha */
+}
+
+.contaner-category__items-img {
+    width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của ô chứa */
+    height: auto;
+    display: block;
+}
+.product-img{
+    width: 100px;
+}

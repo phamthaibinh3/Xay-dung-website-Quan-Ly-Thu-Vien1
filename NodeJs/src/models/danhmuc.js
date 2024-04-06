@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     };
     DanhMuc.init({
         tenDanhMuc: DataTypes.STRING,
-
+        anh: DataTypes.BLOB('long')
     }, {
         sequelize,
         modelName: 'DanhMuc',

@@ -8,6 +8,7 @@ import ManageNhanVien from '../containers/System/Admin/ManageNhanVien';
 import ManageBook from '../containers/System/Book/ManageBook';
 import ChuyenMuc from '../containers/System/ChuyenMuc/ChuyenMuc';
 import LoaiSach from '../containers/System/LoaiSach/LoaiSach';
+import TaiLieuMoiNhat from '../containers/System/TaiLieuMoiNhat/TaiLieuMoiNhat';
 
 class System extends Component {
     render() {
@@ -24,6 +25,7 @@ class System extends Component {
                             <Route path="/system/quan-ly-sach" component={ManageBook}/>
                             <Route path="/system/quan-ly-chuyen-muc" component={ChuyenMuc}/>
                             <Route path="/system/quan-ly-loai-sach" component={LoaiSach}/>
+                            <Route path="/system/quan-ly-tai-lieu-moi" component={TaiLieuMoiNhat}/>
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

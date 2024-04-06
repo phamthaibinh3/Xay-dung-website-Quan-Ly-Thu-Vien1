@@ -1,0 +1,105 @@
+/* */
+/* */
+/* */
+/* */
+/* contaner */
+.home-contaner {
+    background-color: #f5f5f5;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+/* danh mục contaner */
+.contaner-category__text {
+    display: flex;
+    width: 100%;
+    font-size: 20px;
+    padding: 0 14px 0;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.contaner-category {
+    width: 1200px;
+    background-color: var(--white-color);
+}
+
+.contaner-category__items {
+    padding: 0 0 16px;
+    display: flex;
+    text-align: center;
+}
+
+.contaner-category__list {
+    padding: 0;
+    width: 14.28%;
+}
+
+.contaner-category__link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    border: 1px solid #f1f1f1;
+    height: 50%;
+}
+
+.contaner-category__link a {
+    text-decoration: none;
+}
+
+.contaner-category__items-img {
+    width: 80px;
+    height: 80px;
+}
+
+.contaner-category__items-text {
+    color: rgba(0, 0, 0, 0.54);
+    height: 46px;
+    line-height: 20px;
+    margin-bottom: 0.625rem;
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: var(--text-color);
+}
+
+.contaner-category__content {
+    width: 1200px;
+    position: relative;
+}
+
+.contaner-category__content:hover .contaner-category-navi-icon {
+    opacity: 1;
+}
+
+.contaner-category-navi {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: -9px;
+    right: -9px;
+    transform: translateY(-50%);
+}
+
+.contaner-category-navi-icon {
+    padding: 12px 14px;
+    line-height: 25px;
+    margin-top: -12.5px;
+    background-color: #fff;
+    box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 999999px;
+    color: rgba(0, 0, 0, 0.54);
+    opacity: 0;
+}
+
+.contaner-category-navi-icon:hover {
+    cursor: pointer;
+}

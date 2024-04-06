@@ -14,6 +14,8 @@ class ChuyenMuc extends Component {
             allChuyenMuc: [],
             maDanhMuc: '',
             tenDanhMuc: '',
+            previewImgUrl: '',
+            anh: '',
 
             editingIndex: -1
         }
@@ -27,7 +29,8 @@ class ChuyenMuc extends Component {
         if (prevProps.chuyenMuc !== this.props.chuyenMuc) {
             this.props.fetchChuyenMucStart()
             this.setState({
-                allChuyenMuc: this.props.chuyenMuc
+                allChuyenMuc: this.props.chuyenMuc,
+                
             })
         }
     }
@@ -44,15 +47,21 @@ class ChuyenMuc extends Component {
         await this.props.createCategory({
             maDanhMuc: this.state.maDanhMuc,
             tenDanhMuc: this.state.tenDanhMuc,
+            anh: this.state.anh
         })
         this.setState({
             maDanhMuc: '',
-            tenDanhMuc: ''
+            tenDanhMuc: '',
+            anh: '',
+            previewImgUrl: '',
         })
     }
 
     handleDeleteCategory = (item) => {
         this.props.deleteCategory(item.id)
+        this.setState({
+            editingIndex: -1,
+        })
     }
 
 
@@ -65,13 +74,28 @@ class ChuyenMuc extends Component {
     handleUpdateCategory = (item) => {
         this.props.updateCategory({
             id: item.id,
-            tenDanhMuc: this.state.tenDanhMuc
+            tenDanhMuc: this.state.tenDanhMuc,
+            anh: this.state.anh
         })
         this.setState({
             editingIndex: -1,
             tenDanhMuc: '',
             maDanhMuc: ''
         })
+    }
+
+    handleFileChange = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let base64 = await CommonUtils.getBase64(file);
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImgUrl: objectUrl,
+                anh: base64
+            })
+
+        }
     }
 
     render() {
@@ -103,6 +127,20 @@ class ChuyenMuc extends Component {
                             placeholder="Nhập tên thư mục mới"
                         />
                     </div>
+                    <div className='input-container'>
+                        <label htmlFor='anh'>Ảnh:</label>
+                        <input
+                            id='anh'
+                            className='form-control'
+                            type='file'
+                            onChange={(event) => this.handleFileChange(event)}
+                        />
+                    </div>
+                    {this.state.previewImgUrl && (
+                        <div className='input-container'>
+                            <img src={editingIndex === -1 ?  this.state.previewImgUrl  : ''}  style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                        </div>
+                    )}
                     <button className="add-folder-button" onClick={() => this.handleCreateCategory()}>Thêm Thư mục</button>
                 </div>
 
@@ -114,11 +152,28 @@ class ChuyenMuc extends Component {
                                     <div className="folder-details">
                                         {editingIndex === index ? (
                                             <div>
-                                                <input
-                                                    type="text"
-                                                    value={tenDanhMuc}
-                                                    onChange={(event) => this.isChange(event, 'tenDanhMuc')}
-                                                />
+                                                <div>
+                                                    <label htmlFor='anh'>Tên danh mục:</label>
+                                                    <input
+                                                        type="text"
+                                                        value={tenDanhMuc}
+                                                        onChange={(event) => this.isChange(event, 'tenDanhMuc')}
+                                                    />
+                                                    <div className='input-container py-4'>
+                                                        <label htmlFor='anh'>Ảnh:</label>
+                                                        <input
+                                                            id='anh'
+                                                            className='form-control'
+                                                            type='file'
+                                                            onChange={(event) => this.handleFileChange(event)}
+                                                        />
+                                                    </div>
+                                                    {this.state.previewImgUrl && (
+                                                        <div className='input-container'>
+                                                            <img src={this.state.previewImgUrl} alt="Ảnh xem trước" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 <button className="save-btn" onClick={() => this.handleUpdateCategory(item)}>Lưu</button>
                                             </div>
                                         ) : (

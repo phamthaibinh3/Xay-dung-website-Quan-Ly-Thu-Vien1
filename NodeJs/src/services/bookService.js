@@ -174,7 +174,8 @@ let addDanhMuc = (data) => {
                 } else {
                     await db.DanhMuc.create({
                         id: data.maDanhMuc,
-                        tenDanhMuc: data.tenDanhMuc
+                        tenDanhMuc: data.tenDanhMuc,
+                        anh: data.anh
                     })
                     resolve({
                         errCode: 0,
@@ -240,6 +241,7 @@ let updateDanhMuc = (data) => {
                 })
                 if (category) {
                     category.tenDanhMuc = data.tenDanhMuc;
+                    category.anh = data.anh
                     await category.save();
 
                     resolve({
@@ -259,6 +261,24 @@ let updateDanhMuc = (data) => {
     })
 }
 
+
+let getBookNew = (inputLimit) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let book = await db.Sach.findAll({
+                limit: inputLimit,
+                order: [['createdAt', 'DESC']],
+            })
+
+            resovle({
+                errCode: 0,
+                data: book
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -267,5 +287,6 @@ module.exports = {
     getAllDanhMuc: getAllDanhMuc,
     addDanhMuc: addDanhMuc,
     deleteDanhMuc: deleteDanhMuc,
-    updateDanhMuc: updateDanhMuc
+    updateDanhMuc: updateDanhMuc,
+    getBookNew: getBookNew
 }

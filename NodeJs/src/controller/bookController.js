@@ -1,4 +1,6 @@
+import { reject } from 'lodash';
 import bookService from '../services/bookService'
+import { query } from 'express';
 
 let getAllBook = async (req, res) => {
     try {
@@ -78,7 +80,7 @@ let addDanhMuc = async (req, res) => {
     }
 }
 
-let deleteDanhMuc = async(req,res) => {
+let deleteDanhMuc = async (req, res) => {
     try {
         let id = await bookService.deleteDanhMuc(req.query.id)
         return res.status(200).json(id)
@@ -91,15 +93,30 @@ let deleteDanhMuc = async(req,res) => {
     }
 }
 
-let updateDanhMuc = async(req,res) => {
+let updateDanhMuc = async (req, res) => {
     try {
         let data = await bookService.updateDanhMuc(req.body);
         return res.status(200).json(data)
     } catch (e) {
-        console.log(e);      
+        console.log(e);
         return res.status(200).json({
             errCode: -1,
             errMessage: 'Loi server'
+        })
+    }
+}
+
+let getBookNew = async (req, res) => {
+    let limit = req.query.limit;
+    if (!limit) limit = 10;
+    try {
+        let data = await bookService.getBookNew(limit);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
         })
     }
 }
@@ -112,5 +129,6 @@ module.exports = {
     getAllDanhMuc: getAllDanhMuc,
     addDanhMuc: addDanhMuc,
     deleteDanhMuc: deleteDanhMuc,
-    updateDanhMuc: updateDanhMuc
+    updateDanhMuc: updateDanhMuc,
+    getBookNew: getBookNew
 }

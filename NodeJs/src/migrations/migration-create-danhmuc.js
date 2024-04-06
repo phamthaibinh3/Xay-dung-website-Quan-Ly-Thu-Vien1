@@ -12,7 +12,9 @@ module.exports = {
             tenDanhMuc: {
                 type: Sequelize.STRING
             },
-
+            anh: {
+                type: Sequelize.BLOB('long')
+            },
 
             createdAt: {
                 allowNull: false,

@@ -10,6 +10,7 @@ import NhanVien from './Section/NhanVien';
 import CamNang from './Section/CamNang';
 import About from './Section/About';
 import HomeFooter from './HomeFooter';
+import HomeDanhMuc from './HomeDanhMuc';
 
 class HomePage extends Component {
 
@@ -38,6 +39,7 @@ class HomePage extends Component {
                     settings={settings}
                 />
                 <About />
+                <HomeDanhMuc/>
                 <HomeFooter />
             </div>
         );

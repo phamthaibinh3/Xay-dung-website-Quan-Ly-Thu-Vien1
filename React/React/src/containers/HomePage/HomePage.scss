@@ -61,9 +61,17 @@
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-color: #eee;
+                cursor: pointer;
+
+
+                .a {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #333;
+                }
 
                 &.section-docNew {
-                    background-image: url('../../assets/DocsNew/lo-go-viet-duc.jpg');
+                    // background-image: url('../../assets/DocsNew/lo-go-viet-duc.jpg');
                 }
 
                 &.section-docNoiBat {
