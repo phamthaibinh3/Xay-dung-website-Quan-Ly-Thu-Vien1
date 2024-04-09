@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TaiLieuMoiNhat.scss';
 import { FormattedMessage } from 'react-intl';
-import { getBookNew } from '../../../services/bookService'
+import { getBookNew } from '../../../services/bookService';
+import { withRouter } from 'react-router'
 
 import Slider from 'react-slick'
 
@@ -25,6 +26,11 @@ class TaiLieuMoiNhat extends Component {
         }
     }
 
+    handleDelteBook = (item) => {
+        // alert('check hehe: '+item.id)
+        this.props.history.push(`/chi-tiet-tai-lieu-moi-nhat/${item.id}`)
+    }
+
     render() {
         let { arrBook } = this.state;
         // console.log('check state11: ', this.state.arrBook);
@@ -44,7 +50,7 @@ class TaiLieuMoiNhat extends Component {
                                         imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
                                     }
                                     return (
-                                        <div className='section-customize'>
+                                        <div onClick={() => this.handleDelteBook(item)} className='section-customize'>
                                             <div className='bg-image section-docNew'
                                                 style={{ backgroundImage: `url(${imageBase64})` }}
                                             />
@@ -100,4 +106,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaiLieuMoiNhat);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaiLieuMoiNhat));

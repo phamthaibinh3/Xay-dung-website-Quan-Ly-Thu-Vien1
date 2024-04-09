@@ -121,6 +121,19 @@ let getBookNew = async (req, res) => {
     }
 }
 
+let getBookId = async (req,res) => {
+    try {
+        let data = await bookService.getBookId(req.query.id);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -130,5 +143,6 @@ module.exports = {
     addDanhMuc: addDanhMuc,
     deleteDanhMuc: deleteDanhMuc,
     updateDanhMuc: updateDanhMuc,
-    getBookNew: getBookNew
+    getBookNew: getBookNew,
+    getBookId: getBookId
 }

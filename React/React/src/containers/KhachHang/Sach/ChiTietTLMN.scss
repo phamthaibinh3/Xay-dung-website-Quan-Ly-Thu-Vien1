@@ -1,0 +1,277 @@
+$white-color: #fff;
+$view-color: #05a;
+$text-color: #767676;
+$organ-color: #ff4500;
+
+.fa-facebook.icon {
+    color: #3b5999;
+}
+
+.product_contaner {
+    background-color: #eee;
+}
+
+/* Tiêu đề sản phẩm */
+.product_contaner-header {
+    font-size: 16px;
+    margin: 0 0 12px;
+
+    .product_header-text {
+        text-decoration: none;
+        color: $view-color;
+    }
+
+    i {
+        margin: 6px;
+        color: $view-color;
+    }
+}
+
+/* Nội dung */
+.product_introduce {
+    display: flex;
+    background-color: $white-color;
+}
+
+/* Silder nội dung */
+.product_introduce-slider {
+    width: 450px;
+    margin: 8px 8px;
+
+    .introduce-slider--big img {
+        width: 450px;
+        height: 450px;
+    }
+
+    .introduce-slider--small {
+        display: flex;
+    }
+
+    .introduce-slider--small-items {
+        width: 82px;
+        height: 82px;
+        margin: 6px 4px;
+    }
+
+    .product_introduce-slider--media {
+        display: flex;
+        justify-content: space-around;
+        margin: 12px 0;
+    }
+}
+
+/* Phần bên phải nội dung */
+.product_introduce-right {
+    margin: 20px 12px;
+
+    .product_introduce-header {
+        font-size: 20px;
+        margin: 12px 0 16px;
+
+        .introduce-header-iuthich {
+            background-color: $view-color;
+            color: $white-color;
+            font-size: 12px;
+            padding: 4px;
+            margin-right: 4px;
+            border-radius: 2px;
+        }
+
+        .introduce-header--name {
+            font-weight: 700;
+        }
+
+        .product_introduce-vote {
+            display: flex;
+            justify-content: space-between;
+
+            .product_introduce-vote-list {
+                display: flex;
+
+                .product_introduce-vote-items {
+                    display: flex;
+                    margin: 0 16px;
+
+                    .product_introduce-vote-items .product_introduce-vote-star {
+                        color: $view-color;
+                    }
+
+                    .product_introduce-vote-text {
+                        text-decoration: none;
+                        font-size: 17px;
+                        margin-right: 3px;
+                        color: $text-color;
+
+                        span {
+                            font-size: 14px;
+                            color: $text-color;
+                        }
+                    }
+
+                    .product_introduce-vote a {
+                        text-decoration: none;
+                        color: $text-color;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Giá */
+.product_introduce-price {
+    background-color: #f5f5f5;
+    margin-top: 16px;
+
+    .product_introduce-price-content {
+        margin: 14px 18px;
+        padding-bottom: 14px;
+        padding-top: 28px;
+
+        .product_introduce-price-sale {
+            margin-bottom: 14px;
+
+            .introduce-price__new {
+                font-size: 24px;
+                color: $organ-color;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+/* Mua sản phẩm */
+.product_introduce-buy {
+    margin: 28px 20px;
+    display: flex;
+    flex-direction: column;
+
+    .introduce__name {
+        color: #757575;
+        font-size: 14px;
+        line-height: 20px;
+        width: 130px;
+        flex-shrink: 0;
+    }
+
+    .fa-circle-chevron-down {
+        margin-left: 4px;
+    }
+
+    .introduce-deal {
+        display: flex;
+        margin: 6px 0;
+    }
+
+    .introduce__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .introduce__title-freeimg {
+            width: 25px;
+            margin-right: 8px;
+        }
+    }
+
+    .introduce-color {
+        display: flex;
+        margin: 6px 0;
+
+        .introduce-color__items {
+            flex-wrap: wrap;
+
+            .introduce-color__btn {
+                background-color: $white-color;
+                border: 1px solid #f0f0f0;
+                border-radius: 2px;
+                padding: 6px 8px;
+                margin: 0px 8px 4px 0px;
+                border-radius: 4px;
+
+                &:hover {
+                    cursor: pointer;
+                    color: $view-color;
+                    border: 1px solid $view-color;
+                }
+            }
+        }
+    }
+
+    .introduce-sl {
+        display: flex;
+        margin: 10px 0;
+    }
+
+    .introduce-nb {
+        display: flex;
+
+        input {
+            width: 30px;
+            text-align: center;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            border-left: none;
+            border-right: none;
+            cursor: text;
+            -webkit-appearance: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        button {
+            width: 30px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+            border-radius: 2px;
+            -webkit-appearance: none;
+            background-color: $white-color;
+        }
+    }
+
+    .introduce-have {
+        margin-left: 14px;
+        font-size: 14px;
+        color: #757575;
+    }
+
+    .introduce-buy {
+        display: flex;
+        margin: 16px 0;
+
+        .introduce-buy-add {
+            width: 219px;
+            height: 48px;
+            text-align: center;
+            background-color: #ffeee8;
+            border: 1px solid $view-color;
+            margin-right: 10px;
+            color: $view-color;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(255, 197, 178, 0.181);
+            }
+        }
+
+        .introduce-buy-click {
+            width: 114px;
+            height: 48px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: visible;
+            outline: 0px;
+            background: #ee4d2d;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+                background: #f05d40;
+            }
+        }
+    }
+}

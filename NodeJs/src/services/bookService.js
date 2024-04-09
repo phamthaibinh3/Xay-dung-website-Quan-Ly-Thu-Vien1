@@ -279,6 +279,30 @@ let getBookNew = (inputLimit) => {
         }
     })
 }
+
+let getBookId = (inputId) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            if(!inputId){
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Chua co id'
+                })
+            }else{
+                let data = await db.Sach.findOne({
+                    where: {id: inputId},
+                })
+                resolve({
+                    errCode: 0,
+                    data:data
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -288,5 +312,6 @@ module.exports = {
     addDanhMuc: addDanhMuc,
     deleteDanhMuc: deleteDanhMuc,
     updateDanhMuc: updateDanhMuc,
-    getBookNew: getBookNew
+    getBookNew: getBookNew,
+    getBookId: getBookId
 }

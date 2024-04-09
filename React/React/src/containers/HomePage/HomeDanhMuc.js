@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import * as actions from '../../store/actions'
 import Slider from 'react-slick'
 import './HomeDanhMuc.css'
+import { withRouter } from 'react-router'
 
 class TaiLieuMoiNhat extends Component {
 
@@ -28,6 +29,8 @@ class TaiLieuMoiNhat extends Component {
         }
     }
 
+    
+
     render() {
         console.log('check huhu: ', this.state);
         let { allChuyenMuc } = this.state;
@@ -47,7 +50,7 @@ class TaiLieuMoiNhat extends Component {
                                             }
                                             return (
                                                 <li key={chuyenMuc.id} className="contaner-category__list">
-                                                    <div className="contaner-category__link">
+                                                    <div  className="contaner-category__link">
                                                         <a href={chuyenMuc.url}>
                                                             {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
                                                             <div className="contaner-category__items-text">{chuyenMuc.tenDanhMuc}</div>
@@ -81,4 +84,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaiLieuMoiNhat);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaiLieuMoiNhat));

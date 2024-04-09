@@ -30,7 +30,7 @@
 }
 
 .contaner-category__list {
-    width: 12.5%; /* Hiển thị 4 items trên mỗi hàng */
+    width: 14.2857142857%; /* Hiển thị 4 items trên mỗi hàng */
     padding: 0 8px; /* Tạo khoảng cách giữa các item */
     box-sizing: border-box;
     float: left; /* Đảm bảo các item được xếp vào hàng ngang */
@@ -54,5 +54,10 @@
     display: block;
 }
 .product-img{
+    cursor: pointer;
     width: 100px;
+}
+
+.contaner-category__items-text{
+    cursor: pointer;
 }

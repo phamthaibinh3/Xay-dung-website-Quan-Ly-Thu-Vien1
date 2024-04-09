@@ -8,7 +8,8 @@ const initialState = {
     allSchedule: [],
     allbook: [],
     chuyenMuc: [],
-    loaiSach: []
+    loaiSach: [],
+    idSach: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -110,6 +111,16 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_ALL_KINDOFBOOK_FAIL:
             state.loaiSach = [];
+            return {
+                ...state,
+            }
+        case actionTypes.GET_BOOK_ID_SUCCESS:
+            state.idSach = action.dataBookID;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_BOOK_ID_FAIL:
+            state.idSach = [];
             return {
                 ...state,
             }

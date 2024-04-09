@@ -3,10 +3,10 @@ import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
-    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc
+    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc,
 }
     from '../../services/userService';
-
+import { getBookByID } from '../../services/bookService'
 import { getAllLoaiSach, createLoaiSach, deleteLoaiSach, updateLoaiSach } from '../../services/kindOfBook'
 import { toast } from "react-toastify";
 // export const fetchGenderStart = () => ({
@@ -543,6 +543,30 @@ export const updateKindOfBook = (data) => {
             console.log('UPDATE_KINDOFBOOK_FAIL', e);
             dispatch({
                 type: actionTypes.UPDATE_KINDOFBOOK_FAIL
+            })
+        }
+    }
+}
+
+export const getBookID = (id) => {
+    return async (dispatch,getState) => {
+        try {
+            let res = await getBookByID(id);
+            console.log('check res: ',res);
+            if(res && res.errCode === 0){
+                dispatch({
+                    type: actionTypes.GET_BOOK_ID_SUCCESS,
+                    dataBookID: res.data
+                })
+            }else{
+                dispatch({
+                    type: actionTypes.GET_BOOK_ID_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_BOOK_ID_FAIL',e);
+            dispatch({
+                type: actionTypes.GET_BOOK_ID_FAIL
             })
         }
     }
