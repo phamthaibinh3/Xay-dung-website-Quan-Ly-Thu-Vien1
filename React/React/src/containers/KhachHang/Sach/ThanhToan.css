@@ -1,0 +1,161 @@
+body {
+    background-color: #ccc;
+}
+.app {
+    width: 1150px;
+    display: flex;
+    margin: auto;
+}
+.product {
+    width: 70%;
+    margin-right: 10px;
+}
+.pay {
+    width: 30%;
+}
+.chon-tat-ca {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    margin: 0px 0px 10px;
+    padding: 20px;
+    border-radius: 10px;
+}
+.chon-tat-ca_radio .checkbox {
+    height: 20px;
+    width: 20px;
+}
+.chon-tat-ca_soluong {
+    flex-basis: 13%;
+}
+.chon-tat-ca_thanhtien {
+    flex-basis: 21%;
+}
+.chon-tat-ca_text {
+    flex-basis: 68%;
+}
+.chon-tat-ca_radio {
+    flex-basis: 8%;
+}
+
+.list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+.list-radio .checkbox {
+    height: 20px;
+    width: 20px;
+}
+.list-radio {
+    flex-basis: 8%;
+}
+.list-image img {
+    width: 119px;
+    height: 119px;
+}
+.list-to {
+    flex-basis: 68%;
+    display: flex;
+}
+.list-image {
+    flex-basis: 16%;
+}
+.list-name {
+    font-size: 14px;
+    color: black;
+    flex-basis: 65%;
+}
+.list-soluong {
+    width: 81px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 17%;
+    padding-right: 50px;
+}
+.list-soluong input {
+    width: 30px;
+    text-align: center;
+    border-top: 1px solid rgb(240, 240, 240);
+    border-bottom: 1px solid rgb(240, 240, 240);
+    border-left: none;
+    border-right: none;
+    cursor: text;
+    -webkit-appearance: none;
+  }
+.list-soluong button {
+    width: 30px;
+    text-align: center;
+    border: 1px solid rgb(240, 240, 240);
+    border-radius: 2px;
+    -webkit-appearance: none;
+    background-color: var(--white-color);
+  }
+.list-soluongnua {
+    display: flex;
+    
+}
+.list-thanhtien {
+    color: red;
+    font-size: 16px;
+    flex-basis: 18%;
+}
+
+
+.pay {
+    justify-content: space-between; /* căn các phần tử sang hai bên */
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.thanhtien {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+.final {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+.thanhtien .title-thanhtien {
+    font-size: 16px;
+    margin: 0;
+}
+.thanhtien .gia {
+    font-size: 16px;
+    margin: 0;
+}
+.final .title-tongsotien {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+}
+.final .gias {
+    font-size: 22px;
+    color: red;
+    margin: 0;
+}
+.thanhtoan {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    height: 39px;
+    line-height: 1.42857;
+    background-color: red;
+    border-radius: 10px;
+}

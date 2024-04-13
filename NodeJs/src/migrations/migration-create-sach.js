@@ -42,6 +42,16 @@ module.exports = {
             anh: {
                 type: Sequelize.BLOB('long')
             },
+            luotThich: {
+                type: Sequelize.INTEGER, 
+                defaultValue: 0
+            },
+            moTa: {
+                type: Sequelize.TEXT, 
+            },
+            ngonNgu: {
+                type: Sequelize.STRING, 
+            },
 
 
             createdAt: {

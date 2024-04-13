@@ -78,11 +78,15 @@ const updateDanhMuc = (data) => {
     return axios.put('/api/update-danh-muc',data)
 }
 
+const getTaiLieuNoiBat = () => {
+    return axios.get('/api/get-book-outstanding')
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
     getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
-    createDanhMuc, deleteDanhMuc, updateDanhMuc
+    createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat
 }

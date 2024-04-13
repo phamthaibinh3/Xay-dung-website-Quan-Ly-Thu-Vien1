@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'maLoaiSach',
                 as: 'LoaiSachData',
             });
+            Sach.hasMany(models.LuotThich, {
+                foreignKey: 'maSach',
+                as: 'LuotThichSach',
+            });
+            Sach.hasMany(models.PhieuMuon, { foreignKey: 'maSach', as: 'PhieuMuon' });
         }
     };
     Sach.init({
@@ -35,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
         gia: DataTypes.INTEGER,
         tacGia: DataTypes.STRING,
         maLoaiSach: DataTypes.STRING,
-        anh: DataTypes.BLOB('long')
+        anh: DataTypes.BLOB('long'),
+        luotThich: DataTypes.INTEGER,
+        moTa: DataTypes.TEXT,
+        ngonNgu: DataTypes.STRING
+
     }, {
         sequelize,
         modelName: 'Sach',

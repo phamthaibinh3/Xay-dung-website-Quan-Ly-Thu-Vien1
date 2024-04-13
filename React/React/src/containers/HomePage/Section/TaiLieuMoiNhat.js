@@ -26,7 +26,7 @@ class TaiLieuMoiNhat extends Component {
         }
     }
 
-    handleDelteBook = (item) => {
+    handleDetailBook = (item) => {
         // alert('check hehe: '+item.id)
         this.props.history.push(`/chi-tiet-tai-lieu-moi-nhat/${item.id}`)
     }
@@ -50,7 +50,7 @@ class TaiLieuMoiNhat extends Component {
                                         imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
                                     }
                                     return (
-                                        <div onClick={() => this.handleDelteBook(item)} className='section-customize'>
+                                        <div onClick={() => this.handleDetailBook(item)} className='section-customize'>
                                             <div className='bg-image section-docNew'
                                                 style={{ backgroundImage: `url(${imageBase64})` }}
                                             />

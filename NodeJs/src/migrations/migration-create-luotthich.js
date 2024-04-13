@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('phieumuons', {
+        await queryInterface.createTable('luotthiches', {
 
             id: {
                 allowNull: false,
@@ -15,14 +15,8 @@ module.exports = {
             maSach: {
                 type: Sequelize.INTEGER
             },
-            ngayMuon: {
-                type: Sequelize.DATE
-            },
-            tinhTrang: {
-                type: Sequelize.STRING
-            },
-            ngayTraDuKien: {
-                type: Sequelize.DATE
+            trangThai: {
+                type: Sequelize.BOOLEAN
             },
 
 
@@ -37,6 +31,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('phieumuons');
+        await queryInterface.dropTable('luotthiches');
     }
 };

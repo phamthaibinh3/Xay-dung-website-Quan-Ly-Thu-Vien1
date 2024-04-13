@@ -19,6 +19,7 @@ class ModalBook extends Component {
             maDanhMuc: '',
             anh: '',
             loaiSach: '',
+            moTa: '',
 
             previewImgUrl: '',
             allChuyenMuc: [],
@@ -74,7 +75,8 @@ class ModalBook extends Component {
                 gia: '',
                 maDanhMuc: [],
                 anh: '',
-                loaiSach: ''
+                loaiSach: '',
+                moTa: '',
             })
         }
         this.toggle()
@@ -190,6 +192,15 @@ class ModalBook extends Component {
                                 <img src={this.state.previewImgUrl} alt="Ảnh xem trước" style={{ maxWidth: '100px', maxHeight: '100px' }} />
                             </div>
                         )}
+                        <div className="input-container">
+                            <label>Mô tả sách:</label>
+                            <textarea
+                                value={this.state.moTa}
+                                onChange={(event) => this.isChange(event, 'moTa')}
+                                rows="4"
+                                cols="50"
+                            />
+                        </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

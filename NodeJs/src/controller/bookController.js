@@ -1,6 +1,4 @@
-import { reject } from 'lodash';
 import bookService from '../services/bookService'
-import { query } from 'express';
 
 let getAllBook = async (req, res) => {
     try {
@@ -134,6 +132,64 @@ let getBookId = async (req,res) => {
     }
 }
 
+let getBookOutstanding = async(req,res) => {
+    try {
+        let data = await bookService.getBookOutstanding();
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let likeBook = async (req, res) => {
+    try {
+        let data = await bookService.likeBook(req.body)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode:-1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let unlikeBook = async (req, res) => {
+    try {
+        let { bookId, userId } = req.body;
+        let likedBook = await db.Like.findOne({
+            where: {
+                bookId: bookId,
+                userId: userId
+            }
+        });
+
+        if (!likedBook) {
+            return res.status(200).json({
+                message: 'Sách chưa được thích'
+            });
+        } else {
+            await likedBook.destroy();
+
+            let book = await db.Book.findByPk(bookId);
+            await book.decrement('likes');
+
+            return res.status(200).json({
+                message: 'Bỏ thích sách thành công'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: 'Lỗi server'
+        });
+    }
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -144,5 +200,8 @@ module.exports = {
     deleteDanhMuc: deleteDanhMuc,
     updateDanhMuc: updateDanhMuc,
     getBookNew: getBookNew,
-    getBookId: getBookId
+    getBookId: getBookId,
+    getBookOutstanding: getBookOutstanding,
+    likeBook: likeBook,
+    unlikeBook: unlikeBook
 }

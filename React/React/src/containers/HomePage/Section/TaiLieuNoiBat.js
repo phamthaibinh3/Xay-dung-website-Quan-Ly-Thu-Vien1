@@ -1,16 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TaiLieuNoiBat.scss';
-
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { withRouter } from 'react-router'
+import { getTaiLieuNoiBat } from '../../../services/userService'
 
 
 class TaiLieuNoiBat extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            arrBook: [],
+        }
+    }
+    async componentDidUpdate() {
+        let res = await getTaiLieuNoiBat('');
+        if (res && res.errCode === 0) {
+            this.setState({
+                arrBook: res.data
+            })
+        }
+    }
+
+    handleDetailTLNB = async(item) => {
+        this.props.history.push(`/chi-tiet-tai-lieu-noi-bat/${item.id}`)
+    }
 
     render() {
-
+        let { arrBook } = this.state;
         return (
             <div className='section-share section-docNoiBat'>
                 <div className='section-container'>
@@ -20,7 +40,23 @@ class TaiLieuNoiBat extends Component {
                     </div>
                     <div className='section-body'>
                         <Slider {...this.props.settings}>
-                            <div className='section-customize'>
+                            {arrBook && arrBook.length > 0 &&
+                                arrBook.map((item, index) => {
+                                    let imageBase64 = '';
+                                    if (item.anh) {
+                                        imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
+                                    }
+                                    return (
+                                        <div onClick={() => this.handleDetailTLNB(item)} className='section-customize'>
+                                            <div className='bg-image section-docNew'
+                                                style={{ backgroundImage: `url(${imageBase64})` }}
+                                            />
+                                            <div className='a'>{item.tieuDe}</div>
+                                        </div>
+                                    )
+                                })
+                            }
+                            {/* <div className='section-customize'>
                                 <div className='bg-image section-docNoiBat' />
                                 <div>heheh 1</div>
                             </div>
@@ -43,7 +79,7 @@ class TaiLieuNoiBat extends Component {
                             <div className='section-customize'>
                                 <div className='bg-image section-docNoiBat' />
                                 <div>heheh 6</div>
-                            </div>
+                            </div> */}
 
                         </Slider>
                     </div>
@@ -67,4 +103,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaiLieuNoiBat);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaiLieuNoiBat));

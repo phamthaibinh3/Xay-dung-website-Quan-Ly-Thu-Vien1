@@ -3,7 +3,9 @@ import homeController from '../controller/homeController'
 import userController from '../controller/userController'
 import staffController from '../controller/staffController'
 import bookController from '../controller/bookController'
+import luotThichController from '../controller/luotThichController'
 import kindOfBookController from '../controller/kindOfBookController'
+import phieuMuonController from '../controller/phieuMuonController'
 
 let router = express.Router();
 
@@ -43,13 +45,23 @@ const initWebRoutes = (app) => {
     router.delete('/api/delete-danh-muc', bookController.deleteDanhMuc);
     router.put('/api/update-danh-muc', bookController.updateDanhMuc);
     router.get('/api/get-book-new', bookController.getBookNew)
-    router.get('/api/get-book-id',bookController.getBookId)
+    router.get('/api/get-book-id', bookController.getBookId);
+    router.get('/api/get-book-outstanding', bookController.getBookOutstanding);
+
+    router.get('/api/lay-luot-thich', luotThichController.layLuotThich);
+    router.post('/api/create-luot-thich', luotThichController.createLike);
+    router.put('/api/update-like', luotThichController.updateLike);
+    router.post('/api/trang-thai', luotThichController.trangThai);
+    router.get('/api/get-trang-thai-luot-thich', luotThichController.getStateLike);
 
     router.get('/api/get-all-loai-sach', kindOfBookController.getLoaiSach);
     router.post('/api/create-loai-sach', kindOfBookController.createLoaiSach);
     router.delete('/api/delete-loai-sach', kindOfBookController.deleteLoaiSach);
     router.get('/api/get-loai-sach-id', kindOfBookController.getLoaiSachId);
-    router.put('/api/update-loai-sach', kindOfBookController.editLoaiSach)
+    router.put('/api/update-loai-sach', kindOfBookController.editLoaiSach);
+
+    router.get('/api/get-phieu-muon', phieuMuonController.layPhieuMuon);
+    router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon)
 
 
     return app.use('/', router);

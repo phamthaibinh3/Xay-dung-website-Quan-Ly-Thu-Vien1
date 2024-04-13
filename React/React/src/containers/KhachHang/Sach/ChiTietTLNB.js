@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import MarkdownIt from 'markdown-it';
 import 'react-markdown-editor-lite/lib/index.css';
 import HomeHeader from '../../HomePage/HomeHeader';
-import './ChiTietTLMN.scss'
-import * as actions from '../../../store/actions'
+import './ChiTietTLNB.scss'
+import * as actions from '../../../store/actions';
+import ThueSach from "./ThueSach";
 
-class ChiTietTLMN extends Component {
+class ChiTietTLNB extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             book: [],
             quantity: 1,
-            liked: false
+            liked: false,
+            isOpenModalbook: false,
         }
     }
 
@@ -46,23 +48,43 @@ class ChiTietTLMN extends Component {
     };
 
     handleIncreaseQuantity = () => {
-        this.setState(prevState => ({
-            quantity: prevState.quantity + 1
-        }));
+        if (this.state.quantity < this.state.book.soLuong) {
+            this.setState(prevState => ({
+                quantity: prevState.quantity + 1
+            }));
+        }
     };
 
+    handleBuyBook = () => {
+        this.setState({
+            isOpenModalbook: true
+        })
+        // this.props.history.push(`/gio-hang/${this.state.book.id}`)
+    }
+    togglebookModal = () => {
+        this.setState({
+            isOpenModalbook: !this.state.isOpenModalbook
+        })
+    }
+    
+
     render() {
-        let { book, quantity, liked } = this.state;
+        console.log('check state: ', this.state);
+        let { book, quantity, liked, showModal } = this.state;
         let imageBase64 = '';
         if (book.anh) {
             imageBase64 = new Buffer(book.anh, 'base64').toString('binary')
         }
         return (
             <>
+                <ThueSach
+                    isOpen={this.state.isOpenModalbook}
+                    togglebookModal={this.togglebookModal}
+                    bookid={this.props.match.params.id}
+                    // createbook={this.createbook}
+                />
                 <HomeHeader isShowBanner={false} />
                 <div className="app">
-                    {/* header */}
-                    {/* contaner */}
                     <div className="product_contaner">
                         <div className="grid">
                             <div className="grid__row">
@@ -74,23 +96,10 @@ class ChiTietTLMN extends Component {
 
                                                 {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
                                             </div>
-                                            {/* <div className="introduce-slider--small">
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/v/_/v_ng_tr_n_l_a.png?_gl=1*1d8ltlk*_ga*NzU0MTE2OTU0LjE3MDkyMTk0MTk.*_ga_460L9JMC2G*MTcxMjA2OTUyOC4xNS4xLjE3MTIwNjk3MzQuNTkuMC4w*_gcl_au*MTIyMzEzNDc2OC4xNzA5MjE5NDE4" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                            </div> */}
+
                                             <div className="product_introduce-slider--media">
-                                                {/* <div className="product_introduce-slider--share">
-                                                    <span>Chia sẻ: </span>
-                                                    <i className="fa-brands fa-facebook-messenger" />
-                                                    <i className="fa-brands fa-facebook icon" />
-                                                    <i className="fa-brands fa-pinterest" />
-                                                    <i className="fa-brands fa-twitter" />
-                                                </div> */}
+
                                                 <div className="product_introduce-slider--liked">
-                                                    {/* <i className="fa-regular fa-heart" /> */}
                                                     <i onClick={() => this.handleLikeBook()} className={liked ? "fas fa-heart liked" : "fas fa-heart"}></i>
                                                     <span>   Đã thích {book.luotThich}</span>
                                                 </div>
@@ -103,33 +112,16 @@ class ChiTietTLMN extends Component {
                                             </div>
                                             <div className="product_introduce-vote">
                                                 <div className="product_introduce-vote-list">
-                                                    {/* <div className="product_introduce-vote-items ">
-                                                        <a href className="product_introduce-vote-star product_introduce-vote-text">
-                                                            4.9
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                        </a>
-                                                    </div> */}
-                                                    {/* <div className="product_introduce-vote-items">
-                                                        <a href className="product_introduce-vote-text">
-                                                            11.9k
-                                                            <span>Đánh giá</span>
-                                                        </a>
-                                                    </div> */}
+
                                                 </div>
                                             </div>
                                             <div className="product_introduce-price">
                                                 <div className="product_introduce-price-content">
                                                     <div className="product_introduce-price-sale">
-                                                        {/* <span className="introduce-price__old">₫600.000</span> */}
                                                         <span className="introduce-price__new">₫{book.gia}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* điền thông tin mua */}
                                             <div className="product_introduce-buy">
                                                 <div className="introduce-deal">
                                                     <span className="introduce__name">Tác Giả</span>
@@ -146,20 +138,17 @@ class ChiTietTLMN extends Component {
                                                 <div className="introduce-sl">
                                                     <span className="introduce__name">Số lượng</span>
                                                     <div className="introduce-nb">
-                                                        {/* <button className="fa-solid fa-minus" /> */}
                                                         <i class="fas fa-minus" onClick={this.handleDecreaseQuantity}></i>
                                                         <input type="text" value={quantity} readOnly />
                                                         <i class="fas fa-plus" onClick={this.handleIncreaseQuantity}></i>
-                                                        {/* <button className="fa-solid fa-plus" /> */}
                                                     </div>
                                                     <span className="introduce-have">{book.soLuong} sản phẩm có sẵn</span>
                                                 </div>
                                                 <div className="introduce-buy">
                                                     <button className="introduce-buy-add">
-                                                        {/* <i className="fa-solid fa-cart-plus" /> */}
                                                         <i class="fas fa-cart-plus"></i>
                                                         Thêm Vào Giỏ Hàng</button>
-                                                    <button className="introduce-buy-click">
+                                                    <button onClick={() => this.handleBuyBook()} className="introduce-buy-click">
                                                         Mua Ngay
                                                     </button>
                                                 </div>
@@ -168,7 +157,6 @@ class ChiTietTLMN extends Component {
                                     </div>
                                     <div className="product_detail" />
                                 </div>
-                                {/* thông tin người bán */}
                                 <div className="product_info">
                                     <div className="product-information">
                                         <h3>Thông tin sản phẩm</h3>
@@ -252,4 +240,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChiTietTLMN);
+export default connect(mapStateToProps, mapDispatchToProps)(ChiTietTLNB);

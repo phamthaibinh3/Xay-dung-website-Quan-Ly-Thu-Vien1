@@ -49,7 +49,8 @@ let CreateBook = (data) => {
                         maDanhMuc: data.maDanhMuc,
                         gia: data.gia,
                         anh: data.anh,
-                        maLoaiSach: data.loaiSach
+                        maLoaiSach: data.loaiSach,
+                        moTa: data.moTa
                     })
                     resolve({
                         errCode: 0,
@@ -281,22 +282,48 @@ let getBookNew = (inputLimit) => {
 }
 
 let getBookId = (inputId) => {
-    return new Promise(async(resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            if(!inputId){
+            if (!inputId) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Chua co id'
                 })
-            }else{
+            } else {
                 let data = await db.Sach.findOne({
-                    where: {id: inputId},
+                    where: { id: inputId },
                 })
                 resolve({
                     errCode: 0,
-                    data:data
+                    data: data
                 })
             }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getBookOutstanding = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Sach.findAll({
+                order: [['luotThich', 'DESC']],
+            })
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let likeBook = async (idBook) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
         } catch (e) {
             reject(e)
         }
@@ -313,5 +340,7 @@ module.exports = {
     deleteDanhMuc: deleteDanhMuc,
     updateDanhMuc: updateDanhMuc,
     getBookNew: getBookNew,
-    getBookId: getBookId
+    getBookId: getBookId,
+    getBookOutstanding: getBookOutstanding,
+    likeBook: likeBook
 }
