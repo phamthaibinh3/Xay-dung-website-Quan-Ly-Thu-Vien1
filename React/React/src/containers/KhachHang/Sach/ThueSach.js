@@ -3,22 +3,24 @@ import { FormattedMessage } from 'react-intl';
 import * as actions from '../../../store/actions'
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-// import './ThueSach.scss'
+import './ThueSach.scss'
 import './ThanhToan.css'
 import { toast } from "react-toastify";
 import { CommonUtils, LANGUAGES } from '../../../utils';
+import { phieuMuon } from '../../../services/userService'
 
 class ThueSach extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            book: ''
+            book: '',
+            quantity: 1
         }
     }
 
     componentDidMount() {
-        this.props.getBookID(this.props.bookid)
+        this.props.getBookID(this.props.match.params.id)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -27,6 +29,8 @@ class ThueSach extends Component {
                 book: this.props.SachID
             })
         }
+        let { userInfo } = this.props;
+        console.log('check userInfo ', userInfo);
     }
 
     toggle = () => {
@@ -86,105 +90,130 @@ class ThueSach extends Component {
         }
     }
 
+    handleDecreaseQuantity = () => {
+        if (this.state.quantity > 1) {
+            this.setState(prevState => ({
+                quantity: prevState.quantity - 1
+            }));
+        }
+    };
+
+    handleIncreaseQuantity = () => {
+        if (this.state.quantity < this.state.book.soLuong) {
+            this.setState(prevState => ({
+                quantity: prevState.quantity + 1
+            }));
+        }
+    };
+
+    handleThanhToan = async () => {
+        let { userInfo } = this.props;
+        this.props.handleHoaDon({
+            idSach: this.state.book.id,
+            idUser: userInfo.id,
+            gia: this.state.book.gia * this.state.quantity + this.state.book.gia * this.state.quantity * 0.1
+        })
+    }
+
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
-        let { book } = this.state
+        let { book, quantity } = this.state
+        // let { userInfo } = this.props;
         let imageBase64 = '';
         if (book.anh) {
             imageBase64 = new Buffer(book.anh, 'base64').toString('binary')
         }
         console.log('check state: ', this.state);
         return (
-            <Modal
-                isOpen={this.props.isOpen}
-                toggle={() => this.toggle()}
-                size="lg"
-                centered
-                className={'modal-user-container'}
-            >
-                <ModalHeader toggle={() => this.toggle()}>Thuê Sách</ModalHeader>
-                <ModalBody>
-                    <div className='modal-user-body'>
-                        <div className='input-container'>
-                            <label>Tên Sách:{book.tieuDe}</label>
-                            
+            // <Modal
+            //     isOpen={this.props.isOpen}
+            //     toggle={() => this.toggle()}
+            //     size="lg"
+            //     centered
+            //     className={'modal-user-container'}
+            // >
+            //     <ModalHeader toggle={() => this.toggle()}>Thuê Sách</ModalHeader>
+            //     <ModalBody>
+            //         <div className='modal-user-body'>
+            //             <div className='input-container'>
+            //                 <label>Tên Sách:{book.tieuDe}</label>
+
+            //             </div>
+            //             <div className='input-container'>
+            //                 <label>Số lượng:{book.soLuong}</label>
+            //             </div>
+            //             <div className='input-container'>
+            //                 <label>Tác giả:{book.tacGia}</label>
+            //             </div>
+            //             <div className='input-container'>
+            //                 <label htmlFor='maDanhMuc'>Danh mục: {book.maDanhMuc}</label>
+            //             </div>
+            //             <div className='input-container'>
+            //                 <label htmlFor='loaiSach'>Loại sách:{book.maLoaiSach}</label>
+            //             </div>
+            //             <div className='input-container'>
+            //                 <label htmlFor='anh'>Ảnh:</label>
+            //                 {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
+            //             </div>
+            //             <div className="input-container">
+            //                 <label>Giá:{book.gia}</label>
+            //             </div> 
+            //         </div>
+            //     </ModalBody>
+            //     <ModalFooter>
+            //         <Button color="primary" className='px-3' onClick={(data) => this.handleThemUser(data)}>
+            //             Xác nhận
+            //         </Button>{' '}
+            //         <Button color="secondary" className='px-3' onClick={() => this.toggle()}>
+            //             Thoát
+            //         </Button>
+            //     </ModalFooter>
+            // </Modal >
+            <div className="app">
+                <div className="product">
+                    <div className="chon-tat-ca">
+                        <div className="chon-tat-ca_radio">
+                            <input type="checkbox" className="checkbox" />
                         </div>
-                        <div className='input-container'>
-                            <label>Số lượng:{book.soLuong}</label>
+                        <div className="chon-tat-ca_text">Chọn tất cả</div>
+                        <div className="chon-tat-ca_soluong">Số lượng</div>
+                        <div className="chon-tat-ca_thanhtien">Thành tiền</div>
+                    </div>
+                    <div className="list">
+                        <div className="list-radio">
+                            <input type="checkbox" className="checkbox" />
                         </div>
-                        <div className='input-container'>
-                            <label>Tác giả:{book.tacGia}</label>
-                        </div>
-                        <div className='input-container'>
-                            <label htmlFor='maDanhMuc'>Danh mục: {book.maDanhMuc}</label>
-                        </div>
-                        <div className='input-container'>
-                            <label htmlFor='loaiSach'>Loại sách:{book.maLoaiSach}</label>
-                        </div>
-                        <div className='input-container'>
-                            <label htmlFor='anh'>Ảnh:</label>
+                        <div className="list-image">
                             {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
                         </div>
-                        <div className="input-container">
-                            <label>Giá:{book.gia}</label>
-                        </div> 
+                        <div className="list-to">
+                            <div className="list-name">{book.tieuDe}</div>
+                            <div className="list-soluong">
+                                <div className="list-soluongnua">
+                                    <i class="fas fa-minus" onClick={this.handleDecreaseQuantity}></i>
+                                    <input type="text" value={quantity} readOnly />
+                                    <i class="fas fa-plus" onClick={this.handleIncreaseQuantity}></i>
+                                </div>
+                            </div>
+                            <div className="list-thanhtien">{book.gia} đ</div>
+                        </div>
+                        <div className="list-xoa">
+                            <i className="fa-regular fa-trash-can" />
+                        </div>
                     </div>
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" className='px-3' onClick={(data) => this.handleThemUser(data)}>
-                        Xác nhận
-                    </Button>{' '}
-                    <Button color="secondary" className='px-3' onClick={() => this.toggle()}>
-                        Thoát
-                    </Button>
-                </ModalFooter>
-            </Modal >
-            // <div className="app">
-            //     <div className="product">
-            //         <div className="chon-tat-ca">
-            //             <div className="chon-tat-ca_radio">
-            //                 <input type="checkbox" className="checkbox" />
-            //             </div>
-            //             <div className="chon-tat-ca_text">Chọn tất cả</div>
-            //             <div className="chon-tat-ca_soluong">Số lượng</div>
-            //             <div className="chon-tat-ca_thanhtien">Thành tiền</div>
-            //         </div>
-            //         <div className="list">
-            //             <div className="list-radio">
-            //                 <input type="checkbox" className="checkbox" />
-            //             </div>
-            //             <div className="list-image">
-            //                 <img src="https://cdn0.fahasa.com/media/catalog/product//b/_/b_a-1-tr_n-l_n-m_i-nh_-_-kh_c-2.jpg" alt="" />
-            //             </div>
-            //             <div className="list-to">
-            //                 <div className="list-name">Trốn Lên Mái Nhà Để Khóc - Tặng
-            //                     Kèm Bookmark</div>
-            //                 <div className="list-soluong">
-            //                     <div className="list-soluongnua">
-            //                         <button className="fa-solid fa-minus" />
-            //                         <input type="text" defaultValue={2} />
-            //                         <button className="fa-solid fa-plus" />
-            //                     </div>
-            //                 </div>
-            //                 <div className="list-thanhtien">64.600 đ</div>
-            //             </div>
-            //             <div className="list-xoa">
-            //                 <i className="fa-regular fa-trash-can" />
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <div className="pay">
-            //         <div className="thanhtien">
-            //             <div className="title-thanhtien"> Thành tiền</div>
-            //             <span className="gia">0đ</span>
-            //         </div>
-            //         <div className="final">
-            //             <div className="title-tongsotien"> Tổng Số Tiền (gồm VAT)</div>
-            //             <span className="gias">0đ</span>
-            //         </div>
-            //         <button className="thanhtoan">THANH TOÁN</button>
-            //     </div>
-            // </div>
+                </div>
+                <div className="pay">
+                    <div className="thanhtien">
+                        <div className="title-thanhtien"> Thành tiền</div>
+                        <span className="gia">{+book.gia * +this.state.quantity}đ</span>
+                    </div>
+                    <div className="final">
+                        <div className="title-tongsotien"> Tổng Số Tiền (gồm VAT)</div>
+                        <span className="gias">{book.gia * this.state.quantity + book.gia * this.state.quantity * 0.1}đ</span>
+                    </div>
+                    <button onClick={() => this.handleThanhToan()} className="thanhtoan">THANH TOÁN</button>
+                </div>
+            </div>
 
         )
     }
@@ -193,13 +222,15 @@ class ThueSach extends Component {
 
 const mapStateToProps = state => {
     return {
-        SachID: state.admin.idSach
+        SachID: state.admin.idSach,
+        userInfo: state.user.userInfo
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getBookID: (id) => dispatch(actions.getBookID(id))
+        getBookID: (id) => dispatch(actions.getBookID(id)),
+        handleHoaDon: (data) => dispatch(actions.handleHoaDon(data))
     };
 };
 

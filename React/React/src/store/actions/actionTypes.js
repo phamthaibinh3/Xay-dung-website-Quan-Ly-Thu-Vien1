@@ -82,6 +82,9 @@ const actionTypes = Object.freeze({
 
     GET_BOOK_ID_SUCCESS: 'GET_BOOK_ID_SUCCESS',
     GET_BOOK_ID_FAIL: 'GET_BOOK_ID_FAIL',
+
+    HOA_DON_SUCCESS: 'HOA_DON_SUCCESS',
+    HOA_DON_FAIL:'HOA_DON_FAIL'
 })
 
 export default actionTypes;

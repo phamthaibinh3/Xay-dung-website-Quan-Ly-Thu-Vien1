@@ -1,10 +1,12 @@
 body {
-    background-color: #ccc;
+    /* background-color: #ccc; */
 }
 .app {
-    width: 1150px;
+    width: 100%;
     display: flex;
     margin: auto;
+    /* background-color: #ccc; */
+     /* height: 100vh; */
 }
 .product {
     width: 70%;
@@ -22,10 +24,12 @@ body {
     margin: 0px 0px 10px;
     padding: 20px;
     border-radius: 10px;
+    
 }
 .chon-tat-ca_radio .checkbox {
     height: 20px;
     width: 20px;
+    
 }
 .chon-tat-ca_soluong {
     flex-basis: 13%;

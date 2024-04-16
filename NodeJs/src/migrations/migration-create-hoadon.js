@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('hoadon', {
+        await queryInterface.createTable('hoadons', {
 
             id: {
                 allowNull: false,
@@ -9,14 +9,14 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            ngayMua: {
-                type: Sequelize.DATE
+            maSach: {
+                type: Sequelize.INTEGER
             },
             maNguoiDung: {
                 type: Sequelize.INTEGER
             },
             gia: {
-                type: Sequelize.INTEGER
+                type: Sequelize.DOUBLE
             },
             
 
@@ -31,6 +31,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('hoadon');
+        await queryInterface.dropTable('hoadons');
     }
 };

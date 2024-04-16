@@ -3,7 +3,7 @@ import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
-    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc,
+    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -567,6 +567,30 @@ export const getBookID = (id) => {
             console.log('GET_BOOK_ID_FAIL',e);
             dispatch({
                 type: actionTypes.GET_BOOK_ID_FAIL
+            })
+        }
+    }
+}
+
+export const handleHoaDon = (data) => {
+    return async (dispatch,getState) => {
+        try {
+            let res = await hoaDon(data);
+            console.log('check res: ',res);
+            if(res && res.errCode === 0){
+                dispatch({
+                    type: actionTypes.HOA_DON_SUCCESS,
+                    dataBookID: res.data
+                })
+            }else{
+                dispatch({
+                    type: actionTypes.HOA_DON_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('HOA_DON_FAIL',e);
+            dispatch({
+                type: actionTypes.HOA_DON_FAIL
             })
         }
     }

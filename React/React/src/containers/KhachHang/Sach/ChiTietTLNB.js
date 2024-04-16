@@ -56,10 +56,10 @@ class ChiTietTLNB extends Component {
     };
 
     handleBuyBook = () => {
-        this.setState({
-            isOpenModalbook: true
-        })
-        // this.props.history.push(`/gio-hang/${this.state.book.id}`)
+        // this.setState({
+        //     isOpenModalbook: true
+        // })
+        this.props.history.push(`/gio-hang/${this.props.match.params.id}`)
     }
     togglebookModal = () => {
         this.setState({
@@ -77,12 +77,12 @@ class ChiTietTLNB extends Component {
         }
         return (
             <>
-                <ThueSach
+                {/* <ThueSach
                     isOpen={this.state.isOpenModalbook}
                     togglebookModal={this.togglebookModal}
                     bookid={this.props.match.params.id}
                     // createbook={this.createbook}
-                />
+                /> */}
                 <HomeHeader isShowBanner={false} />
                 <div className="app">
                     <div className="product_contaner">

@@ -11,7 +11,7 @@ let handleUserLogin = (taiKhoan, matKhau) => {
             let tonTai = await checkTaiKhoan(taiKhoan);
             if (tonTai) {
                 let user = await db.User.findOne({
-                    attributes: ['taiKhoan', 'vaiTro', 'matKhau', 'hoTen'],
+                    attributes: ['taiKhoan', 'vaiTro', 'matKhau', 'hoTen', 'id'],
                     where: { taiKhoan: taiKhoan }
                 })
                 if (user) {

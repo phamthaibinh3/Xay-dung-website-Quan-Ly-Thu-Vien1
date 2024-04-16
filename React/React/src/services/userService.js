@@ -82,11 +82,20 @@ const getTaiLieuNoiBat = () => {
     return axios.get('/api/get-book-outstanding')
 }
 
+const phieuMuon = (data) => {
+    return axios.post('/api/tao-phieu-muon',data)
+}
+
+let hoaDon = (data) => {
+    return axios.post('/api/tao-hoa-don',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
     getTopStaffHomeService, getAllStaff, saveDetailStaff,
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
     getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
-    createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat
+    createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
+    phieuMuon, hoaDon
 }

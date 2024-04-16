@@ -6,6 +6,7 @@ import bookController from '../controller/bookController'
 import luotThichController from '../controller/luotThichController'
 import kindOfBookController from '../controller/kindOfBookController'
 import phieuMuonController from '../controller/phieuMuonController'
+import hoaDonController from '../controller/hoaDonController'
 
 let router = express.Router();
 
@@ -61,8 +62,12 @@ const initWebRoutes = (app) => {
     router.put('/api/update-loai-sach', kindOfBookController.editLoaiSach);
 
     router.get('/api/get-phieu-muon', phieuMuonController.layPhieuMuon);
-    router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon)
+    router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon);
 
+    router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
+    
+    router.get('/api/lay-hoa-don-tam-thoi', hoaDonController.layHoaDonTT);
+    router.post('/api/tao-hoa-don-tam-thoi', hoaDonController.taoHoaDonTT)
 
     return app.use('/', router);
 }

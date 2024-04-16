@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     HoaDon.init({
-        ngayMua: DataTypes.DATE,
+        maSach: DataTypes.INTEGER,
         maNguoiDung: DataTypes.INTEGER,
-        gia: DataTypes.INTEGER
+        gia: DataTypes.DOUBLE
     }, {
         sequelize,
         modelName: 'HoaDon',
