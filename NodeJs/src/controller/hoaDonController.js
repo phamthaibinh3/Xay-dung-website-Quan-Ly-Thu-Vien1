@@ -39,6 +39,19 @@ let taoHoaDonTT = async(req,res) => {
     }
 }
 
+let xoaHoaDonTamThoi = async(req,res) => {
+    try {
+        let data = await hoaDonService.xoaHoaDonTamThoi(req.query.id);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports ={
-    taoHoaDon, layHoaDonTT, taoHoaDonTT
+    taoHoaDon, layHoaDonTT, taoHoaDonTT, xoaHoaDonTamThoi
 }

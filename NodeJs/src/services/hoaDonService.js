@@ -26,7 +26,7 @@ let taoHoaDon = (data) => {
 }
 
 let layHoaDonTT = () => {
-    return new Promise(async(resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let data = await db.HoaDonTT.findAll();
             resolve({
@@ -39,15 +39,15 @@ let layHoaDonTT = () => {
     })
 }
 
-let taoHoaDonTT = async(data) => {
-    return new Promise(async(resolve,reject) => {
+let taoHoaDonTT = async (data) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            if(!data){
+            if (!data) {
                 resolve({
-                    errCode:1,
+                    errCode: 1,
                     errMessage: 'Chua co data'
                 })
-            }else{
+            } else {
                 await db.HoaDonTT.create({
                     tieuDe: data.tieuDe,
                     soLuong: data.soLuong,
@@ -58,13 +58,51 @@ let taoHoaDonTT = async(data) => {
                     maLoaiSach: data.loaiSach,
                     moTa: data.moTa
                 })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'thanh cong'
+                })
             }
         } catch (e) {
-            reject
+            reject(e)
+        }
+    })
+}
+
+let xoaHoaDonTamThoi = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Ban chua co id'
+                })
+            } else {
+                let res = await db.HoaDonTT.findOne({
+                    where: { id: inputId },
+                })
+                if (!res) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'id khong co trong he thong'
+                    })
+                } else {
+                    await db.HoaDonTT.destroy({
+                        where: { id: inputId }
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Xóa thành công'
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
         }
     })
 }
 
 module.exports = {
-    taoHoaDon, layHoaDonTT, taoHoaDonTT
+    taoHoaDon, layHoaDonTT, taoHoaDonTT,
+    xoaHoaDonTamThoi
 }

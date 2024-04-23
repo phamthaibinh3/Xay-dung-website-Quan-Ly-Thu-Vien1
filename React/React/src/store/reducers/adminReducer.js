@@ -9,7 +9,8 @@ const initialState = {
     allbook: [],
     chuyenMuc: [],
     loaiSach: [],
-    idSach: []
+    idSach: [],
+    hoaDonTT: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -124,6 +125,17 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.GET_HOA_DON_TT_SUCCESS:
+            state.hoaDonTT = action.hoaDonTT;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_HOA_DON_TT_FAIL:
+            state.hoaDonTT = [];
+            return {
+                ...state,
+            }
+            
         default:
             return state;
     }

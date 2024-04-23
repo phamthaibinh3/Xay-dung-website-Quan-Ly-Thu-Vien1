@@ -90,6 +90,18 @@ let hoaDon = (data) => {
     return axios.post('/api/tao-hoa-don',data)
 }
 
+let getHoaDonTamThoi = () => {
+    return axios.get('/api/lay-hoa-don-tam-thoi')
+}
+
+let taoHoaDonTamThoi = (data) => {
+    return axios.post('/api/tao-hoa-don-tam-thoi',data)
+}
+
+let xoaHoaDonTamThoi = (data) => {
+    return axios.delete(`/api/xoa-hoa-don-tam-thoi?id=${data}`)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -97,5 +109,5 @@ export {
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
     getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
     createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
-    phieuMuon, hoaDon
+    phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi
 }

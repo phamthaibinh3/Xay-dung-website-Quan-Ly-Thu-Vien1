@@ -66,7 +66,20 @@ class ChiTietTLNB extends Component {
             isOpenModalbook: !this.state.isOpenModalbook
         })
     }
-    
+
+    handleThemGioHang = () => {
+        let { book } = this.state;
+        this.props.createHoaDonTT({
+            tieuDe: book.tieuDe,
+            soLuong: book.soLuong,
+            tacGia: book.tacGia,
+            maDanhMuc: book.maDanhMuc,
+            gia: book.gia,
+            anh: book.anh.data,
+            maLoaiSach: book.loaiSach,
+            moTa: book.moTa
+        })
+    }
 
     render() {
         console.log('check state: ', this.state);
@@ -83,7 +96,11 @@ class ChiTietTLNB extends Component {
                     bookid={this.props.match.params.id}
                     // createbook={this.createbook}
                 /> */}
+
                 <HomeHeader isShowBanner={false} />
+                <div>
+                    <button onClick={() => this.handleBuyBook()}>Giỏ hàng nè</button>
+                </div>
                 <div className="app">
                     <div className="product_contaner">
                         <div className="grid">
@@ -145,7 +162,7 @@ class ChiTietTLNB extends Component {
                                                     <span className="introduce-have">{book.soLuong} sản phẩm có sẵn</span>
                                                 </div>
                                                 <div className="introduce-buy">
-                                                    <button className="introduce-buy-add">
+                                                    <button onClick={() => this.handleThemGioHang()} className="introduce-buy-add">
                                                         <i class="fas fa-cart-plus"></i>
                                                         Thêm Vào Giỏ Hàng</button>
                                                     <button onClick={() => this.handleBuyBook()} className="introduce-buy-click">
@@ -236,7 +253,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getBookID: (id) => dispatch(actions.getBookID(id))
+        getBookID: (id) => dispatch(actions.getBookID(id)),
+        createHoaDonTT: (data) => dispatch(actions.createHoaDonTT(data)),
     };
 };
 

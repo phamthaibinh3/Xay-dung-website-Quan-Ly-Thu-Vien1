@@ -3,7 +3,8 @@ import {
     getAllCodeService, createNewUserService, getAllUsers,
     delteUserService, updateUserService, getTopStaffHomeService,
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
-    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon
+    updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
+    getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -502,7 +503,7 @@ export const deleteKindOfBook = (id) => {
     return async (dispatch, getState) => {
         try {
             let res = await deleteLoaiSach(id)
-            console.log('check res: ',res);
+            console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -527,7 +528,7 @@ export const updateKindOfBook = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await updateLoaiSach(data)
-            console.log('check res: ',res);
+            console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -549,22 +550,22 @@ export const updateKindOfBook = (data) => {
 }
 
 export const getBookID = (id) => {
-    return async (dispatch,getState) => {
+    return async (dispatch, getState) => {
         try {
             let res = await getBookByID(id);
-            console.log('check res: ',res);
-            if(res && res.errCode === 0){
+            console.log('check res: ', res);
+            if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.GET_BOOK_ID_SUCCESS,
                     dataBookID: res.data
                 })
-            }else{
+            } else {
                 dispatch({
                     type: actionTypes.GET_BOOK_ID_FAIL
                 })
             }
         } catch (e) {
-            console.log('GET_BOOK_ID_FAIL',e);
+            console.log('GET_BOOK_ID_FAIL', e);
             dispatch({
                 type: actionTypes.GET_BOOK_ID_FAIL
             })
@@ -573,24 +574,96 @@ export const getBookID = (id) => {
 }
 
 export const handleHoaDon = (data) => {
-    return async (dispatch,getState) => {
+    return async (dispatch, getState) => {
         try {
             let res = await hoaDon(data);
-            console.log('check res: ',res);
-            if(res && res.errCode === 0){
+            console.log('check res: ', res);
+            if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.HOA_DON_SUCCESS,
                     dataBookID: res.data
                 })
-            }else{
+            } else {
                 dispatch({
                     type: actionTypes.HOA_DON_FAIL
                 })
             }
         } catch (e) {
-            console.log('HOA_DON_FAIL',e);
+            console.log('HOA_DON_FAIL', e);
             dispatch({
                 type: actionTypes.HOA_DON_FAIL
+            })
+        }
+    }
+}
+
+export const createHoaDonTT = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await taoHoaDonTamThoi(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thêm thành công');
+                dispatch({
+                    type: actionTypes.CREATE_HOA_DON_TT_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.CREATE_HOA_DON_TT_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CREATE_HOA_DON_TT_FAIL', e);
+            dispatch({
+                type: actionTypes.CREATE_HOA_DON_TT_FAIL
+            })
+        }
+    }
+}
+
+export const getHoaDonTT = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getHoaDonTamThoi();
+            if (res && res.errCode === 0) {
+                // toast.success('Thêm thành công');
+                dispatch({
+                    type: actionTypes.GET_HOA_DON_TT_SUCCESS,
+                    hoaDonTT: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_HOA_DON_TT_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_HOA_DON_TT_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_HOA_DON_TT_FAIL
+            })
+        }
+    }
+}
+
+export const deleteHoaDonTT = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await xoaHoaDonTamThoi(data);
+            console.log('check res: ', res);
+            if (res && res.errCode === 0) {
+                toast.success('Xóa thành công');
+                dispatch({
+                    type: actionTypes.DELLETE_HOA_DON_TT_SUCCESS,
+                    hoaDonTT: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.DELLETE_HOA_DON_TT_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DELLETE_HOA_DON_TT_FAIL', e);
+            dispatch({
+                type: actionTypes.DELLETE_HOA_DON_TT_FAIL
             })
         }
     }

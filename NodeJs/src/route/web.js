@@ -67,7 +67,8 @@ const initWebRoutes = (app) => {
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
     
     router.get('/api/lay-hoa-don-tam-thoi', hoaDonController.layHoaDonTT);
-    router.post('/api/tao-hoa-don-tam-thoi', hoaDonController.taoHoaDonTT)
+    router.post('/api/tao-hoa-don-tam-thoi', hoaDonController.taoHoaDonTT);
+    router.delete('/api/xoa-hoa-don-tam-thoi',hoaDonController.xoaHoaDonTamThoi)
 
     return app.use('/', router);
 }
