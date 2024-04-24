@@ -4,7 +4,8 @@ import {
     delteUserService, updateUserService, getTopStaffHomeService,
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
-    getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi
+    getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
+    xoaNhaXuatBan, suaNhaXuatBan
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -664,6 +665,98 @@ export const deleteHoaDonTT = (data) => {
             console.log('DELLETE_HOA_DON_TT_FAIL', e);
             dispatch({
                 type: actionTypes.DELLETE_HOA_DON_TT_FAIL
+            })
+        }
+    }
+}
+
+export const getNXB = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await layNhaXuatBan();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_NXB_SUCCESS,
+                    nxb: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_NXB_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_NXB_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_NXB_FAIL
+            })
+        }
+    }
+}
+
+export const createNXB = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await themNhaXuatBan(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.CREATE_NXB_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.CREATE_NXB_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CREATE_NXB_FAIL', e);
+            dispatch({
+                type: actionTypes.CREATE_NXB_FAIL
+            })
+        }
+    }
+}
+
+export const deleteNXB = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await xoaNhaXuatBan(id);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.DELETE_NXB_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.DELETE_NXB_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DELETE_NXB_FAIL', e);
+            dispatch({
+                type: actionTypes.DELETE_NXB_FAIL
+            })
+        }
+    }
+}
+
+export const updateNXB = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await suaNhaXuatBan(id);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.UPDATE_NXB_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.UPDATE_NXB_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('UPDATE_NXB_FAIL', e);
+            dispatch({
+                type: actionTypes.UPDATE_NXB_FAIL
             })
         }
     }

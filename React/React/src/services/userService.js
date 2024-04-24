@@ -102,6 +102,22 @@ let xoaHoaDonTamThoi = (data) => {
     return axios.delete(`/api/xoa-hoa-don-tam-thoi?id=${data}`)
 }
 
+let layNhaXuatBan = () => {
+    return axios.get('/api/get-nha-xuat-ban')
+}
+
+let themNhaXuatBan = (data) => {
+    return axios.post('/api/tao-nha-xuat-ban',data)
+}
+
+let xoaNhaXuatBan = (id) => {
+    return axios.delete(`/api/xoa-nha-xuat-ban?id=${id}`)
+}
+
+let suaNhaXuatBan = (data) => {
+    return axios.put('/api/sua-nha-xuat-ban',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -109,5 +125,6 @@ export {
     getDetailStaff, saveBulkScheduleStaff, getScheduleStaffByDate,
     getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
     createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
-    phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi
+    phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi,
+    layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan
 }

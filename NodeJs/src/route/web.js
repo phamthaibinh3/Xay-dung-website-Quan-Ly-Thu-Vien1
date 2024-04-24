@@ -7,6 +7,8 @@ import luotThichController from '../controller/luotThichController'
 import kindOfBookController from '../controller/kindOfBookController'
 import phieuMuonController from '../controller/phieuMuonController'
 import hoaDonController from '../controller/hoaDonController'
+import nhaXuatBanController from '../controller/nhaXuatBanController'
+import theThuVienController from '../controller/theThuVienController'
 
 let router = express.Router();
 
@@ -65,10 +67,20 @@ const initWebRoutes = (app) => {
     router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon);
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
-    
+
     router.get('/api/lay-hoa-don-tam-thoi', hoaDonController.layHoaDonTT);
     router.post('/api/tao-hoa-don-tam-thoi', hoaDonController.taoHoaDonTT);
-    router.delete('/api/xoa-hoa-don-tam-thoi',hoaDonController.xoaHoaDonTamThoi)
+    router.delete('/api/xoa-hoa-don-tam-thoi', hoaDonController.xoaHoaDonTamThoi);
+
+    router.post('/api/tao-nha-xuat-ban', nhaXuatBanController.themNhaXuatBan);
+    router.get('/api/get-nha-xuat-ban', nhaXuatBanController.layNhaXuatBan);
+    router.delete('/api/xoa-nha-xuat-ban', nhaXuatBanController.xoaNhaXuatBan);
+    router.put('/api/sua-nha-xuat-ban', nhaXuatBanController.suaNhaXuatBan);
+
+    router.post('/api/tao-the-thu-vien', theThuVienController.themTheThuVien);
+    router.get('/api/lay-the-thu-vien', theThuVienController.layTheThuVien);
+    router.delete('/api/xoa-the-thu-vien', theThuVienController.xoaTheThuVien);
+    router.put('/api/sua-the-thu-vien', theThuVienController.suaTheThuVien);
 
     return app.use('/', router);
 }

@@ -57,7 +57,18 @@ export const adminMenu = [
             {
                 name: 'menu.admin.quan-ly-docNew', link: '/system/quan-ly-tai-lieu-moi',
             },
+            {
+                name: 'menu.admin.quan-ly-noi-bat', link: '/system/quan-ly-tai-lieu-noi-bat'
+            }
 
+        ]
+    },
+    { //quan ly tai lieu moi
+        name: 'menu.admin.nhaXuatBan',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-nha-xuat-ban', link: '/system/quan-ly-tai-nha-xuat-ban',
+            },
         ]
     },
 ];

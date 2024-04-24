@@ -32,10 +32,13 @@
             "quan-ly-chuyen-muc": "Quản lý chuyên mục",
             "sach": "Sách",
             "quan-ly-sach": "Quản lý sách",
-            "docNew": "Tài liệu mới nhất",
+            "docNew": "Tài liệu",
+            "nhaXuatBan": "Nhà xuất bản",
             "quan-ly-docNew": "Quản lý tài liệu mới",
+            "quan-ly-noi-bat": "Quản lý tài liệu nổi bật",
             "loai-sach": "Loại sách",
-            "quan-ly-loai-sach": "Quản lý loại sách"
+            "quan-ly-loai-sach": "Quản lý loại sách",
+            "quan-ly-nha-xuat-ban": "Quản lý nhà xuất bản"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

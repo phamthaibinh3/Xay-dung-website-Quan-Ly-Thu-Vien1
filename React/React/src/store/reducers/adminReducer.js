@@ -11,6 +11,7 @@ const initialState = {
     loaiSach: [],
     idSach: [],
     hoaDonTT: [],
+    nhaXB: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -132,6 +133,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_HOA_DON_TT_FAIL:
             state.hoaDonTT = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_NXB_SUCCESS:
+            state.nhaXB = action.nxb;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_NXB_FAIL:
+            state.nhaXB = [];
             return {
                 ...state,
             }
