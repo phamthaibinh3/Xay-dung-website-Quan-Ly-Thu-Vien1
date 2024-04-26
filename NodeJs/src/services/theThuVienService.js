@@ -6,40 +6,58 @@ let themTheThuVien = (data) => {
             if (!data) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'chua co data'
-                })
+                    errMessage: 'Dữ liệu không được cung cấp'
+                });
             } else {
-                let tonTai = await db.TheThuVien.findOne({
-                    where: { maNguoiDung: data.maNguoiDung },
-                })
-                if (tonTai) {
+                // Kiểm tra xem mã người dùng có tồn tại trong bảng User không
+                let userExist = await db.User.findOne({
+                    where: { id: data.maNguoiDung }
+                });
+                if (!userExist) {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Nhà xuất bản đã có'
-                    })
+                        errMessage: 'Mã người dùng không tồn tại trong hệ thống'
+                    });
                 } else {
-                    await db.TheThuVien.create({
-                        maNguoiDung: data.maNguoiDung,
-                        ngayCap: data.ngayCap,
-                        ngayHetHan: data.ngayHetHan,
-                    })
-                    resolve({
-                        errCode: 0,
-                        errMessage: ' thanh cong'
-                    })
+                    // Kiểm tra xem mã người dùng đã tồn tại trong bảng TheThuVien chưa
+                    let tonTai = await db.TheThuVien.findOne({
+                        where: { maNguoiDung: data.maNguoiDung }
+                    });
+                    if (tonTai) {
+                        resolve({
+                            errCode: 3,
+                            errMessage: 'Người dùng đã có thẻ thư viện trong hệ thống'
+                        });
+                    } else {
+                        // Nếu không tồn tại, thêm mới dữ liệu vào bảng TheThuVien
+                        await db.TheThuVien.create({
+                            maNguoiDung: data.maNguoiDung,
+                            ngayCap: data.ngayCap,
+                            ngayHetHan: data.ngayHetHan,
+                        });
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'Thêm thẻ thư viện thành công'
+                        });
+                    }
                 }
             }
         } catch (e) {
             reject(e);
         }
-    })
-}
+    });
+};
 
 let layTheThuVien = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let data = await db.TheThuVien.findAll({
                 order: [['createdAt', 'DESC']],
+                include: [
+                    { model: db.User, as: 'nguoiDung' },
+                ],
+                raw: true,
+                nest: true
             });
             resolve({
                 errCode: 0,

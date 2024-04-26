@@ -12,6 +12,7 @@ const initialState = {
     idSach: [],
     hoaDonTT: [],
     nhaXB: [],
+    theThanhVien: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -23,12 +24,12 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_GENDER_SUCCESS:
             state.genders = action.data
-            console.log('hehashdhasdh SUCCESS: ', action);
+            // console.log('hehashdhasdh SUCCESS: ', action);
             return {
                 ...state,
             }
         case actionTypes.FETCH_GENDER_FAILED:
-            console.log('hehashdhasdh FAILED: ', action);
+            // console.log('hehashdhasdh FAILED: ', action);
             return {
                 ...state,
             }
@@ -144,6 +145,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_NXB_FAIL:
             state.nhaXB = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_THE_THANH_VIEN_SUCCESS:
+            state.theThanhVien = action.dataTheThuVien;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_THE_THANH_VIEN_FAIL:
+            state.theThanhVien = [];
             return {
                 ...state,
             }

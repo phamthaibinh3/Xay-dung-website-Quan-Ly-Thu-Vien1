@@ -118,6 +118,18 @@ let suaNhaXuatBan = (data) => {
     return axios.put('/api/sua-nha-xuat-ban',data)
 }
 
+let layTheThanhVien = () => {
+    return axios.get('/api/lay-the-thu-vien')
+}
+
+let taoTheThanhVien = (data) => {
+    return axios.post('/api/tao-the-thu-vien',data)
+}
+
+let xoaTheThanhVien = (id) => {
+    return axios.delete(`/api/xoa-the-thu-vien?id=${id}`)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -126,5 +138,6 @@ export {
     getAllSBook, createBook, deleteBook, updateBook, getAllDanhMuc,
     createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
     phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi,
-    layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan
+    layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
+    layTheThanhVien, taoTheThanhVien, xoaTheThanhVien
 }

@@ -13,10 +13,10 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             ngayCap: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING
             },
             ngayHetHan: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING
             },
 
 

@@ -1,178 +1,229 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { getAllCodeService } from '../../services/userService';
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../utils'
+import * as actions from '../../store/actions'
 import './UserManage.scss'
-import { getAllUsers, createNewUserService, delteUserService, updateUserService } from '../../services/userService'
-import ModalUser from './ModalUser'
-import ModalEditUser from './ModalEditUser'
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+import TableMangeUser from './TableMangeUser';
+import DatePicker from '../../components/Input/DatePicker';
 
 class UserManage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            arrUser: [],
-            isOpenModalUser: false,
-            isOpenModalEidtUser: false,
-            userEdit: {}
+            isOpen: false,
+
+            maNguoiDung: '',
+            ngayCap: '',
+            ngayHetHan: '',
+
+            action: '',
+            userEditId: ''
         }
     }
 
     async componentDidMount() {
-        await this.getAllUserFormReact();
+        this.props.getTheThanhVien()
     }
 
-    getAllUserFormReact = async () => {
-        let response = await getAllUsers('ALL');
-        if (response && response.errCode === 0) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.theThanhVien !== this.props.theThanhVien) {
             this.setState({
-                arrUser: response.users
+                maNguoiDung: '',
+                ngayCap: '',
+                ngayHetHan: '',
+                action: CRUD_ACTIONS.CREATE,
             })
         }
-        console.log('data tu Nodejs: ', response);
     }
 
-    handleAddNewUser = () => {
+    handleOnChangeInput = (event, id) => {
+        let copyState = { ...this.state };
+        copyState[id] = event.target.value;
         this.setState({
-            isOpenModalUser: true
+            ...copyState
         })
     }
 
-    toggleUserModal = () => {
-        this.setState({
-            isOpenModalUser: !this.state.isOpenModalUser
-        })
-    }
+    handleSaveUser = () => {
+        let valid = this.checkValidateInput();
+        if (valid === false) return; //thoat khoai ham` nay`
 
-    toggleUserEditModal = () => {
-        this.setState({
-            isOpenModalEidtUser: !this.state.isOpenModalEidtUser
-        })
-    }
+        let { action } = this.state;
 
-    createUser = async (data) => {
-        try {
-            let response = await createNewUserService(data)
-            if (response && response.errCode !== 0) {
-                alert(response.errMessage)
-            } else {
-                await this.getAllUserFormReact();
-                this.setState({
-                    isOpenModalUser: false
-                })
-            }
-        } catch (e) {
-            console.log(e);
+        //true thi` day data len redux
+        if (action === CRUD_ACTIONS.CREATE) {
+            let { ngayCap, ngayHetHan } = this.state;
+
+            let ngayCapDate = new Date(ngayCap);
+
+            // Lấy ra ngày, tháng, năm từ ngày cấp
+            let ngayCapDay = ngayCapDate.getDate();
+            let ngayCapMonth = ngayCapDate.getMonth() + 1;
+            let ngayCapYear = ngayCapDate.getFullYear();
+            let ngayCapString = `${ngayCapDay}/${ngayCapMonth}/${ngayCapYear}`;
+
+            let ngayHetHanDate = new Date(ngayCapDate);
+            ngayHetHanDate.setMonth(ngayHetHanDate.getMonth() + 2);
+
+            // Trích xuất ngày, tháng và năm từ ngày hết hạn
+            let ngayHetHan3 = ngayHetHanDate.getDate().toString().padStart(2, '0');
+            let thangHetHan = (ngayHetHanDate.getMonth() + 1).toString().padStart(2, '0');
+            let namHetHan = ngayHetHanDate.getFullYear();
+
+            // Tạo chuỗi ngày hết hạn với định dạng 'dd/MM/yyyy'
+            let ngayHetHanString = `${ngayHetHan3}/${thangHetHan}/${namHetHan}`;
+            this.props.createTheThanhVien({
+                maNguoiDung: this.state.maNguoiDung,
+                ngayCap: ngayCapString,
+                ngayHetHan: ngayHetHanString
+            });
+        }
+        if (action === CRUD_ACTIONS.EDIT) {
+            this.props.updateUserRedux({
+                id: this.state.userEditId,
+                taiKhoan: this.state.taiKhoan,
+                matKhau: this.state.matKhau,
+                hoTen: this.state.hoTen,
+                diaChi: this.state.diaChi,
+                dienThoai: this.state.dienThoai,
+                gioiTinh: this.state.gioiTinh,
+                vaiTro: this.state.vaiTro,
+                email: this.state.email,
+                avatar: this.state.anh
+            })
         }
     }
 
-    handleDeleteUser = async (user) => {
-        try {
-            let res = await delteUserService(user.id);
-            if (res && res.errCode === 0) {
-                this.getAllUserFormReact();
-                this.setState({
-
-                })
-            } else {
-                alert(res.errMessage)
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    handleEditUser = async (user) => {
+    handleEditUserFromParent = (user) => {
         this.setState({
-            isOpenModalEidtUser: true,
-            userEdit: user
+            maNguoiDung: user.maNguoiDung,
+            ngayCap: user.ngayCap,
+            ngayHetHan: user.ngayHetHan,
         })
     }
 
-    doEditUser = async (user) => {
-        try {
-            let res = await updateUserService(user);
-            if (res && res.errCode === 0) {
-                await this.getAllUserFormReact();
-                this.setState({
-                    isOpenModalEidtUser: false
-                })
-            } else {
-                alert(res.errMessage);
+    checkValidateInput = () => {
+        let valid = true;
+        let check = ['maNguoiDung', 'ngayCap']
+        for (let i = 0; i < check.length; i++) {
+            if (!this.state[check[i]]) {
+                valid = false;
+                alert('Bạn chưa nhập thông tin: ' + check[i]);
+                break;
             }
-        } catch (e) {
-            console.log(e);
         }
+        return valid;
+    }
+
+    handleOnchangeNgayCap = (date) => {
+        this.setState({
+            ngayCap: date[0]
+        })
+    }
+
+    handleOnchangeNgayHetHan = (date) => {
+        this.setState({
+            ngayHetHan: date[0]
+        })
     }
 
     render() {
-        let arrUser = this.state.arrUser;
+        let { maNguoiDung } = this.state;
+        let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+        console.log('check state: ', this.state);
         return (
-            <>
-                <div className='user-container'>
-                    <ModalUser
-                        isOpen={this.state.isOpenModalUser}
-                        toggleUserModal={this.toggleUserModal}
-                        createUser={this.createUser}
-                    />
-                    {this.state.isOpenModalEidtUser &&
-                        <ModalEditUser
-                            isOpen={this.state.isOpenModalEidtUser}
-                            toggleUserModal={this.toggleUserEditModal}
-                            userEdit={this.state.userEdit}
-                            editUser={this.doEditUser}
-                        />
-                    }
-                    <div className='title mt-3'>Danh sách Users</div>
-                    <div className="mx-3">
-                        <button
-                            onClick={() => this.handleAddNewUser()}
-                            className='btn btn-primary px-2'
-                        > <i className="fas fa-plus"></i> Thêm người dùng
-                        </button>
-                    </div>
-                    <div className='user-content mt-4 mx-3'>
-                        <table id="customers">
-                            <tr>
-                                <th>Tài khoản</th>
-                                <th>Họ tên</th>
-                                <th>Địa chỉ</th>
-                                <th>SĐT</th>
-                                <th>Hành động</th>
-                            </tr>
-                            {arrUser && arrUser.map((item, index) => {
-                                return (
-                                    <>
-                                        <tr>
-                                            <td>{item.taiKhoan}</td>
-                                            <td>{item.hoTen}</td>
-                                            <td>{item.diaChi}</td>
-                                            <td>{item.dienThoai}</td>
-                                            <td>
-                                                <button onClick={() => this.handleEditUser(item)} className='btn-edit'><i className="fas fa-pencil-alt"></i></button>
-                                                <button onClick={() => this.handleDeleteUser(item)} className='btn-delete'><i className="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    </>
-                                )
-                            })}
+            <div className='user-redux-container'>
+                <div className='title'>
+                    Quản lý thẻ thành viên
+                </div>
+                <div className="user-redux-body" >
+                    <div className='container'>
+                        <div className='row'>
+                            <div className='col-12 mb-3'> <FormattedMessage id="manage-user.them" /></div>
+                            <div className='col-4'>
+                                <label>Mã người dùng</label>
+                                <input className='form-control' type='text'
+                                    value={maNguoiDung}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'maNguoiDung')}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                />
+                            </div>
+                            <div className='col-4'>
+                                <label>Ngày cấp</label>
+                                <DatePicker
+                                    onChange={this.handleOnchangeNgayCap}
+                                    className='form-control'
+                                    value={this.state.currentDate}
+                                    minDate={yesterday}
+                                />
+                            </div>
+                            <div className='col-4'>
+                                <label>Ngày hết hạn</label>
+                                <DatePicker
+                                    onChange={this.handleOnchangeNgayHetHan}
+                                    className='form-control'
+                                    value={this.state.currentDate}
+                                    minDate={yesterday}
+                                />
+                            </div>
 
-                        </table>
+                            <div className='col-12 my-3 '>
+                                <button className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning px-3' : 'btn btn-primary px-3'}
+                                    onClick={() => this.handleSaveUser()}
+
+                                >
+                                    {this.action === CRUD_ACTIONS.EDIT ?
+                                        <FormattedMessage id="manage-user.luu" />
+                                        :
+                                        <FormattedMessage id="manage-user.luu" />
+                                    }
+                                </button>
+                                {/* <button className='btn btn-warning px-3' >
+                                    Lưu
+                                </button> */}
+                            </div>
+
+                            <div className='col-12'>
+                                <TableMangeUser
+                                    handleEditUserFromParent={this.handleEditUserFromParent}
+                                    action={this.state.action}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </>
-        );
+
+
+                {this.state.isOpen === true &&
+                    <Lightbox
+                        mainSrc={this.state.previewImgUrl}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                    />}
+            </div>
+        )
     }
 
 }
 
 const mapStateToProps = state => {
     return {
+        language: state.app.language,
+        theThanhVien: state.admin.theThanhVien
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getTheThanhVien: () => dispatch(actions.getTheThanhVien()),
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
+        fetchVaiTroStart: () => dispatch(actions.fetchVaiTroStart()),
+        createTheThanhVien: (data) => dispatch(actions.createTheThanhVien(data)),
+        updateUserRedux: (data) => dispatch(actions.updateUser(data))
     };
 };
 

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './TableMangeUser.scss'
-import actionTypes from '../../../store/actions/actionTypes';
-import * as actions from '../../../store/actions'
+import actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../store/actions'
 
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
@@ -33,20 +33,19 @@ class TableMangeUser extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllUserRedux();
+        this.props.getTheThanhVien();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.listUser !== this.props.listUser) {
+        if (prevProps.theThanhVien !== this.props.theThanhVien) {
             this.setState({
-                userRedux: this.props.listUser
+                userRedux: this.props.theThanhVien
             })
         }
     }
 
     handleDeleteUser = (user) => {
-        this.props.deleteUserRedux(user.id);
-        
+        this.props.deleteTheThanhVien(user.id);
     }
 
     handleEditUser = (user) => {
@@ -55,16 +54,14 @@ class TableMangeUser extends Component {
     }
 
     render() {
-        console.log('check data redux ', this.props.listUser);
         let arrUser = this.state.userRedux
         return (
             <>
                 <table id='TableMangeUser'>
                     <tr>
-                        <th>Tài khoản</th>
-                        <th>Họ tên</th>
-                        <th>Địa chỉ</th>
-                        <th>SĐT</th>
+                        <th>Mã người dùng</th>
+                        <th>Ngày cấp</th>
+                        <th>Ngày hết hạn</th>
                         <th>Hành động</th>
                     </tr>
                     <>
@@ -72,10 +69,9 @@ class TableMangeUser extends Component {
                             arrUser.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.taiKhoan}</td>
-                                        <td>{item.hoTen}</td>
-                                        <td>{item.diaChi}</td>
-                                        <td>{item.dienThoai}</td>
+                                        <td>{item.maNguoiDung}</td>
+                                        <td>{item.ngayCap}</td>
+                                        <td>{item.ngayHetHan}</td>
                                         <td>
                                             <button
                                                 onClick={() => this.handleEditUser(item)}
@@ -92,7 +88,6 @@ class TableMangeUser extends Component {
                     </>
 
                 </table>
-                <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
 
             </>
         );
@@ -102,14 +97,15 @@ class TableMangeUser extends Component {
 
 const mapStateToProps = state => {
     return {
-        listUser: state.admin.users
+        listUser: state.admin.users,
+        theThanhVien: state.admin.theThanhVien
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllUserRedux: () => dispatch(actions.fetchAllUserStart()),
-        deleteUserRedux: (data) => dispatch(actions.deleteUser(data)),
+        getTheThanhVien: () => dispatch(actions.getTheThanhVien()),
+        deleteTheThanhVien: (data) => dispatch(actions.deleteTheThanhVien(data)),
         updateUserRedux: (data) => dispatch(actions.updateUser(data))
     };
 };

@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     };
     TheThuVien.init({
         maNguoiDung: DataTypes.INTEGER,
-        ngayCap: DataTypes.DATE,
-        ngayHetHan: DataTypes.DATE,
+        ngayCap: DataTypes.STRING,
+        ngayHetHan: DataTypes.STRING,
 
     }, {
         sequelize,

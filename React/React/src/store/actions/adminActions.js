@@ -5,7 +5,7 @@ import {
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
-    xoaNhaXuatBan, suaNhaXuatBan
+    xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -757,6 +757,75 @@ export const updateNXB = (id) => {
             console.log('UPDATE_NXB_FAIL', e);
             dispatch({
                 type: actionTypes.UPDATE_NXB_FAIL
+            })
+        }
+    }
+}
+
+export const getTheThanhVien = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await layTheThanhVien();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_THE_THANH_VIEN_SUCCESS,
+                    dataTheThuVien: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_THE_THANH_VIEN_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_THE_THANH_VIEN_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_THE_THANH_VIEN_FAIL
+            })
+        }
+    }
+}
+
+export const createTheThanhVien = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await taoTheThanhVien(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công');
+                dispatch({
+                    type: actionTypes.CREATE_THE_THANH_VIEN_SUCCESS,
+                })
+            } else {
+                toast.error(res.errMessage);
+                dispatch({
+                    type: actionTypes.CREATE_THE_THANH_VIEN_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CREATE_THE_THANH_VIEN_FAIL', e);
+            dispatch({
+                type: actionTypes.CREATE_THE_THANH_VIEN_FAIL
+            })
+        }
+    }
+}
+export const deleteTheThanhVien = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await xoaTheThanhVien(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công');
+                dispatch({
+                    type: actionTypes.DELETE_THE_THANH_VIEN_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.DELETE_THE_THANH_VIEN_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DELETE_THE_THANH_VIEN_FAIL', e);
+            dispatch({
+                type: actionTypes.DELETE_THE_THANH_VIEN_FAIL
             })
         }
     }
