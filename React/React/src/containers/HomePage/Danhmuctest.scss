@@ -1,60 +1,54 @@
 
+/* */
+/* */
+/* */
+/* */
 /* contaner */
 .home-contaner {
-    background-color: #f5f5f5   ;
+    background-color: #f5f5f5;
     color: var(--text-color);
     font-size: 14px;
-}
-.background {
-    background-color: #fff;
-}
-/* danh mục contaner */
-.contaner-category__text {
+  }
+  /* danh mục contaner */
+  .contaner-category__text {
     display: flex;
     width: 100%;
     font-size: 20px;
     padding: 0 14px 0;
     color: rgba(0, 0, 0, 0.54);
-}
-
-.contaner-category {
+  }
+  .contaner-category {
     width: 1200px;
     background-color: var(--white-color);
-}
-
-.contaner-category__items {
+  }
+  
+  .contaner-category__items {
     padding: 0 0 16px;
     display: flex;
     text-align: center;
-}
-
-.contaner-category__list {
+  }
+  .contaner-category__list {
     padding: 0;
     width: 14.28%;
-}
-
-.contaner-category__link {
+  }
+  .contaner-category__link {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     color: var(--text-color);
     background-color: var(--white-color);
     border: 1px solid #f1f1f1;
-    height: 130px;
-    width: 130px;
-}
-
-.contaner-category__link a {
+    height: 50%;
+  }
+  .contaner-category__link a {
     text-decoration: none;
-}
-
-.contaner-category__items-img {
+  }
+  .contaner-category__items-img {
     width: 80px;
     height: 80px;
-}
-
-.contaner-category__items-text {
+  }
+  .contaner-category__items-text {
     color: rgba(0, 0, 0, 0.54);
     height: 46px;
     line-height: 20px;
@@ -66,18 +60,15 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     color: var(--text-color);
-}
-
-.contaner-category__content {
+  }
+  .contaner-category__content {
     width: 1200px;
     position: relative;
-}
-
-.contaner-category__content:hover .contaner-category-navi-icon {
+  }
+  .contaner-category__content:hover .contaner-category-navi-icon {
     opacity: 1;
-}
-
-.contaner-category-navi {
+  }
+  .contaner-category-navi {
     position: absolute;
     display: flex;
     justify-content: space-between;
@@ -87,9 +78,8 @@
     left: -9px;
     right: -9px;
     transform: translateY(-50%);
-}
-
-.contaner-category-navi-icon {
+  }
+  .contaner-category-navi-icon {
     padding: 12px 14px;
     line-height: 25px;
     margin-top: -12.5px;
@@ -98,8 +88,8 @@
     border-radius: 999999px;
     color: rgba(0, 0, 0, 0.54);
     opacity: 0;
-}
-
-.contaner-category-navi-icon:hover {
+  }
+  .contaner-category-navi-icon:hover {
     cursor: pointer;
-}
+  }
+  

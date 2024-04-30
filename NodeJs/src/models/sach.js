@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         anh: DataTypes.BLOB('long'),
         luotThich: DataTypes.INTEGER,
         moTa: DataTypes.TEXT,
+        giaAo: DataTypes.INTEGER,
         ngonNgu: DataTypes.STRING
 
     }, {

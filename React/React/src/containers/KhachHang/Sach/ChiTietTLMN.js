@@ -168,57 +168,51 @@ class ChiTietTLMN extends Component {
                                     </div>
                                     <div className="product_detail" />
                                 </div>
-                                {/* thông tin người bán */}
+                                {/* thông tin san pham */}
                                 <div className="product_info">
                                     <div className="product-information">
-                                        <h3>Thông tin sản phẩm</h3>
-                                        <table className="data-table table-additional">
-                                            <colgroup>
-                                                <col width="25%" />
-                                                <col />
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <th className="table-label">
-                                                        Mã hàng </th>
-                                                    <td className="table-data">
-                                                        {book.id} </td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="table-label">
-                                                        Tên Nhà Cung Cấp </th>
-                                                    <td className="table-data">
-                                                        <a className="xem-chi-tiet" href="sky-books?fhs_campaign=ATTRIBUTE_PRODUCT">Skybooks</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="table-label">
-                                                        Tác giả </th>
-                                                    <td className="table-data">
-                                                        {book.tacGia} </td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="table-label">
-                                                        NXB </th>
-                                                    <td className="table-data">
-                                                        Dân Trí </td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="table-label">
-                                                        Giá </th>
-                                                    <td className="table-data">
-                                                        {book.gia} </td>
-                                                </tr>
+                                        <h2>Thông tin sản phẩm</h2>
+                                        <div className="data-table">
+                                            <div className="table-label1">
+                                                Mã hàng
+                                            </div>
+                                            <div className="table-data">
+                                                {book.id}
+                                            </div>
+                                        </div>
+                                        <div className="data-table">
+                                            <div className="table-label1">
+                                                Tác giả
+                                            </div>
+                                            <div className="table-data">
+                                                {book.tacGia}
+                                            </div>
+                                        </div>
+                                        <div className="data-table">
+                                            <div className="table-label1">
+                                                NXB
+                                            </div>
+                                            <div className="table-data">
+                                                Dân Trí
+                                            </div>
+                                        </div>
+                                        <div className="data-table">
+                                            <div className="table-label1">
+                                                Giá
+                                            </div>
+                                            <div className="table-data">
+                                                {book.gia}
+                                            </div>
+                                        </div>
+                                        <div className="data-table">
+                                            <div className="table-label1">
+                                                Số lượng
+                                            </div>
+                                            <div className="table-data">
+                                                {book.soLuong}
+                                            </div>
+                                        </div>
 
-                                                <tr>
-                                                    <th className="table-label">
-                                                        Số lượng </th>
-                                                    <td className="table-data">
-                                                        {book.soLuong} </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
                                     </div>
                                     <div className="product-short">
                                         <h3>{book.tieuDe}</h3>

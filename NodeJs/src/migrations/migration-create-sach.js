@@ -33,6 +33,9 @@ module.exports = {
             gia: {
                 type: Sequelize.INTEGER
             },
+            giaAo: {
+                type: Sequelize.INTEGER
+            },
             tacGia: {
                 type: Sequelize.STRING
             },

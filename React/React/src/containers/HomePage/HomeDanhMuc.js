@@ -35,7 +35,6 @@ class TaiLieuMoiNhat extends Component {
         console.log('check huhu: ', this.state);
         let { allChuyenMuc } = this.state;
         return (
-            <div className="app">
                 <div className="home-contaner">
                     <div className="grid">
                         <div className="grid__row">
@@ -65,7 +64,6 @@ class TaiLieuMoiNhat extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
 
         );
     }

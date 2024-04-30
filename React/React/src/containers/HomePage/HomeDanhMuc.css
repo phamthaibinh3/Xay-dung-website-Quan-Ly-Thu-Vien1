@@ -3,7 +3,7 @@
     background-color: #f5f5f5;
     color: var(--text-color);
     font-size: 14px;
-    display: flex;
+    display: block;
 }
 
 .contaner-category__text {
@@ -37,13 +37,13 @@
 }
 
 .contaner-category__link {
-    display: block;
+    display: flex;
     text-decoration: none;
     color: var(--text-color);
     background-color: var(--white-color);
     border: 1px solid #f1f1f1;
-    width: 100%; /* Chỉnh width của các ô chứa hình ảnh */
-    height: auto;
+    width: 130px; /* Chỉnh width của các ô chứa hình ảnh */
+    height: 130px;
     text-align: center; /* Canh giữa hình ảnh trong ô chứa */
     overflow: hidden; /* Đảm bảo hình ảnh không tràn ra khỏi phần tử cha */
 }

@@ -4,11 +4,13 @@ import './TaiLieuMoiNhat.scss';
 import { FormattedMessage } from 'react-intl';
 import { getBookNew } from '../../../services/bookService';
 import { withRouter } from 'react-router'
+import { MdOutlineMenuBook } from "react-icons/md";
 
 import Slider from 'react-slick'
 
 
 class TaiLieuMoiNhat extends Component {
+    
 
     constructor(props) {
         super(props);
@@ -35,58 +37,52 @@ class TaiLieuMoiNhat extends Component {
         let { arrBook } = this.state;
         // console.log('check state11: ', this.state.arrBook);
         return (
-            <div className='section-share section-docNew'>
-                <div className='section-container'>
-                    <div className='section-header'>
-                        <span className='title-section'>Tài liệu mới</span>
-                        <button className='btn-section'>Xem them</button>
+            <div className='app_contaner'>
+                <div className='grid'>
+                    <div className='grid__row'>
+                        <div className='home-product'>
+                            <div className='title'>
+                                <MdOutlineMenuBook className='icon'/>
+                                <h2>Tài liệu mới nhất</h2>
+                            </div>
+                                <div className='section-body'>
+                                    <Slider {...this.props.settings}>
+                                        {arrBook && arrBook.length > 0 &&
+                                            arrBook.map((item, index) => {
+                                                let imageBase64 = '';
+                                                if (item.anh) {
+                                                    imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
+                                                }
+                                                return (
+                                                    <div onClick={() => this.handleDetailBook(item)} className='section-customize'>
+                                                        <div className="grid__column-2-4">
+                                                            <div className="home-product-item">
+                                                                <div className="home-product-item__img" style={{ backgroundImage: `url(${imageBase64})` }} />
+                                                                <div className="home-product-item-child">
+                                                                <span className="home-product-item__name">{item.tieuDe}</span> 
+                                                                <p className="home-product-item__hastag">Mua để nhận quà</p>
+                                                                <div className="home-product-item__price">
+                                                                    <span className="home-product-item__price--new">139.000 đ</span>
+                                                                    <span class="discount-percent">-9%</span>
+                                                                </div>
+                                                                <div>
+                                                                <span className="home-product-item__price--old">{item.gia} đ</span>
+                                                                </div>
+                                                                <div className="home-product-item__adress">
+                                                                    <span className="home-product-item__brand">Tác giả : {item.tacGia}</span>
+                                                                    <span className="home-product-item__adress-name">Việt Nam</span>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </Slider>
+                                </div>
+                        </div>
                     </div>
-                    <div className='section-body'>
-                        <Slider {...this.props.settings}>
-                            {arrBook && arrBook.length > 0 &&
-                                arrBook.map((item, index) => {
-                                    let imageBase64 = '';
-                                    if (item.anh) {
-                                        imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
-                                    }
-                                    return (
-                                        <div onClick={() => this.handleDetailBook(item)} className='section-customize'>
-                                            <div className='bg-image section-docNew'
-                                                style={{ backgroundImage: `url(${imageBase64})` }}
-                                            />
-                                            <div className='a'>{item.tieuDe}</div>
-                                        </div>
-                                    )
-                                })
-                            }
-                            {/* <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 1</div>
-                            </div>
-                            <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 2</div>
-                            </div>
-                            <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 3</div>
-                            </div>
-                            <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 4</div>
-                            </div>
-                            <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 5</div>
-                            </div>
-                            <div className='section-customize'>
-                                <div className='bg-image section-docNew' />
-                                <div>huhu 6</div>
-                            </div> */}
-
-                        </Slider>
-                    </div>
-
                 </div>
             </div>
         );

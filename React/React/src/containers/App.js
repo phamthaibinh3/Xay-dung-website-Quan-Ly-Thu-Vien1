@@ -19,13 +19,15 @@ import System from '../routes/System';
 import { CustomToastCloseButton } from '../components/CustomToast';
 import HomePage from './HomePage/HomePage'
 import CustomScrollbars from '../components/CustomScrollbars.js'
-
+import Testpay from './HomePage/Testpay.js'
+import Checkout from './HomePage/Checkout.js'
 import DetailStaff from './KhachHang/NhanVien/DetailStaff.js'
 import Staff from '../routes/Staff.js';
 import ChiTietLoaiSach from './System/LoaiSach/ChiTietLoaiSach.js';
 import ChiTietTLMN from './KhachHang/Sach/ChiTietTLMN.js';
 import ChiTietTLNB from './KhachHang/Sach/ChiTietTLNB.js';
 import ThueSach from './KhachHang/Sach/ThueSach.js';
+import PayOnline from './HomePage/PayOnline.js';
 class App extends Component {
 
     // handlePersistorState = () => {
@@ -60,6 +62,9 @@ class App extends Component {
                                     <Route path={'/staff/'} component={userIsAuthenticated(Staff)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_STAFF} component={DetailStaff} />
+                                    <Route path={'/checkout'} component={Checkout} />
+                                    <Route path={'/testpay'} component={Testpay} />
+                                    <Route path={'/payonline'} component={PayOnline} />
                                     <Route path={path.DETAIL_BOOK_TLMN} component={ChiTietTLMN} />
                                     <Route path={path.DETAIL_KIND_OF_BOOK_ADMIN} component={ChiTietLoaiSach} />
                                     <Route path={path.DETAIL_BOOK_TLNB} component={ChiTietTLNB} />
