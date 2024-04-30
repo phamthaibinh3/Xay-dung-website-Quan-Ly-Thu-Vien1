@@ -24,6 +24,8 @@ class ChiTietTLMN extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.SachID !== this.props.SachID) {
+            let id = this.props.match.params.id;
+            this.props.getBookID(id)
             this.setState({
                 book: this.props.SachID
             })
@@ -31,9 +33,14 @@ class ChiTietTLMN extends Component {
     }
 
     handleLikeBook = () => {
-        alert('toi kick dc roi ');
+        // alert('toi kick dc roi ');
+        this.props.createLuotThich({
+            maNguoiDung: this.props.userInfo.id,
+            maSach: this.state.book.id,
+            trangThai: this.state.liked
+        })
         this.setState(prevState => ({
-            liked: !prevState.liked // Đảo ngược giá trị của liked khi bấm vào
+            liked: !prevState.liked 
         }));
     }
 
@@ -52,6 +59,8 @@ class ChiTietTLMN extends Component {
     };
 
     render() {
+        // console.log('check id sach: ',this.state.book.id);
+        // console.log('check userInfo: ',this.props.userInfo.id);
         let { book, quantity, liked } = this.state;
         let imageBase64 = '';
         if (book.anh) {
@@ -71,26 +80,10 @@ class ChiTietTLMN extends Component {
                                     <div className="product_introduce">
                                         <div className="product_introduce-slider">
                                             <div className="introduce-slider--big">
-
                                                 {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
                                             </div>
-                                            {/* <div className="introduce-slider--small">
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/v/_/v_ng_tr_n_l_a.png?_gl=1*1d8ltlk*_ga*NzU0MTE2OTU0LjE3MDkyMTk0MTk.*_ga_460L9JMC2G*MTcxMjA2OTUyOC4xNS4xLjE3MTIwNjk3MzQuNTkuMC4w*_gcl_au*MTIyMzEzNDc2OC4xNzA5MjE5NDE4" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                                <img src="https://cdn0.fahasa.com/media/catalog/product/8/9/8935278606642.jpg" alt="" className="introduce-slider--small-items" />
-                                            </div> */}
                                             <div className="product_introduce-slider--media">
-                                                {/* <div className="product_introduce-slider--share">
-                                                    <span>Chia sẻ: </span>
-                                                    <i className="fa-brands fa-facebook-messenger" />
-                                                    <i className="fa-brands fa-facebook icon" />
-                                                    <i className="fa-brands fa-pinterest" />
-                                                    <i className="fa-brands fa-twitter" />
-                                                </div> */}
                                                 <div className="product_introduce-slider--liked">
-                                                    {/* <i className="fa-regular fa-heart" /> */}
                                                     <i onClick={() => this.handleLikeBook()} className={liked ? "fas fa-heart liked" : "fas fa-heart"}></i>
                                                     <span>   Đã thích {book.luotThich}</span>
                                                 </div>
@@ -102,30 +95,12 @@ class ChiTietTLMN extends Component {
                                                 <span className="introduce-header--name">{book.tieuDe}</span>
                                             </div>
                                             <div className="product_introduce-vote">
-                                                <div className="product_introduce-vote-list">
-                                                    {/* <div className="product_introduce-vote-items ">
-                                                        <a href className="product_introduce-vote-star product_introduce-vote-text">
-                                                            4.9
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                            <i className="fa-solid fa-star" />
-                                                        </a>
-                                                    </div> */}
-                                                    {/* <div className="product_introduce-vote-items">
-                                                        <a href className="product_introduce-vote-text">
-                                                            11.9k
-                                                            <span>Đánh giá</span>
-                                                        </a>
-                                                    </div> */}
-                                                </div>
+                                                
                                             </div>
                                             <div className="product_introduce-price">
                                                 <div className="product_introduce-price-content">
                                                     <div className="product_introduce-price-sale">
-                                                        {/* <span className="introduce-price__old">₫600.000</span> */}
-                                                        <span className="introduce-price__new">₫{book.gia}</span>
+                                                        <span className="introduce-price__new">₫{book.gia}VND</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,17 +121,14 @@ class ChiTietTLMN extends Component {
                                                 <div className="introduce-sl">
                                                     <span className="introduce__name">Số lượng</span>
                                                     <div className="introduce-nb">
-                                                        {/* <button className="fa-solid fa-minus" /> */}
                                                         <i class="fas fa-minus" onClick={this.handleDecreaseQuantity}></i>
                                                         <input type="text" value={quantity} readOnly />
                                                         <i class="fas fa-plus" onClick={this.handleIncreaseQuantity}></i>
-                                                        {/* <button className="fa-solid fa-plus" /> */}
                                                     </div>
                                                     <span className="introduce-have">{book.soLuong} sản phẩm có sẵn</span>
                                                 </div>
                                                 <div className="introduce-buy">
                                                     <button className="introduce-buy-add">
-                                                        {/* <i className="fa-solid fa-cart-plus" /> */}
                                                         <i class="fas fa-cart-plus"></i>
                                                         Thêm Vào Giỏ Hàng</button>
                                                     <button className="introduce-buy-click">
@@ -227,12 +199,10 @@ class ChiTietTLMN extends Component {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </>
 
         );
@@ -242,13 +212,15 @@ class ChiTietTLMN extends Component {
 
 const mapStateToProps = state => {
     return {
-        SachID: state.admin.idSach
+        SachID: state.admin.idSach,
+        userInfo: state.user.userInfo,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getBookID: (id) => dispatch(actions.getBookID(id))
+        getBookID: (id) => dispatch(actions.getBookID(id)),
+        createLuotThich: (data) => dispatch(actions.createLuotThich(data))
     };
 };
 

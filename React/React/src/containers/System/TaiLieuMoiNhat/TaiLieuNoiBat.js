@@ -17,7 +17,7 @@ class TaiLieuNoiBat extends Component {
 
     async componentDidMount() {
         let res = await getBookNew('');
-        console.log('check res: ', res);
+        // console.log('check res: ', res);
         if (res && res.errCode === 0) {
             this.setState({
                 allBook: res.data

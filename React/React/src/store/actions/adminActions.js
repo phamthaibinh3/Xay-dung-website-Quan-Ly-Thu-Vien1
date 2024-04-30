@@ -5,7 +5,8 @@ import {
     getAllStaff, saveDetailStaff, getAllSBook, createBook, deleteBook,
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
-    xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien
+    xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
+    taoLuotThich
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -26,7 +27,7 @@ export const fetchGenderStart = () => {
             }
         } catch (e) {
             dispatch(fetchGenderFail());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -60,7 +61,7 @@ export const fetchVaiTroStart = () => {
             }
         } catch (e) {
             dispatch(fetchVaiTroFail());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -78,7 +79,7 @@ export const createNewUser = (data) => {
             }
         } catch (e) {
             dispatch(saveUserFailed());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -101,7 +102,7 @@ export const fetchAllUserStart = () => {
             }
         } catch (e) {
             dispatch(fetchAllUserFail());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -128,7 +129,7 @@ export const deleteUser = (userId) => {
             }
         } catch (e) {
             dispatch(deleteFailed());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -155,7 +156,7 @@ export const updateUser = (userId) => {
             }
         } catch (e) {
             dispatch(updateFailed());
-            console.log('Loi start Redux', e);
+            // console.log('Loi start Redux', e);
         }
     }
 }
@@ -405,7 +406,7 @@ export const deleteCategory = (id) => {
     return async (dispatch, getState) => {
         try {
             let res = await deleteDanhMuc(id);
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -430,7 +431,7 @@ export const updateCategory = (id) => {
         try {
             let res = await updateDanhMuc(id)
             if (res && res.errCode === 0) {
-                console.log('check res: ', res);
+                // console.log('check res: ', res);
                 toast.success('Sửa thành công');
                 dispatch({
                     type: actionTypes.UPDATE_CATEGORY_SUCCSESS
@@ -504,7 +505,7 @@ export const deleteKindOfBook = (id) => {
     return async (dispatch, getState) => {
         try {
             let res = await deleteLoaiSach(id)
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -529,7 +530,7 @@ export const updateKindOfBook = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await updateLoaiSach(data)
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -554,7 +555,7 @@ export const getBookID = (id) => {
     return async (dispatch, getState) => {
         try {
             let res = await getBookByID(id);
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.GET_BOOK_ID_SUCCESS,
@@ -578,7 +579,7 @@ export const handleHoaDon = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await hoaDon(data);
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.HOA_DON_SUCCESS,
@@ -649,7 +650,7 @@ export const deleteHoaDonTT = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await xoaHoaDonTamThoi(data);
-            console.log('check res: ', res);
+            // console.log('check res: ', res);
             if (res && res.errCode === 0) {
                 toast.success('Xóa thành công');
                 dispatch({
@@ -826,6 +827,28 @@ export const deleteTheThanhVien = (data) => {
             console.log('DELETE_THE_THANH_VIEN_FAIL', e);
             dispatch({
                 type: actionTypes.DELETE_THE_THANH_VIEN_FAIL
+            })
+        }
+    }
+}
+export const createLuotThich = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await taoLuotThich(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công');
+                dispatch({
+                    type: actionTypes.CREATE_LIKE_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.CRAETE_LIKE_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('CRAETE_LIKE_FAIL', e);
+            dispatch({
+                type: actionTypes.CRAETE_LIKE_FAIL
             })
         }
     }

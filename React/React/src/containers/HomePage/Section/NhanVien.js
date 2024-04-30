@@ -31,7 +31,7 @@ class NhanVien extends Component {
     }
 
     handleViewDetailStaff = (staff) => {
-        console.log('check: ', staff);
+        // console.log('check: ', staff);
         this.props.history.push(`/detail-staff/${staff.id}`)
     }
 

@@ -38,12 +38,12 @@ class Header extends Component {
         this.setState({
             menuApp: menu
         })
-        console.log('check hehe: ', staffMenu);
+        // console.log('check hehe: ', staffMenu);
     }
 
     render() {
         const { processLogout, language, userInfo } = this.props;
-        console.log('check state: ', this.state);
+        // console.log('check state: ', this.state);
         return (
             <div className="header-container">
                 {/* thanh navigator */}

@@ -1,160 +1,121 @@
-import { reject } from 'lodash';
 import db from '../models/index';
 
-let layLuotThich = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let data = await db.LuotThich.findAll({
-                include: [
-                    { model: db.User, as: 'LuotThichUser' },
-                    { model: db.Sach, as: 'LuotThichSach' },
-                ],
-                raw: true,
-                nest: true
-            });
+let taoLuotThich = (data) => {
+    return new Promise(async(resolve,reject) => {
+        if(!data){
             resolve({
-                errCode: 0,
-                data: data
+                errCode: 1,
+                errMessage: 'Khong co data'
             })
-        } catch (e) {
-            reject(e)
-        }
-    })
-}
+        }else{
+            let nguoiDung = await db.User.findOne({
+                where: {id: data.maNguoiDung},
+            })
 
-let createLike = (item) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if (!item.idUser || !item.idSach) {
+            if(!nguoiDung){
                 resolve({
-                    errCode: 1,
-                    errMessage: 'Bạn chưa đăng nhập hoặc sách không tồn tại',
-
+                    errCode:2,
+                    errMessage: 'Nguoi dung khong ton tai'
                 })
-            } else {
-
-                await db.LuotThich.create({
-                    maNguoiDung: item.idUser,
-                    maSach: item.idSach,
-                    trangThai: true
+            }else{
+                let sach = await db.Sach.findOne({
+                    where: {id: data.maSach},
+                    raw:false
                 })
 
-                resolve({
-                    errCode: 0,
-                    errMessage: 'Thành công'
-                })
-            }
-        } catch (e) {
-            reject(e);
-        }
-    })
-}
-
-let updateLike = (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if (!data) {
-                resolve({
-                    errCode: 1,
-                    errMessage: 'Ban chua truyen id'
-                })
-            } else {
-                let like = await db.LuotThich.findOne({
-                    where: { id: data.id },
-                    include: [
-                        { model: db.Sach, as: 'LuotThichSach' },
-                    ],
-                    raw: false,
-                    nest: true,
-                })
-                if (like) {
-                    like.trangThai = data.trangThai;
-                    await like.save();
-
+                if(!sach){
+                    resolve({
+                        errCode:3,
+                        errMessage: 'Sach khong ton tai'
+                    })
+                }else{
+                    data.trangThai = JSON.parse(data.trangThai);
+                    console.log('Kiểu dữ liệu của data.trangThai:', typeof data.trangThai);
+                    console.log('Trạng thái dữ liệu của data.trangThai:',data.trangThai);
+                    if(data.trangThai === true){
+                        sach.luotThich += 1;
+                        await sach.save();
+                    }else{
+                        console.log('vào false');
+                        sach.luotThich -= 1;
+                        await sach.save();
+                    }
                     resolve({
                         errCode: 0,
-                        errMessage: 'thanh cong'
-                    })
-
-                } else {
-                    resolve({
-                        errCode: 2,
-                        errMessage: 'Id k co trong he thong'
+                        errMessage: 'Thành công',
                     })
                 }
             }
-        } catch (e) {
-            reject(e);
+
         }
     })
 }
 
-let trangThai = (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let book = await db.Sach.findOne({
-                where: { id: data.id },
-                raw: false
-            });
+// const taoLuotThich = async (data) => {
+//     try {
+//         if (!data) {
+//             return {
+//                 errCode: 1,
+//                 errMessage: 'Không có dữ liệu'
+//             };
+//         }
 
-            if (!book) {
-                resolve({
-                    errCode: 1,
-                    errMessage: 'Không tìm thấy sách'
-                });
-                return;
-            }
+//         // Tìm hoặc tạo một bản ghi trong bảng LuotThich
+//         let [luotThich, created] = await db.LuotThich.findOrCreate({
+//             where: {
+//                 maNguoiDung: data.maNguoiDung,
+//                 maSach: data.maSach
+//             },
+//             raw: false
+//         });
 
-            let like = await db.LuotThich.findOne({
-                where: { trangThai: data.trangThai }
-            });
+//         // Kiểm tra nếu đã tạo mới bản ghi
+//         if (created) {
+//             console.log('Đã tạo mới bản ghi LuotThich');
+//             // Thêm thuộc tính trangThai cho đối tượng luotThich và lưu trạng thái true
+//             luotThich.trangThai = true;
+//             await luotThich.save();
+//         } else {
+//             // Nếu đã tồn tại bản ghi, đảm bảo cập nhật trạng thái thành false
+//             luotThich.trangThai = false;
+//             await luotThich.save();
+//         }
 
-            if (!like) {
-                resolve({
-                    errCode: 2,
-                    errMessage: 'Không tìm thấy lượt thích'
-                });
-                return;
-            }
+//         // Tìm sách và cập nhật số lượt thích
+//         let sach = await db.Sach.findByPk(data.maSach, { raw: false });
+//         if (!sach) {
+//             return {
+//                 errCode: 2,
+//                 errMessage: 'Sách không tồn tại'
+//             };
+//         }
 
-            if (data.trangThai === 1) {
-                book.luotThich -= 1;
-            } else {
-                book.luotThich += 1;
-            }
+//         // Tăng hoặc giảm số lượt thích tùy thuộc vào trạng thái
+//         data.trangThai = JSON.parse(data.trangThai)
+//         if (data.trangThai === true) {
+//             sach.luotThich += 1;
+//             luotThich.trangThai = true;
+//             await luotThich.save();
+//         } else {
+//             sach.luotThich -= 1;
+//             luotThich.trangThai = false;
+//             await luotThich.save();
+//         }
+//         await sach.save();
 
-            await book.save();
-
-            resolve({
-                errCode: 0,
-                errMessage: 'Thành công'
-            });
-        } catch (e) {
-            reject(e);
-        }
-    });
-};
-
-let getStateLike = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let like = await db.LuotThich.findAll({
-                where: { trangThai: 1 },
-            })
-            resolve({
-                errCode: 0,
-                data: like
-            })
-        } catch (e) {
-            reject(e)
-        }
-    })
-}
+//         return {
+//             errCode: 0,
+//             errMessage: 'Thành công'
+//         };
+//     } catch (error) {
+//         console.error('Đã xảy ra lỗi:', error);
+//         return {
+//             errCode: -1,
+//             errMessage: 'Đã xảy ra lỗi: ' + error.message
+//         };
+//     }
+// };
 
 module.exports = {
-    layLuotThich: layLuotThich,
-    createLike: createLike,
-    updateLike: updateLike,
-    trangThai: trangThai,
-    getStateLike: getStateLike
-}
+    taoLuotThich
+};

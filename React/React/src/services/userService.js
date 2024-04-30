@@ -130,6 +130,10 @@ let xoaTheThanhVien = (id) => {
     return axios.delete(`/api/xoa-the-thu-vien?id=${id}`)
 }
 
+let taoLuotThich = (data) => {
+    return axios.post('/api/tao-luot-thich',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -139,5 +143,5 @@ export {
     createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
     phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi,
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
-    layTheThanhVien, taoTheThanhVien, xoaTheThanhVien
+    layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich
 }

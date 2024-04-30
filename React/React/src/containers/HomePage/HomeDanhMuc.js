@@ -32,7 +32,7 @@ class TaiLieuMoiNhat extends Component {
     
 
     render() {
-        console.log('check huhu: ', this.state);
+        // console.log('check huhu: ', this.state);
         let { allChuyenMuc } = this.state;
         return (
             <div className="app">

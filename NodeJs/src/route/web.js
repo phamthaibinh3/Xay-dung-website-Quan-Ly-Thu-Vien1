@@ -51,12 +51,6 @@ const initWebRoutes = (app) => {
     router.get('/api/get-book-id', bookController.getBookId);
     router.get('/api/get-book-outstanding', bookController.getBookOutstanding);
 
-    router.get('/api/lay-luot-thich', luotThichController.layLuotThich);
-    router.post('/api/create-luot-thich', luotThichController.createLike);
-    router.put('/api/update-like', luotThichController.updateLike);
-    router.post('/api/trang-thai', luotThichController.trangThai);
-    router.get('/api/get-trang-thai-luot-thich', luotThichController.getStateLike);
-
     router.get('/api/get-all-loai-sach', kindOfBookController.getLoaiSach);
     router.post('/api/create-loai-sach', kindOfBookController.createLoaiSach);
     router.delete('/api/delete-loai-sach', kindOfBookController.deleteLoaiSach);
@@ -81,6 +75,8 @@ const initWebRoutes = (app) => {
     router.get('/api/lay-the-thu-vien', theThuVienController.layTheThuVien);
     router.delete('/api/xoa-the-thu-vien', theThuVienController.xoaTheThuVien);
     router.put('/api/sua-the-thu-vien', theThuVienController.suaTheThuVien);
+
+    router.post('/api/tao-luot-thich',luotThichController.taoLuotThich)
 
     return app.use('/', router);
 }

@@ -27,7 +27,7 @@ class NhaXuatBan extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.nhaXB !== this.props.nhaXB) {
-            // this.props.getNXB()
+            this.props.getNXB()
             this.setState({
                 allNXB: this.props.nhaXB,
 
