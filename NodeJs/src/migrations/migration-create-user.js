@@ -24,7 +24,16 @@ module.exports = {
       gioiTinh: {
         type: Sequelize.STRING
       },
-      diaChi: {
+      // diaChi: {
+      //   type: Sequelize.STRING
+      // },
+      tinhThanh: {
+        type: Sequelize.STRING
+      },
+      quanHuyen: {
+        type: Sequelize.STRING
+      },
+      phuongXa: {
         type: Sequelize.STRING
       },
       dienThoai: {

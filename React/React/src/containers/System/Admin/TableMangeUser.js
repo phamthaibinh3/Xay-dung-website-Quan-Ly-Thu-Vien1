@@ -55,7 +55,7 @@ class TableMangeUser extends Component {
     }
 
     render() {
-        console.log('check data redux ', this.props.listUser);
+        // console.log('check data redux ', this.props.listUser);
         let arrUser = this.state.userRedux
         return (
             <>
@@ -74,7 +74,7 @@ class TableMangeUser extends Component {
                                     <tr key={index}>
                                         <td>{item.taiKhoan}</td>
                                         <td>{item.hoTen}</td>
-                                        <td>{item.diaChi}</td>
+                                        <td>{item.tinhThanh}</td>
                                         <td>{item.dienThoai}</td>
                                         <td>
                                             <button

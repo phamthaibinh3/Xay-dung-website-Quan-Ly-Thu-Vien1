@@ -29,6 +29,10 @@ class UserRedux extends Component {
             anh: '',
             email: '',
 
+            tinhThanh: '',
+            quanHuyen: '',
+            phuongXa: '',
+
             action: '',
             userEditId: ''
         }
@@ -126,7 +130,9 @@ class UserRedux extends Component {
                 taiKhoan: this.state.taiKhoan,
                 matKhau: this.state.matKhau,
                 hoTen: this.state.hoTen,
-                diaChi: this.state.diaChi,
+                tinhThanh: this.state.tinhThanh,
+                quanHuyen: this.state.quanHuyen,
+                phuongXa: this.state.phuongXa,
                 dienThoai: this.state.dienThoai,
                 gioiTinh: this.state.gioiTinh,
                 vaiTro: this.state.vaiTro,
@@ -140,7 +146,9 @@ class UserRedux extends Component {
                 taiKhoan: this.state.taiKhoan,
                 matKhau: this.state.matKhau,
                 hoTen: this.state.hoTen,
-                diaChi: this.state.diaChi,
+                tinhThanh: this.state.tinhThanh,
+                quanHuyen: this.state.quanHuyen,
+                phuongXa: this.state.phuongXa,
                 dienThoai: this.state.dienThoai,
                 gioiTinh: this.state.gioiTinh,
                 vaiTro: this.state.vaiTro,
@@ -172,7 +180,7 @@ class UserRedux extends Component {
 
     checkValidateInput = () => {
         let valid = true;
-        let check = ['taiKhoan', 'matKhau', 'hoTen', 'dienThoai', 'diaChi', 'email']
+        let check = ['taiKhoan', 'matKhau', 'hoTen', 'dienThoai', 'email']
         for (let i = 0; i < check.length; i++) {
             if (!this.state[check[i]]) {
                 valid = false;
@@ -184,8 +192,8 @@ class UserRedux extends Component {
     }
 
     render() {
-        console.log('check lisuer: ',this.props.listUser);
-        console.log('check state: ', this.state.anh);
+        console.log('check lisuer: ', this.props.listUser);
+        console.log('check state: ', this.state);
         let vaiTroArr = this.state.vaiTroArr;
         let genders = this.state.genderArr;
         let language = this.props.language;
@@ -231,12 +239,25 @@ class UserRedux extends Component {
                                     onChange={(event) => this.handleOnChangeInput(event, 'dienThoai')}
                                 />
                             </div>
-                            <div className='col-4'>
+                            {/* <div className='col-4'>
                                 <label><FormattedMessage id="manage-user.diaChi" /></label>
                                 <input className='form-control' type='text'
                                     value={diaChi}
                                     onChange={(event) => this.handleOnChangeInput(event, 'diaChi')}
                                 />
+                            </div> */}
+                            <div>
+                                <select onChange={(event) => this.handleOnChangeInput(event, 'tinhThanh')} class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                    <option value={this.state.tinhThanh} selected={this.state.tinhThanh}>Chọn tỉnh thành</option>
+                                </select>
+
+                                <select onChange={(event) => this.handleOnChangeInput(event, 'quanHuyen')} class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                    <option value={this.state.quanHuyen} selected>Chọn quận huyện</option>
+                                </select>
+
+                                <select onChange={(event) => this.handleOnChangeInput(event, 'phuongXa')} class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                    <option value={this.state.phuongXa} selected>Chọn phường xã</option>
+                                </select>
                             </div>
                             <div className='col-4'>
                                 <label>email</label>
