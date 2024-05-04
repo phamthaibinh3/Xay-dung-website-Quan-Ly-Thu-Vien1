@@ -6,7 +6,7 @@ import {
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
-    taoLuotThich, loginFacebook
+    taoLuotThich, loginFacebook, getLuotThich
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -875,6 +875,29 @@ export const loginFaceBook = (data) => {
             console.log('LOGIN_FACEBOOK_FAIL', e);
             dispatch({
                 type: actionTypes.LOGIN_FACEBOOK_FAIL
+            })
+        }
+    }
+}
+export const layLuotThich = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getLuotThich();
+            if (res && res.errCode === 0) {
+                console.log('check res', res);
+                dispatch({
+                    type: actionTypes.GET_LUOTTHICH_SUCCESS,
+                    dataLuotThich: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_LUOTTHICH_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_LUOTTHICH_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_LUOTTHICH_FAIL
             })
         }
     }

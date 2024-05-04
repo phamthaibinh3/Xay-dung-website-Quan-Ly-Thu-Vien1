@@ -14,6 +14,7 @@ const initialState = {
     nhaXB: [],
     theThanhVien: [],
     idFB: [],
+    luotThich: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -168,6 +169,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.LOGIN_FACEBOOK_FAIL:
             state.idFB = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_LUOTTHICH_SUCCESS:
+            state.luotThich = action.dataLuotThich;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_LUOTTHICH_FAIL:
+            state.luotThich = [];
             return {
                 ...state,
             }

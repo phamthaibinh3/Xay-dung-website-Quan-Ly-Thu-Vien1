@@ -28,6 +28,7 @@ const initWebRoutes = (app) => {
     router.put('/api/update-user', userController.handleUpdateUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);
     router.get('/api/allcode', userController.getAllcode);
+    router.post('/api/loginFacebook', userController.loginFacebook)
 
     router.get('/api/top-staff-home', staffController.getTopStaffHome);
     router.get('/api/get-all-staff', staffController.getAllStaff);
@@ -77,8 +78,9 @@ const initWebRoutes = (app) => {
     router.put('/api/sua-the-thu-vien', theThuVienController.suaTheThuVien);
 
     router.post('/api/tao-luot-thich',luotThichController.taoLuotThich);
+    router.get('/api/get-luot-thich', luotThichController.layLuotThich);
 
-    router.post('/api/loginFacebook', userController.loginFacebook)
+    
 
     return app.use('/', router);
 }
