@@ -6,7 +6,14 @@ import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 
 import './Login.scss';
-import { handleLoginApi } from '../../services/userService'
+import { handleLoginApi } from '../../services/userService';
+
+
+import { LoginSocialFacebook } from 'reactjs-social-login';
+import { FacebookLoginButton } from 'react-social-login-buttons';
+
+import { LoginSocialGoogle } from 'reactjs-social-login';
+import { GoogleLoginButton } from 'react-social-login-buttons'
 
 
 class Login extends Component {
@@ -16,7 +23,8 @@ class Login extends Component {
             username: '',
             password: '',
             isShowPassword: false,
-            errMessage: ''
+            errMessage: '',
+            profile: null,
         }
     }
 
@@ -41,11 +49,13 @@ class Login extends Component {
         console.log(this.state.password);
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
+            
             if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message
                 })
             }
+            console.log('check user ',data.user)
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
                 console.log('login succeeds');
@@ -73,8 +83,30 @@ class Login extends Component {
         }
     }
 
-    render() {
+    handleLoginWithFacebook = async (profile) => {
+        console.log('check profile: ',profile);
+        try {
+            await this.props.loginFaceBook({
+                taiKhoan: profile.data.email,
+                ten: profile.data.name,
+            });
+            console.log('check asasdasd: ', profile.data.name);
+            this.props.userLoginSuccess({
+                hoTen: profile.data.name,
+                taiKhoan: profile.data.email,
+                id: this.props.idFB
+            });
+            this.props.navigate('/');
+        } catch (error) {
+            console.log('Error while logging in with Facebook:', error);
+            this.setState({
+                errMessage: 'An error occurred while logging in with Facebook.'
+            });
+        }
+    }
 
+    render() {
+        console.log('check id: ', this.props.idFB);
 
 
         return (
@@ -120,11 +152,44 @@ class Login extends Component {
                             <span className='forgot-password'>Forgot your password?</span>
                         </div>
                         <div className='col-12 text-center mt-3'>
+
                             <span className='text-other-login'>Or login with:</span>
                         </div>
                         <div className='col-12 social-login'>
-                            <i className="fab fa-google-plus-g google"></i>
-                            <i class="fab fa-facebook-f facebook"></i>
+                            {/* <i className="fab fa-google-plus-g google"></i> */}
+                           <div>
+                                <LoginSocialGoogle
+                                    client_id = {
+                                        "905935473669-jht8kdul73ldpi8aj3fu091oou3qlbmk.apps.googleusercontent.com"
+                                    }
+                                    // onResolve={this.handleLoginWithFacebook}
+                                    scope = "openid profile email"
+                                    onResolve={this.handleLoginWithFacebook}
+                                    onReject={(e) => {
+                                        console.log(e);
+                                        this.setState({
+                                            errMessage: 'An error occurred while logging in with Facebook.'
+                                        });
+                                    }}
+                                >
+                                    <GoogleLoginButton />
+                                </LoginSocialGoogle>
+                           </div>
+                            <div>
+                                <LoginSocialFacebook
+                                    appId="355315360890205"
+                                    onResolve={this.handleLoginWithFacebook}
+                                    onReject={(e) => {
+                                        console.log(e);
+                                        this.setState({
+                                            errMessage: 'An error occurred while logging in with Facebook.'
+                                        });
+                                    }}
+                                >
+                                    <FacebookLoginButton />
+                                </LoginSocialFacebook>
+                            </div>
+                            {/* <i class="fab fa-facebook-f facebook"></i> */}
                         </div>
                     </div>
                 </div>
@@ -135,7 +200,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        idFB: state.admin.idFB
     };
 };
 
@@ -143,7 +209,8 @@ const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
         // userLoginFail: () => dispatch(actions.adminLoginFail()),
-        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
+        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor)),
+        loginFaceBook: (data) => dispatch(actions.loginFaceBook(data))
     };
 };
 

@@ -134,6 +134,10 @@ let taoLuotThich = (data) => {
     return axios.post('/api/tao-luot-thich',data)
 }
 
+let loginFacebook = (data) => {
+    return axios.post('/api/loginFacebook',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -143,5 +147,6 @@ export {
     createDanhMuc, deleteDanhMuc, updateDanhMuc, getTaiLieuNoiBat,
     phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi,
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
-    layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich
+    layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
+    loginFacebook
 }

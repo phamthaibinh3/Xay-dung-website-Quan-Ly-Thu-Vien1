@@ -227,12 +227,54 @@ let getAllCodeService = (typeInput) => {
     })
 }
 
+let loginFacebook = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Không có dữ liệu'
+                });
+            } else {
+                let id = ''
+                let user = await db.User.findOne({
+                    where: { taiKhoan: data.taiKhoan },
+                });
+
+                if (!user) {
+                    let newUser = await db.User.create({
+                        taiKhoan: data.taiKhoan,
+                        hoTen: data.ten,
+                        anh: data.anh,
+                        vaiTro: 'R3'
+                    });
+
+                    resolve({
+                        errCode: 0,
+                        user: newUser,
+                        message: 'Đăng nhập thành công',
+                    });
+                } else {
+                    
+                    resolve({
+                        errCode: 0,
+                        user: user,
+                        message: 'Đăng nhập thành công'
+                    });
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
     createUser: createUser,
     deleteUser: deleteUser,
     updateUser: updateUser,
-
+    loginFacebook: loginFacebook,
     getAllCodeService: getAllCodeService,
 }

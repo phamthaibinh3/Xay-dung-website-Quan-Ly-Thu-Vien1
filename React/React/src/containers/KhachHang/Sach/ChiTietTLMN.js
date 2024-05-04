@@ -13,7 +13,7 @@ class ChiTietTLMN extends Component {
         this.state = {
             book: [],
             quantity: 1,
-            liked: false
+            liked: true
         }
     }
 
@@ -33,7 +33,7 @@ class ChiTietTLMN extends Component {
     }
 
     handleLikeBook = () => {
-        // alert('toi kick dc roi ');
+        console.log('check id user: ', this.state.book.id);
         this.props.createLuotThich({
             maNguoiDung: this.props.userInfo.id,
             maSach: this.state.book.id,

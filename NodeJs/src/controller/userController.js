@@ -72,12 +72,25 @@ let getAllcode = async (req, res) => {
     }
 }
 
+let loginFacebook = async(req,res) => {
+    try {
+        let data = await userService.loginFacebook(req.body);
+        return res.status(200).json(data);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateUser: handleCreateUser,
     handleDeleteUser: handleDeleteUser,
     handleUpdateUser: handleUpdateUser,
-
+    loginFacebook: loginFacebook,
     getAllcode: getAllcode,
 }

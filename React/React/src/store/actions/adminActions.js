@@ -6,7 +6,7 @@ import {
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
-    taoLuotThich
+    taoLuotThich, loginFacebook
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -809,6 +809,7 @@ export const createTheThanhVien = (data) => {
         }
     }
 }
+
 export const deleteTheThanhVien = (data) => {
     return async (dispatch, getState) => {
         try {
@@ -831,6 +832,7 @@ export const deleteTheThanhVien = (data) => {
         }
     }
 }
+
 export const createLuotThich = (data) => {
     return async (dispatch, getState) => {
         try {
@@ -849,6 +851,30 @@ export const createLuotThich = (data) => {
             console.log('CRAETE_LIKE_FAIL', e);
             dispatch({
                 type: actionTypes.CRAETE_LIKE_FAIL
+            })
+        }
+    }
+}
+
+export const loginFaceBook = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await loginFacebook(data);
+            if (res && res.errCode === 0) {
+                console.log('check res', res);
+                dispatch({
+                    type: actionTypes.LOGIN_FACEBOOK_SUCCESS,
+                    idFacebook: res.user.id
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.LOGIN_FACEBOOK_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('LOGIN_FACEBOOK_FAIL', e);
+            dispatch({
+                type: actionTypes.LOGIN_FACEBOOK_FAIL
             })
         }
     }

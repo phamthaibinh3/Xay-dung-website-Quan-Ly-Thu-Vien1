@@ -76,7 +76,9 @@ const initWebRoutes = (app) => {
     router.delete('/api/xoa-the-thu-vien', theThuVienController.xoaTheThuVien);
     router.put('/api/sua-the-thu-vien', theThuVienController.suaTheThuVien);
 
-    router.post('/api/tao-luot-thich',luotThichController.taoLuotThich)
+    router.post('/api/tao-luot-thich',luotThichController.taoLuotThich);
+
+    router.post('/api/loginFacebook', userController.loginFacebook)
 
     return app.use('/', router);
 }
