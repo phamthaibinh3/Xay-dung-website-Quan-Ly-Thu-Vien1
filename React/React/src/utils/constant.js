@@ -8,7 +8,8 @@ export const path = {
     DETAIL_BOOK_TLMN: '/chi-tiet-tai-lieu-moi-nhat/:id',
     DETAIL_KIND_OF_BOOK_ADMIN: '/detail-kind-of-book-admin/:id',
     DETAIL_BOOK_TLNB:'/chi-tiet-tai-lieu-noi-bat/:id',
-    GIO_HANG: '/gio-hang/:id'
+    GIO_HANG: '/gio-hang/:id',
+    THUE_SACH: '/thue-sach/:id'
 };
 
 export const LANGUAGES = {

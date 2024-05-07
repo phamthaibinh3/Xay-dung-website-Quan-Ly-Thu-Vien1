@@ -32,7 +32,7 @@ class ChiTietTLMN extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.SachID !== this.props.SachID) {
             let id = this.props.match.params.id;
-            this.props.getBookID(id)
+            // this.props.getBookID(id)
             this.setState({
                 book: this.props.SachID
             })
@@ -43,19 +43,10 @@ class ChiTietTLMN extends Component {
     }
 
     handleLikeBook = () => {
-        // console.log('check id user: ', this.state.book.id);
-        // this.props.createLuotThich({
-        //     maNguoiDung: this.props.userInfo.id,
-        //     maSach: this.state.book.id,
-        //     trangThai: this.state.liked
-        // })
-        // this.setState(prevState => ({
-        //     liked: !prevState.liked 
-        // }));
+
         const { userInfo } = this.props;
         const { book, liked } = this.state;
 
-        // Cập nhật trạng thái liked
         this.setState(prevState => ({
             liked: !prevState.liked
         }), () => {
@@ -81,6 +72,10 @@ class ChiTietTLMN extends Component {
         }));
     };
 
+    handleThueSach = () => {
+        this.props.history.push(`/thue-sach/${this.props.match.params.id}`)
+    }
+
     render() {
         // console.log('check id sach: ',this.state.book.id);
         // console.log('check userInfo: ',this.props.userInfo.id);
@@ -90,7 +85,10 @@ class ChiTietTLMN extends Component {
         if (book.anh) {
             imageBase64 = new Buffer(book.anh, 'base64').toString('binary')
         }
-        console.log('cehck liked: ',this.state.liked);
+
+        // console.log('cehck id : ', this.props.match.params.id);
+        // console.log('cehck id Nguoi dung: ', this.props.userInfo.id);
+        // console.log('check book id: ', this.state.book.id);
         return (
             <>
                 <HomeHeader isShowBanner={false} />
@@ -158,6 +156,9 @@ class ChiTietTLMN extends Component {
                                                         Thêm Vào Giỏ Hàng</button>
                                                     <button className="introduce-buy-click">
                                                         Mua Ngay
+                                                    </button>
+                                                    <button onClick={() => this.handleThueSach()} className="introduce-rent-click">
+                                                        Thuê sách
                                                     </button>
                                                 </div>
                                             </div>
@@ -247,7 +248,8 @@ const mapDispatchToProps = dispatch => {
     return {
         getBookID: (id) => dispatch(actions.getBookID(id)),
         createLuotThich: (data) => dispatch(actions.createLuotThich(data)),
-        layLuotThich: () => dispatch(actions.layLuotThich())
+        layLuotThich: () => dispatch(actions.layLuotThich()),
+        createMuonSach: (data) => dispatch(actions.createMuonSach(data))
     };
 };
 

@@ -117,7 +117,7 @@ const taoLuotThich = async (data) => {
 };
 
 let layLuotThich = () => {
-    return new Promise(async (resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let data = await db.LuotThich.findAll();
             resolve({

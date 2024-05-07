@@ -255,7 +255,7 @@ let loginFacebook = (data) => {
                         message: 'Đăng nhập thành công',
                     });
                 } else {
-                    
+
                     resolve({
                         errCode: 0,
                         user: user,
@@ -269,6 +269,51 @@ let loginFacebook = (data) => {
     });
 };
 
+let doiMatKhau = async (data) => {
+    try {
+        if (!data) {
+            return {
+                errCode: 0,
+                errMessage: 'Không có dữ liệu'
+            };
+        }
+
+        const tonTai = await checkTaiKhoan(data.taiKhoan);
+        if (!tonTai) {
+            return {
+                errCode: 1,
+                errMessage: 'Tài khoản không tồn tại trong hệ thống'
+            };
+        }
+
+        const user = await db.User.findOne({
+            where: { taiKhoan: data.taiKhoan }
+        });
+
+        const isMatch = await bcrypt.compare(data.matKhau, user.matKhau);
+        if (!isMatch) {
+            return {
+                errCode: 2,
+                errMessage: 'Mật khẩu hiện tại không chính xác'
+            };
+        }
+
+        // Mã hóa mật khẩu mới
+        const hashNewPassword = await hashUserPassword(data.newPassword);
+
+        await db.User.update({ matKhau: hashNewPassword }, {
+            where: { taiKhoan: data.taiKhoan }
+        });
+
+        return {
+            errCode: 0,
+            errMessage: 'Đổi mật khẩu thành công'
+        };
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
@@ -277,4 +322,5 @@ module.exports = {
     updateUser: updateUser,
     loginFacebook: loginFacebook,
     getAllCodeService: getAllCodeService,
+    doiMatKhau: doiMatKhau
 }

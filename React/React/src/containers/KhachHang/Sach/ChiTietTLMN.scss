@@ -283,10 +283,26 @@ $organ-color: #ff4500;
             outline: 0px;
             background: #ee4d2d;
             border: none;
-
             &:hover {
                 cursor: pointer;
                 background: #f05d40;
+            }
+        }
+
+        .introduce-rent-click {
+            width: 114px;
+            height: 48px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: visible;
+            outline: 0px;
+            background: #a09694;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+                background: rgb(56, 20, 13);
             }
         }
     }
@@ -572,6 +588,7 @@ $organ-color: #ff4500;
             outline: 0px;
             background: #ee4d2d;
             border: none;
+            margin-right: 9px;
 
             &:hover {
                 cursor: pointer;

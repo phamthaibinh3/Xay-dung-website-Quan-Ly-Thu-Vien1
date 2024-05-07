@@ -46,7 +46,7 @@ class TableMangeUser extends Component {
 
     handleDeleteUser = (user) => {
         this.props.deleteUserRedux(user.id);
-        
+
     }
 
     handleEditUser = (user) => {
@@ -88,11 +88,11 @@ class TableMangeUser extends Component {
                                 )
                             })
                         }
-
+                       
                     </>
-
                 </table>
-                <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+                <div className="a"></div>
+                {/* <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /> */}
 
             </>
         );

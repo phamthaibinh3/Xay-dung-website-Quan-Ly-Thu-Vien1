@@ -28,7 +28,8 @@ const initWebRoutes = (app) => {
     router.put('/api/update-user', userController.handleUpdateUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);
     router.get('/api/allcode', userController.getAllcode);
-    router.post('/api/loginFacebook', userController.loginFacebook)
+    router.post('/api/loginFacebook', userController.loginFacebook);
+    router.post('/api/doi-mat-khau', userController.doiMatKhau)
 
     router.get('/api/top-staff-home', staffController.getTopStaffHome);
     router.get('/api/get-all-staff', staffController.getAllStaff);
@@ -60,6 +61,8 @@ const initWebRoutes = (app) => {
 
     router.get('/api/get-phieu-muon', phieuMuonController.layPhieuMuon);
     router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon);
+    router.post('/api/duyet-phieu-muon', phieuMuonController.duyetPhieuMuon);
+    router.post('/api/huy-phieu-muon', phieuMuonController.huyPhieuMuon)
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
 
@@ -77,10 +80,10 @@ const initWebRoutes = (app) => {
     router.delete('/api/xoa-the-thu-vien', theThuVienController.xoaTheThuVien);
     router.put('/api/sua-the-thu-vien', theThuVienController.suaTheThuVien);
 
-    router.post('/api/tao-luot-thich',luotThichController.taoLuotThich);
+    router.post('/api/tao-luot-thich', luotThichController.taoLuotThich);
     router.get('/api/get-luot-thich', luotThichController.layLuotThich);
 
-    
+
 
     return app.use('/', router);
 }

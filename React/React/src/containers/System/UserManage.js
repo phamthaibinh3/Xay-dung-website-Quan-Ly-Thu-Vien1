@@ -109,7 +109,7 @@ class UserManage extends Component {
 
     checkValidateInput = () => {
         let valid = true;
-        let check = ['maNguoiDung', 'ngayCap']
+        let check = ['maNguoiDung']
         for (let i = 0; i < check.length; i++) {
             if (!this.state[check[i]]) {
                 valid = false;

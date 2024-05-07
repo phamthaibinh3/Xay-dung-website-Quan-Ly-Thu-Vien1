@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     PhieuMuon.init({
         maNguoiDung: DataTypes.INTEGER,
         maSach: DataTypes.INTEGER,
-        ngayMuon: DataTypes.DATE,
+        ngayMuon: DataTypes.STRING,
         tinhTrang: DataTypes.STRING,
-        ngayTraDuKien: DataTypes.DATE,
+        ngayTraDuKien: DataTypes.STRING,
 
     }, {
         sequelize,

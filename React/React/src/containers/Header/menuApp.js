@@ -71,6 +71,14 @@ export const adminMenu = [
             },
         ]
     },
+    { //quan ly tai lieu moi
+        name: 'menu.admin.theSach',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-the-sach', link: '/system/quan-ly-thue-sach',
+            },
+        ]
+    },
 ];
 
 export const staffMenu = [

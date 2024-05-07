@@ -6,7 +6,8 @@ import {
     updateBook, getAllDanhMuc, createDanhMuc, deleteDanhMuc, updateDanhMuc, hoaDon,
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
-    taoLuotThich, loginFacebook, getLuotThich
+    taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
+    phieuMuon
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -898,6 +899,98 @@ export const layLuotThich = () => {
             console.log('GET_LUOTTHICH_FAIL', e);
             dispatch({
                 type: actionTypes.GET_LUOTTHICH_FAIL
+            })
+        }
+    }
+}
+
+export const getPhieuMuon = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await layPhieuMuon();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_PHIEUMUON_SUCCESS,
+                    dataPhieuMuon: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_PHIEUMUON_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_PHIEUMUON_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_PHIEUMUON_FAIL
+            })
+        }
+    }
+}
+
+export const duyetMuonSach = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await duyetPhieuMuon(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.DUYET_PHIEUMUON_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.DUYET_PHIEUMUON_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DUYET_PHIEUMUON_FAIL', e);
+            dispatch({
+                type: actionTypes.DUYET_PHIEUMUON_FAIL
+            })
+        }
+    }
+}
+
+export const huyMuonSach = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await huyPhieuMuon(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.HUY_PHIEUMUON_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.HUY_PHIEUMUON_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('HUY_PHIEUMUON_FAIL', e);
+            dispatch({
+                type: actionTypes.HUY_PHIEUMUON_FAIL
+            })
+        }
+    }
+}
+
+export const createMuonSach = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await phieuMuon(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.TAO_PHIEUMUON_SUCCESS,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.TAO_PHIEUMUON_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('TAO_PHIEUMUON_FAIL', e);
+            dispatch({
+                type: actionTypes.TAO_PHIEUMUON_FAIL
             })
         }
     }

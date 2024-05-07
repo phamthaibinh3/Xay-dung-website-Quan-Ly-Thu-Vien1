@@ -82,9 +82,6 @@ const getTaiLieuNoiBat = () => {
     return axios.get('/api/get-book-outstanding')
 }
 
-const phieuMuon = (data) => {
-    return axios.post('/api/tao-phieu-muon',data)
-}
 
 let hoaDon = (data) => {
     return axios.post('/api/tao-hoa-don',data)
@@ -142,6 +139,22 @@ let getLuotThich = () => {
     return axios.get('/api/get-luot-thich')
 }
 
+const phieuMuon = (data) => {
+    return axios.post('/api/tao-phieu-muon',data)
+}
+
+const layPhieuMuon = () =>{
+    return axios.get('/api/get-phieu-muon')
+}
+
+const duyetPhieuMuon = (data) => {
+    return axios.post('/api/duyet-phieu-muon',data);
+}
+
+const huyPhieuMuon = (data) => {
+    return axios.post('/api/huy-phieu-muon',data)
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -152,5 +165,6 @@ export {
     phieuMuon, hoaDon, getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi,
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
     layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
-    loginFacebook, getLuotThich
+    loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
+
 }

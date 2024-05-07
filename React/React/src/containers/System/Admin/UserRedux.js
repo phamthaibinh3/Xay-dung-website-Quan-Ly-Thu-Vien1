@@ -23,7 +23,6 @@ class UserRedux extends Component {
             matKhau: '',
             hoTen: '',
             dienThoai: '',
-            diaChi: '',
             gioiTinh: '',
             vaiTro: '',
             anh: '',
@@ -78,7 +77,6 @@ class UserRedux extends Component {
                 matKhau: '',
                 hoTen: '',
                 dienThoai: '',
-                diaChi: '',
                 gioiTinh: arrgender && arrgender.length > 0 ? arrgender[0].keyMap : '',
                 vaiTro: arrvaiTro && arrvaiTro.length > 0 ? arrvaiTro[0].keyMap : '',
                 anh: '',
@@ -118,7 +116,7 @@ class UserRedux extends Component {
         })
     }
 
-    handleSaveUser = () => {
+    handleSaveUser = async () => {
         let valid = this.checkValidateInput();
         if (valid === false) return; //thoat khoai ham` nay`
 
@@ -126,7 +124,7 @@ class UserRedux extends Component {
 
         //true thi` day data len redux
         if (action === CRUD_ACTIONS.CREATE) {
-            this.props.createNewUser({
+            await this.props.createNewUser({
                 taiKhoan: this.state.taiKhoan,
                 matKhau: this.state.matKhau,
                 hoTen: this.state.hoTen,
@@ -141,7 +139,7 @@ class UserRedux extends Component {
             })
         }
         if (action === CRUD_ACTIONS.EDIT) {
-            this.props.updateUserRedux({
+            await this.props.updateUserRedux({
                 id: this.state.userEditId,
                 taiKhoan: this.state.taiKhoan,
                 matKhau: this.state.matKhau,
@@ -167,7 +165,6 @@ class UserRedux extends Component {
             taiKhoan: user.taiKhoan,
             matKhau: 'HARDCODE',
             hoTen: user.hoTen,
-            diaChi: user.diaChi,
             dienThoai: user.dienThoai,
             gioiTinh: user.gioiTinh,
             vaiTro: user.vaiTro,
@@ -192,13 +189,14 @@ class UserRedux extends Component {
     }
 
     render() {
-        console.log('check lisuer: ', this.props.listUser);
+        // console.log('check lisuer: ', this.props.listUser);
         console.log('check state: ', this.state);
         let vaiTroArr = this.state.vaiTroArr;
         let genders = this.state.genderArr;
         let language = this.props.language;
 
-        let { taiKhoan, matKhau, hoTen, dienThoai, diaChi, vaiTro, anh, gioiTinh, email } = this.state
+
+        let { taiKhoan, matKhau, hoTen, dienThoai, vaiTro, anh, gioiTinh, email } = this.state
         // console.log('asghduiashduaishdu asdasd: ', this.props.genderRedux);
         return (
             <div className='user-redux-container'>
@@ -340,8 +338,6 @@ class UserRedux extends Component {
                         </div>
                     </div>
                 </div>
-
-
                 {this.state.isOpen === true &&
                     <Lightbox
                         mainSrc={this.state.previewImgUrl}

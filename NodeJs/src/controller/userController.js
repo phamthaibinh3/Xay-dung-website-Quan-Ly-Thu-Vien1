@@ -85,6 +85,19 @@ let loginFacebook = async(req,res) => {
     }
 }
 
+let doiMatKhau = async (req, res) => {
+    try {
+        let data = await userService.doiMatKhau(req.body);
+        return res.status(200).json(data);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
@@ -93,4 +106,5 @@ module.exports = {
     handleUpdateUser: handleUpdateUser,
     loginFacebook: loginFacebook,
     getAllcode: getAllcode,
+    doiMatKhau: doiMatKhau
 }

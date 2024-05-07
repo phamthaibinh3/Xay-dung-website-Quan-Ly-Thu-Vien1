@@ -16,13 +16,13 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             ngayMuon: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING
             },
             tinhTrang: {
                 type: Sequelize.STRING
             },
             ngayTraDuKien: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING
             },
 
 

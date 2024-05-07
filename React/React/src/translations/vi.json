@@ -38,7 +38,9 @@
             "quan-ly-noi-bat": "Quản lý tài liệu nổi bật",
             "loai-sach": "Loại sách",
             "quan-ly-loai-sach": "Quản lý loại sách",
-            "quan-ly-nha-xuat-ban": "Quản lý nhà xuất bản"
+            "quan-ly-nha-xuat-ban": "Quản lý nhà xuất bản",
+            "theSach": "Quản lý thuê sách",
+            "quan-ly-the-sach": "Quản lý thuê sách"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

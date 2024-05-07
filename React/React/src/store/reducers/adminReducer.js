@@ -15,6 +15,7 @@ const initialState = {
     theThanhVien: [],
     idFB: [],
     luotThich: [],
+    phieuMuon: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -184,6 +185,16 @@ const adminReducer = (state = initialState, action) => {
                 ...state,
             }
             
+        case actionTypes.GET_PHIEUMUON_SUCCESS:
+            state.phieuMuon = action.dataPhieuMuon;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_PHIEUMUON_FAIL:
+            state.phieuMuon = [];
+            return {
+                ...state,
+            }
         default:
             return state;
     }

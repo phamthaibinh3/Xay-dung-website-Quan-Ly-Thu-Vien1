@@ -16,10 +16,16 @@ class ChiTietTLNB extends Component {
             quantity: 1,
             liked: false,
             isOpenModalbook: false,
+            liked: ''
         }
     }
 
     async componentDidMount() {
+        const liked = localStorage.getItem('liked');
+        if (liked !== null) {
+            this.setState({ liked: JSON.parse(liked) });
+        }
+        this.props.layLuotThich()
         let id = this.props.match.params.id;
         this.props.getBookID(id)
     }
@@ -30,13 +36,25 @@ class ChiTietTLNB extends Component {
                 book: this.props.SachID
             })
         }
+
+        if (prevState.liked !== this.state.liked) {
+            localStorage.setItem('liked', JSON.stringify(this.state.liked));
+        }
     }
 
     handleLikeBook = () => {
-        alert('toi kick dc roi ');
+        const { userInfo } = this.props;
+        const { book, liked } = this.state;
+
         this.setState(prevState => ({
-            liked: !prevState.liked // Đảo ngược giá trị của liked khi bấm vào
-        }));
+            liked: !prevState.liked
+        }), () => {
+            this.props.createLuotThich({
+                maNguoiDung: userInfo.id,
+                maSach: book.id,
+                trangThai: this.state.liked
+            });
+        });
     }
 
     handleDecreaseQuantity = () => {
@@ -117,7 +135,7 @@ class ChiTietTLNB extends Component {
                                             <div className="product_introduce-slider--media">
 
                                                 <div className="product_introduce-slider--liked">
-                                                    <i onClick={() => this.handleLikeBook()} className={liked ? "fas fa-heart liked" : "fas fa-heart"}></i>
+                                                    <i onClick={() => this.handleLikeBook()} className={liked ? "fas fa-heart" : "fas fa-heart liked"}></i>
                                                     <span>   Đã thích {book.luotThich}</span>
                                                 </div>
                                             </div>
@@ -247,7 +265,9 @@ class ChiTietTLNB extends Component {
 
 const mapStateToProps = state => {
     return {
-        SachID: state.admin.idSach
+        SachID: state.admin.idSach,
+        userInfo: state.user.userInfo,
+        trangThaiLike: state.admin.luotThich,
     };
 };
 
@@ -255,6 +275,8 @@ const mapDispatchToProps = dispatch => {
     return {
         getBookID: (id) => dispatch(actions.getBookID(id)),
         createHoaDonTT: (data) => dispatch(actions.createHoaDonTT(data)),
+        createLuotThich: (data) => dispatch(actions.createLuotThich(data)),
+        layLuotThich: () => dispatch(actions.layLuotThich())
     };
 };
 
