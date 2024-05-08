@@ -52,6 +52,9 @@ const initWebRoutes = (app) => {
     router.get('/api/get-book-new', bookController.getBookNew)
     router.get('/api/get-book-id', bookController.getBookId);
     router.get('/api/get-book-outstanding', bookController.getBookOutstanding);
+    router.get('/api/get-all-book-outstanding', bookController.getAllBookOutstanding);
+    router.get('/api/get-all-book-tai-lieu-moi', bookController.getAllTaiLieuMoiNhat);
+
 
     router.get('/api/get-all-loai-sach', kindOfBookController.getLoaiSach);
     router.post('/api/create-loai-sach', kindOfBookController.createLoaiSach);

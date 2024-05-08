@@ -1,3 +1,4 @@
+import { reject } from 'lodash';
 import bookService from '../services/bookService'
 
 let getAllBook = async (req, res) => {
@@ -119,7 +120,7 @@ let getBookNew = async (req, res) => {
     }
 }
 
-let getBookId = async (req,res) => {
+let getBookId = async (req, res) => {
     try {
         let data = await bookService.getBookId(req.query.id);
         return res.status(200).json(data)
@@ -132,7 +133,7 @@ let getBookId = async (req,res) => {
     }
 }
 
-let getBookOutstanding = async(req,res) => {
+let getBookOutstanding = async (req, res) => {
     try {
         let data = await bookService.getBookOutstanding();
         return res.status(200).json(data)
@@ -152,7 +153,7 @@ let likeBook = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.status(200).json({
-            errCode:-1,
+            errCode: -1,
             errMessage: 'Loi Server'
         })
     }
@@ -190,6 +191,31 @@ let unlikeBook = async (req, res) => {
     }
 }
 
+let getAllBookOutstanding = async(req,res) => {
+    try {
+        let data = await bookService.getAllBookOutstanding();
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            message: 'Lỗi server'
+        });
+    }
+}
+
+let getAllTaiLieuMoiNhat = async(req,res) => {
+    try {
+        let data = await bookService.getAllTaiLieuMoiNhat();
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -203,5 +229,7 @@ module.exports = {
     getBookId: getBookId,
     getBookOutstanding: getBookOutstanding,
     likeBook: likeBook,
-    unlikeBook: unlikeBook
+    unlikeBook: unlikeBook,
+    getAllBookOutstanding: getAllBookOutstanding,
+    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat
 }

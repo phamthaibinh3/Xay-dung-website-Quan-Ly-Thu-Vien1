@@ -7,7 +7,7 @@ import {
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    phieuMuon
+    phieuMuon, getAllTLNB, getAllTLMN
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -993,6 +993,54 @@ export const createMuonSach = (data) => {
             console.log('TAO_PHIEUMUON_FAIL', e);
             dispatch({
                 type: actionTypes.TAO_PHIEUMUON_FAIL
+            })
+        }
+    }
+}
+
+export const layAllTLNB = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllTLNB();
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.GET_ALL_TLNB_SUCCESS,
+                    dataAllTLNB: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALL_TLNB_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_ALL_TLNB_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_ALL_TLNB_FAIL
+            })
+        }
+    }
+}
+
+export const layAllTLMN = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllTLMN();
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.GET_ALL_TLMN_SUCCESS,
+                    dataAllTLMN: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALL_TLMN_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_ALL_TLMN_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_ALL_TLMN_FAIL
             })
         }
     }

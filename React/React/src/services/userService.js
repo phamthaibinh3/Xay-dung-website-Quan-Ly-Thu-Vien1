@@ -157,6 +157,14 @@ let xoaHoaDonTamThoi = (data) => {
     return axios.delete(`/api/xoa-hoa-don-tam-thoi?id=${data}`)
 }
 
+let getAllTLNB = () => {
+    return axios.get('/api/get-all-book-outstanding')
+}
+
+let getAllTLMN = () => {
+    return axios.get('/api/get-all-book-tai-lieu-moi')
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -168,5 +176,6 @@ export {
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
     layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
+    getAllTLNB, getAllTLMN
 
 }

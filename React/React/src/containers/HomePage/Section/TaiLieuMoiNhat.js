@@ -31,6 +31,10 @@ class TaiLieuMoiNhat extends Component {
         this.props.history.push(`/chi-tiet-tai-lieu-moi-nhat/${item.id}`)
     }
 
+    handleXemThemTLMN = () => {
+        this.props.history.push(`/all-TLMN`)
+    }
+
     render() {
         let { arrBook } = this.state;
         // console.log('check state11: ', this.state.arrBook);
@@ -39,7 +43,7 @@ class TaiLieuMoiNhat extends Component {
                 <div className='section-container'>
                     <div className='section-header'>
                         <span className='title-section'>Tài liệu mới</span>
-                        <button className='btn-section'>Xem them</button>
+                        <button onClick={() => this.handleXemThemTLMN()} className='btn-section'>Xem thêm</button>
                     </div>
                     <div className='section-body'>
                         <Slider {...this.props.settings}>

@@ -330,6 +330,38 @@ let likeBook = async (idBook) => {
     })
 }
 
+let getAllBookOutstanding = () => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let data = await db.Sach.findAll({
+                order: [['luotThich', 'DESC']],
+            })
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getAllTaiLieuMoiNhat = () => {
+    return new Promise(async (resolve,reject) => {
+        try {
+            let data = await db.Sach.findAll({
+                order: [['createdAt', 'DESC']],
+            })
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -342,5 +374,7 @@ module.exports = {
     getBookNew: getBookNew,
     getBookId: getBookId,
     getBookOutstanding: getBookOutstanding,
-    likeBook: likeBook
+    likeBook: likeBook,
+    getAllBookOutstanding: getAllBookOutstanding,
+    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat
 }

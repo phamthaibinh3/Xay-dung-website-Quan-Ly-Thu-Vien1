@@ -9,7 +9,9 @@ export const path = {
     DETAIL_KIND_OF_BOOK_ADMIN: '/detail-kind-of-book-admin/:id',
     DETAIL_BOOK_TLNB:'/chi-tiet-tai-lieu-noi-bat/:id',
     GIO_HANG: '/gio-hang/:id',
-    THUE_SACH: '/thue-sach/:id'
+    THUE_SACH: '/thue-sach/:id',
+    ALL_TLNB: '/all-TLNB',
+    ALL_TLMN: '/all-TLMN'
 };
 
 export const LANGUAGES = {

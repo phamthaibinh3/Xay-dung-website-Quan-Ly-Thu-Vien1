@@ -38,7 +38,7 @@ let deleteLoaiSach = async (req, res) => {
     }
 }
 
-let getLoaiSachId = async(req, res) => {
+let getLoaiSachId = async (req, res) => {
     try {
         let data = await kindOfBookService.getLoaiSachId(req.query.id);
         return res.status(200).json(data)
@@ -51,7 +51,7 @@ let getLoaiSachId = async(req, res) => {
     }
 }
 
-let editLoaiSach = async(req,res) => {
+let editLoaiSach = async (req, res) => {
     try {
         let update = await kindOfBookService.updateLoaiSach(req.body);
         return res.status(200).json(update);

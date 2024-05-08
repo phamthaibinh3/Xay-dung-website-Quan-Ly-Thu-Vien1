@@ -27,6 +27,8 @@ import ChiTietTLMN from './KhachHang/Sach/ChiTietTLMN.js';
 import ChiTietTLNB from './KhachHang/Sach/ChiTietTLNB.js';
 import ThueSach from './KhachHang/Sach/ThueSach.js';
 import ThueSach1 from './KhachHang/Sach/ThueSach1.js';
+import AllTLNB from './HomePage/Section/AllTLNB.js';
+import AllTMN from './HomePage/Section/AllTMN.js';
 class App extends Component {
 
     // handlePersistorState = () => {
@@ -66,6 +68,9 @@ class App extends Component {
                                     <Route path={path.DETAIL_BOOK_TLNB} component={ChiTietTLNB} />
                                     <Route path={path.GIO_HANG} component={ThueSach} />
                                     <Route path={path.THUE_SACH} component={ThueSach1} />
+                                    <Route path={path.ALL_TLNB} component={AllTLNB} />
+                                    <Route path={path.ALL_TLMN} component={AllTMN} />
+
                                 </Switch>
                             </CustomScrollbars>
                         </div>

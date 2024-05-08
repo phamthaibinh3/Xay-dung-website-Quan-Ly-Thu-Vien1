@@ -16,6 +16,8 @@ const initialState = {
     idFB: [],
     luotThich: [],
     phieuMuon: [],
+    taiLieuNoiBat: [],
+    taiLieuMoiNhat: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -192,6 +194,28 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_PHIEUMUON_FAIL:
             state.phieuMuon = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALL_TLNB_SUCCESS:
+            state.taiLieuNoiBat = action.dataAllTLNB;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_TLNB_FAIL:
+            state.taiLieuNoiBat = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALL_TLMN_SUCCESS:
+            state.taiLieuMoiNhat = action.dataAllTLMN;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_TLMN_FAIL:
+            state.taiLieuMoiNhat = [];
             return {
                 ...state,
             }
