@@ -628,6 +628,7 @@ export const getHoaDonTT = () => {
         try {
             let res = await getHoaDonTamThoi();
             if (res && res.errCode === 0) {
+                console.log('check res: ',res);
                 // toast.success('Thêm thành công');
                 dispatch({
                     type: actionTypes.GET_HOA_DON_TT_SUCCESS,

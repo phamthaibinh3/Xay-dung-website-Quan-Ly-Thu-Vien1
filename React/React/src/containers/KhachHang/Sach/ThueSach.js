@@ -31,8 +31,6 @@ class ThueSach extends Component {
                 book: this.props.SachID
             })
         }
-        let { userInfo } = this.props;
-        console.log('check userInfo ', userInfo);
         if (prevProps.hoaDonTT !== this.props.hoaDonTT) {
             this.setState({
                 hoaDonTT: this.props.hoaDonTT
@@ -129,7 +127,9 @@ class ThueSach extends Component {
 
     render() {
         let { book, quantity, hoaDonTT } = this.state
-        
+
+        console.log('check hoa don tam thoi: ', this.state.hoaDonTT);
+
         return (
             // <Modal
             //     isOpen={this.props.isOpen}
@@ -190,8 +190,8 @@ class ThueSach extends Component {
                         {hoaDonTT && hoaDonTT.length > 0 &&
                             hoaDonTT.map((item, index) => {
                                 let imageBase64 = '';
-                                if (item.anh) {
-                                    imageBase64 = new Buffer(item.anh, 'base64').toString('binary')
+                                if (item.HoaDonTTSach.anh.data) {
+                                    imageBase64 = new Buffer(item.HoaDonTTSach.anh.data, 'base64').toString('binary')
                                 }
                                 return (
                                     <div key={index} className="list">
@@ -202,7 +202,7 @@ class ThueSach extends Component {
                                             {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
                                         </div>
                                         <div className="list-to">
-                                            <div className="list-name">{item.tieuDe}</div>
+                                            <div className="list-name">{item.HoaDonTTSach.tieuDe}</div>
                                             <div className="list-soluong">
                                                 <div className="list-soluongnua">
                                                     <i class="fas fa-minus" onClick={this.handleDecreaseQuantity}></i>
@@ -210,7 +210,7 @@ class ThueSach extends Component {
                                                     <i class="fas fa-plus" onClick={this.handleIncreaseQuantity}></i>
                                                 </div>
                                             </div>
-                                            <div className="list-thanhtien">{item.gia} đ</div>
+                                            <div className="list-thanhtien">{item.HoaDonTTSach.gia} đ</div>
                                         </div>
                                         <div className="list-xoa">
                                             <i onClick={() => this.handleDeleteHoaDonTT(item.id)} className="fas fa-trash-alt"></i>
@@ -278,7 +278,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThueSach);
-
-
-
-

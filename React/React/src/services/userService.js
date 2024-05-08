@@ -87,17 +87,7 @@ let hoaDon = (data) => {
     return axios.post('/api/tao-hoa-don',data)
 }
 
-let getHoaDonTamThoi = () => {
-    return axios.get('/api/lay-hoa-don-tam-thoi')
-}
 
-let taoHoaDonTamThoi = (data) => {
-    return axios.post('/api/tao-hoa-don-tam-thoi',data)
-}
-
-let xoaHoaDonTamThoi = (data) => {
-    return axios.delete(`/api/xoa-hoa-don-tam-thoi?id=${data}`)
-}
 
 let layNhaXuatBan = () => {
     return axios.get('/api/get-nha-xuat-ban')
@@ -153,6 +143,18 @@ const duyetPhieuMuon = (data) => {
 
 const huyPhieuMuon = (data) => {
     return axios.post('/api/huy-phieu-muon',data)
+}
+
+let getHoaDonTamThoi = () => {
+    return axios.get('/api/lay-hoa-don-tam-thoi')
+}
+
+let taoHoaDonTamThoi = (data) => {
+    return axios.post('/api/tao-hoa-don-tam-thoi', data)
+}
+
+let xoaHoaDonTamThoi = (data) => {
+    return axios.delete(`/api/xoa-hoa-don-tam-thoi?id=${data}`)
 }
 
 export {

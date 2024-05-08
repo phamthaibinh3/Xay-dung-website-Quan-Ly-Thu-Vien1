@@ -11,22 +11,14 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            HoaDonTT.belongsTo(models.User, { foreignKey: 'maNguoiDung', as: 'HoaDonTTUser' });
+            HoaDonTT.belongsTo(models.Sach, { foreignKey: 'maSach', as: 'HoaDonTTSach' });
         }
     };
     HoaDonTT.init({
-        tieuDe: DataTypes.STRING,
-        maNXB: DataTypes.STRING,
-        namXuatBan: DataTypes.STRING,
-        maDanhMuc: DataTypes.STRING,
-        soLuong: DataTypes.INTEGER,
-        maHoaDon: DataTypes.INTEGER,
-        gia: DataTypes.INTEGER,
-        tacGia: DataTypes.STRING,
-        maLoaiSach: DataTypes.STRING,
-        anh: DataTypes.BLOB('long'),
-        luotThich: DataTypes.INTEGER,
-        moTa: DataTypes.TEXT,
-        ngonNgu: DataTypes.STRING
+        maSach: DataTypes.INTEGER,
+        maNguoiDung: DataTypes.INTEGER,
+        gia: DataTypes.DOUBLE
     }, {
         sequelize,
         modelName: 'HoaDonTT',

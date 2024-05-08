@@ -28,7 +28,14 @@ let taoHoaDon = (data) => {
 let layHoaDonTT = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let data = await db.HoaDonTT.findAll();
+            let data = await db.HoaDonTT.findAll({
+                include: [
+                    { model: db.Sach, as: 'HoaDonTTSach' },
+                    { model: db.User, as: 'HoaDonTTUser' }
+                ],
+                raw: true,
+                nest: true
+            });
             resolve({
                 errCode: 0,
                 data: data
@@ -48,20 +55,35 @@ let taoHoaDonTT = async (data) => {
                     errMessage: 'Chua co data'
                 })
             } else {
-                await db.HoaDonTT.create({
-                    tieuDe: data.tieuDe,
-                    soLuong: data.soLuong,
-                    tacGia: data.tacGia,
-                    maDanhMuc: data.maDanhMuc,
-                    gia: data.gia,
-                    anh: data.anh,
-                    maLoaiSach: data.loaiSach,
-                    moTa: data.moTa
+                let user = await db.User.findOne({
+                    where: { id: data.maNguoiDung }
                 })
-                resolve({
-                    errCode: 0,
-                    errMessage: 'thanh cong'
-                })
+                if (!user) {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'Nguoi dung khong ton tai'
+                    })
+                } else {
+                    let sach = await db.Sach.findOne({
+                        where: { id: data.maSach }
+                    })
+                    if (!sach) {
+                        resolve({
+                            errCode: 2,
+                            errMessage: 'Sach khong ton tai'
+                        })
+                    } else {
+                        await db.HoaDonTT.create({
+                            maSach: data.maSach,
+                            maNguoiDung: data.maNguoiDung,
+                            gia: data.gia
+                        })
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'thanh cong'
+                        })
+                    }
+                }
             }
         } catch (e) {
             reject(e)

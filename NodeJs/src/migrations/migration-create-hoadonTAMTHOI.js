@@ -9,45 +9,14 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            tieuDe: {
-                type: Sequelize.STRING
-            },
-            maNXB: {
+            maSach: {
                 type: Sequelize.INTEGER
             },
-            namXuatBan: {
-                type: Sequelize.STRING
-            },
-            maDanhMuc: {
-                type: Sequelize.STRING
-            },
-            soLuong: {
-                type: Sequelize.INTEGER
-            },
-            maHoaDon: {
+            maNguoiDung: {
                 type: Sequelize.INTEGER
             },
             gia: {
-                type: Sequelize.INTEGER
-            },
-            tacGia: {
-                type: Sequelize.STRING
-            },
-            maLoaiSach: {
-                type: Sequelize.STRING
-            },
-            anh: {
-                type: Sequelize.BLOB('long')
-            },
-            luotThich: {
-                type: Sequelize.INTEGER,
-                defaultValue: 0
-            },
-            moTa: {
-                type: Sequelize.TEXT,
-            },
-            ngonNgu: {
-                type: Sequelize.STRING,
+                type: Sequelize.DOUBLE
             },
 
 

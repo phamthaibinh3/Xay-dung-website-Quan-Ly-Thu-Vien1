@@ -73,10 +73,16 @@ class ChiTietTLNB extends Component {
         }
     };
 
-    handleBuyBook = () => {
+    handleBuyBook = async () => {
         // this.setState({
         //     isOpenModalbook: true
         // })
+        let { book } = this.state;
+        await this.props.createHoaDonTT({
+            maNguoiDung: this.props.userInfo.id,
+            maSach: this.props.match.params.id,
+            gia: book.gia
+        })
         this.props.history.push(`/gio-hang/${this.props.match.params.id}`)
     }
     togglebookModal = () => {
@@ -85,17 +91,12 @@ class ChiTietTLNB extends Component {
         })
     }
 
-    handleThemGioHang = () => {
+    handleThemGioHang = async() => {
         let { book } = this.state;
-        this.props.createHoaDonTT({
-            tieuDe: book.tieuDe,
-            soLuong: book.soLuong,
-            tacGia: book.tacGia,
-            maDanhMuc: book.maDanhMuc,
-            gia: book.gia,
-            anh: book.anh.data,
-            maLoaiSach: book.loaiSach,
-            moTa: book.moTa
+        await this.props.createHoaDonTT({
+            maNguoiDung: this.props.userInfo.id,
+            maSach: this.props.match.params.id,
+            gia: book.gia
         })
     }
 
@@ -106,6 +107,10 @@ class ChiTietTLNB extends Component {
         if (book.anh) {
             imageBase64 = new Buffer(book.anh, 'base64').toString('binary')
         }
+
+        // console.log('check id nguoi dung: ', this.props.userInfo.id);
+        // console.log('check id sach: ', this.props.match.params.id);
+        // console.log('check gia: ',this.state.book.gia);
         return (
             <>
                 {/* <ThueSach
@@ -114,8 +119,9 @@ class ChiTietTLNB extends Component {
                     bookid={this.props.match.params.id}
                     // createbook={this.createbook}
                 /> */}
-
-                <HomeHeader isShowBanner={false} />
+                <div>
+                    <HomeHeader isShowBanner={false} />
+                </div>
                 <div>
                     <button onClick={() => this.handleBuyBook()}>Giỏ hàng nè</button>
                 </div>

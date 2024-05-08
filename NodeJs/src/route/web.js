@@ -62,7 +62,7 @@ const initWebRoutes = (app) => {
     router.get('/api/get-phieu-muon', phieuMuonController.layPhieuMuon);
     router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon);
     router.post('/api/duyet-phieu-muon', phieuMuonController.duyetPhieuMuon);
-    router.post('/api/huy-phieu-muon', phieuMuonController.huyPhieuMuon)
+    router.post('/api/huy-phieu-muon', phieuMuonController.huyPhieuMuon);
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
 

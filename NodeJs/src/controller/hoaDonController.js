@@ -1,6 +1,6 @@
 import hoaDonService from '../services/hoaDonService'
 
-let taoHoaDon = async(req,res) => {
+let taoHoaDon = async (req, res) => {
     try {
         let data = await hoaDonService.taoHoaDon(req.body);
         return res.status(200).json(data)
@@ -13,9 +13,9 @@ let taoHoaDon = async(req,res) => {
     }
 }
 
-let layHoaDonTT = async(req,res) => {
+let layHoaDonTT = async (req, res) => {
     try {
-        let data = await hoaDonService.layHoaDonTT(req.body);
+        let data = await hoaDonService.layHoaDonTT();
         return res.status(200).json(data)
     } catch (e) {
         console.log(e);
@@ -26,7 +26,7 @@ let layHoaDonTT = async(req,res) => {
     }
 }
 
-let taoHoaDonTT = async(req,res) => {
+let taoHoaDonTT = async (req, res) => {
     try {
         let data = await hoaDonService.taoHoaDonTT(req.body);
         return res.status(200).json(data)
@@ -39,7 +39,7 @@ let taoHoaDonTT = async(req,res) => {
     }
 }
 
-let xoaHoaDonTamThoi = async(req,res) => {
+let xoaHoaDonTamThoi = async (req, res) => {
     try {
         let data = await hoaDonService.xoaHoaDonTamThoi(req.query.id);
         return res.status(200).json(data)
@@ -52,6 +52,6 @@ let xoaHoaDonTamThoi = async(req,res) => {
     }
 }
 
-module.exports ={
+module.exports = {
     taoHoaDon, layHoaDonTT, taoHoaDonTT, xoaHoaDonTamThoi
 }

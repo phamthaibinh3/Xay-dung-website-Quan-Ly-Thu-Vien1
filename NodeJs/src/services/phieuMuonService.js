@@ -73,32 +73,44 @@ let duyetPhieuMuon = (data) => {
                     errMessage: 'Chưa có data'
                 })
             } else {
-                let phieuMuon = await db.PhieuMuon.findOne({
+                let nhanVien = await db.User.findOne({
                     where: {
-                        id: data.id,
-                        tinhTrang: 'Chưa duyệt'
-                    },
-                    raw: false
+                        id: data.idNhanVien,
+                        vaiTro: 'R3'
+                    }
                 })
-                if (!phieuMuon) {
+                if (!nhanVien) {
                     resolve({
-                        errCode: 2,
-                        errMessage: 'Phiếu đã được duyệt hoặc không tồn tại'
+                        errCode: 3,
+                        errMessage: 'Nhan vien khong dung'
                     })
                 } else {
-                    phieuMuon.tinhTrang = 'Đang mượn'
-
-                    let soLuongSach = await db.Sach.findOne({
-                        where: { id: data.maSach },
+                    let phieuMuon = await db.PhieuMuon.findOne({
+                        where: {
+                            where: { id: data.id },
+                            tinhTrang: 'Chưa duyệt'
+                        },
                         raw: false
                     })
-                    soLuongSach.soLuong -= 1;
-                    await soLuongSach.save();
-                    await phieuMuon.save();
-                    resolve({
-                        errCode: 0,
-                        errMessage: 'Thành công'
-                    })
+                    if (!phieuMuon) {
+                        resolve({
+                            errCode: 2,
+                            errMessage: 'Phiếu đã được duyệt hoặc không tồn tại'
+                        })
+                    } else {
+                        phieuMuon.tinhTrang = 'Đang mượn'
+                        let soLuongSach = await db.Sach.findOne({
+                            where: { id: data.maSach },
+                            raw: false
+                        })
+                        soLuongSach.soLuong -= 1;
+                        await soLuongSach.save();
+                        await phieuMuon.save();
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'Thành công'
+                        })
+                    }
                 }
             }
         } catch (e) {
