@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'maNguoiDung',
         as: 'LuotThichUser',
       });
-      User.hasMany(models.PhieuMuon, { foreignKey: 'maNguoiDung', as: 'PhieuMuon' });
+      User.hasMany(models.PhieuMuon, { foreignKey: 'maNguoiDung', as: 'NguoiMuon' });
 
       User.hasOne(models.TheThuVien, { foreignKey: 'maNguoiDung', as: 'nguoiDung' });
       User.hasMany(models.HoaDonTT, { foreignKey: 'maNguoiDung', as: 'HoaDonTTUser' });

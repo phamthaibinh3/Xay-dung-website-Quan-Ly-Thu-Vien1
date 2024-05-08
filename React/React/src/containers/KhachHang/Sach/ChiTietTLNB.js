@@ -85,6 +85,7 @@ class ChiTietTLNB extends Component {
         })
         this.props.history.push(`/gio-hang/${this.props.match.params.id}`)
     }
+    
     togglebookModal = () => {
         this.setState({
             isOpenModalbook: !this.state.isOpenModalbook
@@ -98,6 +99,10 @@ class ChiTietTLNB extends Component {
             maSach: this.props.match.params.id,
             gia: book.gia
         })
+    }
+
+    handleThueSach = () => {
+        this.props.history.push(`/thue-sach/${this.props.match.params.id}`)
     }
 
     render() {
@@ -191,6 +196,9 @@ class ChiTietTLNB extends Component {
                                                         Thêm Vào Giỏ Hàng</button>
                                                     <button onClick={() => this.handleBuyBook()} className="introduce-buy-click">
                                                         Mua Ngay
+                                                    </button>
+                                                    <button onClick={() => this.handleThueSach()} className="introduce-rent-click">
+                                                        Thuê sách
                                                     </button>
                                                 </div>
                                             </div>

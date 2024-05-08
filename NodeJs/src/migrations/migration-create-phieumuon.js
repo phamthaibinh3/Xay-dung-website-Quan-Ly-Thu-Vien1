@@ -24,6 +24,12 @@ module.exports = {
             ngayTraDuKien: {
                 type: Sequelize.STRING
             },
+            maNhanVien: {
+                type: Sequelize.INTEGER
+            },
+            gia: {
+                type: Sequelize.DOUBLE
+            },
 
 
             createdAt: {

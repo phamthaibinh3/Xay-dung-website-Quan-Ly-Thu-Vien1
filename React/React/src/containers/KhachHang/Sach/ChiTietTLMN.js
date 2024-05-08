@@ -32,7 +32,7 @@ class ChiTietTLMN extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.SachID !== this.props.SachID) {
             let id = this.props.match.params.id;
-            // this.props.getBookID(id)
+            this.props.getBookID(id)
             this.setState({
                 book: this.props.SachID
             })
@@ -74,6 +74,19 @@ class ChiTietTLMN extends Component {
 
     handleThueSach = () => {
         this.props.history.push(`/thue-sach/${this.props.match.params.id}`)
+    }
+
+    handleBuyBook = async () => {
+        // this.setState({
+        //     isOpenModalbook: true
+        // })
+        let { book } = this.state;
+        await this.props.createHoaDonTT({
+            maNguoiDung: this.props.userInfo.id,
+            maSach: this.props.match.params.id,
+            gia: book.gia
+        })
+        this.props.history.push(`/gio-hang/${this.props.match.params.id}`)
     }
 
     render() {
@@ -154,7 +167,7 @@ class ChiTietTLMN extends Component {
                                                     <button className="introduce-buy-add">
                                                         <i class="fas fa-cart-plus"></i>
                                                         Thêm Vào Giỏ Hàng</button>
-                                                    <button className="introduce-buy-click">
+                                                    <button onClick={() => this.handleBuyBook()} className="introduce-buy-click">
                                                         Mua Ngay
                                                     </button>
                                                     <button onClick={() => this.handleThueSach()} className="introduce-rent-click">
@@ -249,7 +262,8 @@ const mapDispatchToProps = dispatch => {
         getBookID: (id) => dispatch(actions.getBookID(id)),
         createLuotThich: (data) => dispatch(actions.createLuotThich(data)),
         layLuotThich: () => dispatch(actions.layLuotThich()),
-        createMuonSach: (data) => dispatch(actions.createMuonSach(data))
+        createMuonSach: (data) => dispatch(actions.createMuonSach(data)),
+        createHoaDonTT: (data) => dispatch(actions.createHoaDonTT(data)),
     };
 };
 

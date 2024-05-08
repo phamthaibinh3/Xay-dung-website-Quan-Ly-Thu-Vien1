@@ -933,6 +933,7 @@ export const duyetMuonSach = (data) => {
         try {
             let res = await duyetPhieuMuon(data);
             if (res && res.errCode === 0) {
+                console.log('check res: ',res);
                 toast.success('Thành công')
                 dispatch({
                     type: actionTypes.DUYET_PHIEUMUON_SUCCESS,

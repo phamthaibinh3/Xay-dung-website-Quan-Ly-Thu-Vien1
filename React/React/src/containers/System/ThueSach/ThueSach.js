@@ -30,8 +30,9 @@ class ThueSach extends Component {
     handleDuyetPhieuMuon = async (item) => {
         // console.log('check: ', item);
         await this.props.duyetMuonSach({
-            id: item.id,
-            maSach: item.maSach
+            idPhieuMuon: item.id,
+            maSach: item.maSach,
+            idNhanVien: this.props.userInfo.id
         });
     }
 
@@ -41,6 +42,7 @@ class ThueSach extends Component {
 
     render() {
         let { allPhieuMuon } = this.state;
+        // console.log('check id nguoi dung: ', this.props.userInfo.id)
         return (
             <>
                 <div className="contener">
@@ -95,7 +97,8 @@ class ThueSach extends Component {
 
 const mapStateToProps = state => {
     return {
-        phieuMuon: state.admin.phieuMuon
+        phieuMuon: state.admin.phieuMuon,
+        userInfo: state.user.userInfo,
     };
 };
 
