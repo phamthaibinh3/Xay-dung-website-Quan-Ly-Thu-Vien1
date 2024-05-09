@@ -55,7 +55,6 @@ const initWebRoutes = (app) => {
     router.get('/api/get-all-book-outstanding', bookController.getAllBookOutstanding);
     router.get('/api/get-all-book-tai-lieu-moi', bookController.getAllTaiLieuMoiNhat);
 
-
     router.get('/api/get-all-loai-sach', kindOfBookController.getLoaiSach);
     router.post('/api/create-loai-sach', kindOfBookController.createLoaiSach);
     router.delete('/api/delete-loai-sach', kindOfBookController.deleteLoaiSach);

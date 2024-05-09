@@ -3,6 +3,15 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 
+    .product-img:hover {
+        cursor: pointer;
+    }
+
+    .product h2:hover {
+        cursor: pointer;
+        color: red;
+    }
+
     .product {
         background-color: #f0f0f0;
         padding: 10px;
@@ -22,6 +31,7 @@
         p {
             margin-bottom: 5px;
         }
+
     }
 
     /* Media query cho các kích thước màn hình nhỏ hơn */

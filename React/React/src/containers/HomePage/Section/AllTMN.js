@@ -26,6 +26,11 @@ class ALL_TLMN extends Component {
         }
     }
 
+    handleDetailBook = (item) => {
+        // alert('check hehe: '+item.id)
+        this.props.history.push(`/chi-tiet-tai-lieu-moi-nhat/${item.id}`)
+    }
+
     render() {
         const { books } = this.state;
         console.log('check books: ', this.state.books);
@@ -42,7 +47,7 @@ class ALL_TLMN extends Component {
                                 }
                                 return (
                                     <div className="product">
-                                        {imageBase64 && <img className="product-img" src={imageBase64} alt="" />}
+                                        {imageBase64 && <img onClick={() => this.handleDetailBook(item)} className="product-img" src={imageBase64} alt="" />}
                                         <h2>{item.tieuDe}</h2>
                                         <p>{item.moTa}</p>
                                         <p>{item.gia}</p>
