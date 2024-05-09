@@ -1,3 +1,4 @@
+import { reject } from 'lodash';
 import phieuMuonService from '../services/phieuMuonService'
 
 let layPhieuMuon = async (req, res) => {
@@ -52,7 +53,34 @@ let huyPhieuMuon = async (req, res) => {
     }
 }
 
+let traSach = async (req,res) => {
+    try {
+        let data = await phieuMuonService.traSach(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let layTraSach = async (req,res) => {
+    try {
+        let data = await phieuMuonService.layTraSach();
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     layPhieuMuon, taoPhieuMuon,
-    duyetPhieuMuon, huyPhieuMuon
+    duyetPhieuMuon, huyPhieuMuon,
+    traSach, layTraSach
 }

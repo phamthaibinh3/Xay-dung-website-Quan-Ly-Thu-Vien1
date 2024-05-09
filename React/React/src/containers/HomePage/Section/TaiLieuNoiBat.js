@@ -16,6 +16,16 @@ class TaiLieuNoiBat extends Component {
             arrBook: [],
         }
     }
+
+    async componentDidMount(){
+        let res = await getTaiLieuNoiBat('');
+        if (res && res.errCode === 0) {
+            this.setState({
+                arrBook: res.data
+            })
+        }
+    }
+
     async componentDidUpdate() {
         let res = await getTaiLieuNoiBat('');
         if (res && res.errCode === 0) {

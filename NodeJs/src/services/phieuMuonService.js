@@ -7,8 +7,8 @@ let layPhieuMuon = () => {
                 include: [
                     { model: db.Sach, as: 'SachMuon' }
                 ],
-                raw:false,
-                nest:true
+                raw: false,
+                nest: true
             });
             resolve({
                 errCode: 0,
@@ -176,7 +176,103 @@ let huyPhieuMuon = (data) => {
     })
 }
 
+let traSach = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Không có dữ liệu đầu vào'
+                });
+            } else {
+                // 1. Xác minh dữ liệu đầu vào
+                const { idSach } = data;
+                if (!idSach) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Thiếu thông tin về ID sách'
+                    });
+                }
+
+                // 2. Tìm phiếu mượn tương ứng với sách được trả
+                let phieuMuon = await db.PhieuMuon.findOne({
+                    where: {
+                        id: data.id,
+                        maSach: idSach,
+                        tinhTrang: 'Đang mượn'
+                    }
+                });
+
+                if (!phieuMuon) {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Không tìm thấy phiếu mượn tương ứng với sách đã trả'
+                    });
+                }
+
+                // 3. Tính số ngày trễ
+                const ngayTraDuKien = moment(phieuMuon.ngayTraDuKien, 'DD/MM/YYYY');
+                const ngayTraThucTe = moment();
+                const soNgayTre = ngayTraThucTe.diff(ngayTraDuKien, 'DD/MM/YYYY');
+
+                // 4. Tính số tiền phạt
+                let soTienPhat = 0;
+                if (soNgayTre > 0) {
+                    soTienPhat = soNgayTre * 2000;
+                }
+
+                // 5. Cập nhật trạng thái phiếu mượn
+                await db.PhieuMuon.update(
+                    { tinhTrang: 'Đã trả' },
+                    { where: { id: phieuMuon.id } }
+                );
+
+                // 6. Cập nhật số lượng sách
+                await db.Sach.increment('soLuong', { by: 1, where: { id: idSach } });
+
+                // 7. Tạo phiếu trả
+                await db.PhieuTra.create({
+                    maPhieuMuon: phieuMuon.id,
+                    ngayTra: ngayTraThucTe.format('DD/MM/YYYY'),
+                    soTienPhat: soTienPhat
+                });
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Trả sách thành công. Số tiền phạt: ' + soTienPhat + 'đ'
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+
+let layTraSach = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.PhieuTra.findAll({
+                include: [
+                    { model: db.PhieuMuon, as: 'phieuMuon' }
+                ],
+                order: [['createdAt', 'DESC']],
+                raw:false,
+                nest: true
+            })
+            
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     layPhieuMuon, taoPhieuMuon,
-    duyetPhieuMuon, huyPhieuMuon
+    duyetPhieuMuon, huyPhieuMuon,
+    traSach, layTraSach
 }

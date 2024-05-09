@@ -165,6 +165,16 @@ let getAllTLMN = () => {
     return axios.get('/api/get-all-book-tai-lieu-moi')
 }
 
+let traSach = (data) => {
+    return axios.post('/api/tra-sach',data)
+}
+
+let layTraSach = () => {
+    return axios.get('/api/lay-tra-sach')
+}
+
+
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -176,6 +186,6 @@ export {
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
     layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    getAllTLNB, getAllTLMN
+    getAllTLNB, getAllTLMN, traSach, layTraSach
 
 }

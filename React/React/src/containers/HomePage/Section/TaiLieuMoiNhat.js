@@ -17,6 +17,15 @@ class TaiLieuMoiNhat extends Component {
         }
     }
 
+    async componentDidMount(){
+        let res = await getBookNew('');
+        if (res && res.errCode === 0) {
+            this.setState({
+                arrBook: res.data
+            })
+        }
+    }
+
     async componentDidUpdate() {
         let res = await getBookNew('');
         if (res && res.errCode === 0) {

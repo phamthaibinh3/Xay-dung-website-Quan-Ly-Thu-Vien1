@@ -40,7 +40,8 @@
             "quan-ly-loai-sach": "Quản lý loại sách",
             "quan-ly-nha-xuat-ban": "Quản lý nhà xuất bản",
             "theSach": "Quản lý thuê sách",
-            "quan-ly-the-sach": "Quản lý thuê sách"
+            "quan-ly-the-sach": "Quản lý thuê sách",
+            "quan-ly-tra-sach": "Quản lý trả sách"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

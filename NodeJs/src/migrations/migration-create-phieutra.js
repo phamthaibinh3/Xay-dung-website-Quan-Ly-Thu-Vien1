@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('phieutra', {
+        await queryInterface.createTable('phieutras', {
 
             id: {
                 allowNull: false,
@@ -13,7 +13,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             ngayTra: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING
             },
             soTienPhat: {
                 type: Sequelize.INTEGER
@@ -31,6 +31,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('phieutra');
+        await queryInterface.dropTable('phieutras');
     }
 };

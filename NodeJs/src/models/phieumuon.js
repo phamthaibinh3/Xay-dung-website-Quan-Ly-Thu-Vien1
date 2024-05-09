@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             PhieuMuon.belongsTo(models.User, { foreignKey: 'maNguoiDung', as: 'NguoiMuon' });
             PhieuMuon.belongsTo(models.Sach, { foreignKey: 'maSach', as: 'SachMuon' });
+
+            PhieuMuon.hasOne(models.PhieuTra, { foreignKey: 'maPhieuMuon', as: 'phieuMuon' });
         }
     };
     PhieuMuon.init({

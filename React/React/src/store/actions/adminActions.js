@@ -7,7 +7,7 @@ import {
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    phieuMuon, getAllTLNB, getAllTLMN
+    phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -1041,6 +1041,55 @@ export const layAllTLMN = () => {
             console.log('GET_ALL_TLMN_FAIL', e);
             dispatch({
                 type: actionTypes.GET_ALL_TLMN_FAIL
+            })
+        }
+    }
+}
+
+export const traThueSach = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await traSach(data);
+            if (res && res.errCode === 0) {
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.TRA_THUE_SACH_SUCCESS,
+                })
+            } else {
+                toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.TRA_THUE_SACH_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('TRA_THUE_SACH_FAIL', e);
+            dispatch({
+                type: actionTypes.TRA_THUE_SACH_FAIL
+            })
+        }
+    }
+}
+
+export const layTraThueSach = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await layTraSach();
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.GET_THUE_SACH_SUCCESS,
+                    dataTraSach: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.GET_THUE_SACH_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GET_THUE_SACH_FAIL', e);
+            dispatch({
+                type: actionTypes.GET_THUE_SACH_FAIL
             })
         }
     }

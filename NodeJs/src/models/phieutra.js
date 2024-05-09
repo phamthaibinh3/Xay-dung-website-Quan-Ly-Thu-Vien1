@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            PhieuTra.belongsTo(models.PhieuMuon, { foreignKey: 'maPhieuMuon', as: 'phieuMuon' });
         }
     };
     PhieuTra.init({
         maPhieuMuon: DataTypes.INTEGER,
-        ngayTra: DataTypes.DATE,
+        ngayTra: DataTypes.STRING,
         soTienPhat: DataTypes.INTEGER,
 
     }, {

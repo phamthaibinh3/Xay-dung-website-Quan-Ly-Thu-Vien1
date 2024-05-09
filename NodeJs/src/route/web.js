@@ -65,6 +65,9 @@ const initWebRoutes = (app) => {
     router.post('/api/tao-phieu-muon', phieuMuonController.taoPhieuMuon);
     router.post('/api/duyet-phieu-muon', phieuMuonController.duyetPhieuMuon);
     router.post('/api/huy-phieu-muon', phieuMuonController.huyPhieuMuon);
+    router.post('/api/tra-sach', phieuMuonController.traSach);
+    router.get('/api/lay-tra-sach', phieuMuonController.layTraSach);
+
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
 

@@ -77,6 +77,9 @@ export const adminMenu = [
             {
                 name: 'menu.admin.quan-ly-the-sach', link: '/system/quan-ly-thue-sach',
             },
+            {
+                name: 'menu.admin.quan-ly-tra-sach', link: '/system/quan-ly-tra-sach',
+            },
         ]
     },
 ];

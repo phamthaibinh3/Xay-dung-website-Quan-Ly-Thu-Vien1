@@ -5,24 +5,24 @@ import Header from '../../Header/Header';
 import * as actions from '../../../store/actions'
 import { layTraSach } from '../../../services/userService'
 
-class ThueSach extends Component {
+class TraSach extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            allPhieuMuon: [],
+            allTraSach: [],
         }
     }
 
     async componentDidMount() {
-        this.props.getPhieuMuon();
+        this.props.layTraThueSach();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.phieuMuon !== this.props.phieuMuon) {
-            this.props.getPhieuMuon()
+        if (prevProps.traSach !== this.props.traSach) {
+            // this.props.layTraThueSach()
             this.setState({
-                allPhieuMuon: this.props.phieuMuon
+                allTraSach: this.props.traSach
             })
         }
     }
@@ -41,21 +41,22 @@ class ThueSach extends Component {
     }
 
     handleTraSach = async (item) => {
-        console.log('check id: ',item.id);
-        console.log('check idSach: ',item.id);
+        console.log('check id: ', item.id);
+        console.log('check idSach: ', item.id);
         await this.props.traThueSach({
             idSach: item.maSach,
-            id: item.id, 
+            id: item.id,
         });
     }
 
     render() {
-        let { allPhieuMuon } = this.state;
+        let { allTraSach } = this.state;
         // console.log('check id nguoi dung: ', this.props.userInfo.id)
+        console.log('check state: ',this.state);
         return (
             <>
                 <div className="contener">
-                    <div className="header-page">Thuê sách</div>
+                    <div className="header-page">Quản lý trả sách</div>
                     {/* <div className="btn-addbook">
 
                     </div> */}
@@ -63,34 +64,34 @@ class ThueSach extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>người Dùng</th>
+                                    <th>Mã phiếu mượn</th>
+                                    <th>Mã người dùng</th>
                                     <th>Mã sách</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Tình trạng</th>
-                                    <th>Ngày dự kiến trả</th>
+                                    <th>Ngày trả</th>
                                     <th>Số tiền phạt</th>
-                                    <th>Hàng động</th>
+                                    {/* <th>Hàng động</th> */}
                                 </tr>
                             </thead>
                             <tbody>
-                                {allPhieuMuon && allPhieuMuon.length > 0 &&
-                                    allPhieuMuon.map((item, index) => {
+                                {allTraSach && allTraSach.length > 0 &&
+                                    allTraSach.map((item, index) => {
                                         return (
                                             <tr key={index}>
                                                 <td>
-                                                    {item.maNguoiDung}
+                                                    {item.maPhieuMuon}
                                                 </td>
-                                                <td>{item.maSach}</td>
-                                                <td>{item.ngayMuon}</td>
-                                                <td>{item.tinhTrang}</td>
-                                                <td>{item.ngayTraDuKien}</td>
-                                                <td>
+                                                <td>{item.phieuMuon.maNguoiDung}</td>
+                                                <td>{item.phieuMuon.maSach}</td>
+                                                <td>{item.ngayTra}</td>
+                                                <td>{item.soTienPhat}</td>
+                                                
+                                                {/* <td>
                                                     <div className="icon-product">
                                                         <button onClick={() => this.handleDuyetPhieuMuon(item)} className='btn-delete'><i className="fas fa-check"></i></button>
                                                         <button onClick={() => this.handleHuyPhieuMuon(item)} className='btn-delete'><i className="fas fa-trash"></i></button>
-                                                        <button onClick={() => this.handleTraSach(item)} className='btn-delete'><i className="fas fa-arrow-alt-circle-left"></i></button> {/* Nút trả sách */}
+                                                        <button onClick={() => this.handleTraSach(item)} className='btn-delete'><i className="fas fa-arrow-alt-circle-left"></i></button> 
                                                     </div>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         )
                                     })
@@ -108,18 +109,19 @@ class ThueSach extends Component {
 
 const mapStateToProps = state => {
     return {
-        phieuMuon: state.admin.phieuMuon,
+        traSach: state.admin.traSach,
         userInfo: state.user.userInfo,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPhieuMuon: () => dispatch(actions.getPhieuMuon()),
-        duyetMuonSach: (data) => dispatch(actions.duyetMuonSach(data)),
-        huyMuonSach: (data) => dispatch(actions.huyMuonSach(data)),
-        traThueSach: (data) => dispatch(actions.traThueSach(data))
+        // getPhieuMuon: () => dispatch(actions.getPhieuMuon()),
+        // duyetMuonSach: (data) => dispatch(actions.duyetMuonSach(data)),
+        // huyMuonSach: (data) => dispatch(actions.huyMuonSach(data)),
+        // traThueSach: (data) => dispatch(actions.traThueSach(data))
+        layTraThueSach: () => dispatch(actions.layTraThueSach())
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThueSach);
+export default connect(mapStateToProps, mapDispatchToProps)(TraSach);

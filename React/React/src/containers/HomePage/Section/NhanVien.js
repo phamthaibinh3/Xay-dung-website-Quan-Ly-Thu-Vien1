@@ -66,7 +66,6 @@ class NhanVien extends Component {
                                                 </div>
                                                 <div className='position text-center'>
                                                     <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
-                                                    <div>Nhân viên</div>
                                                 </div>
                                             </div>
 

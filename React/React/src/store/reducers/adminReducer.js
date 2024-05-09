@@ -17,7 +17,8 @@ const initialState = {
     luotThich: [],
     phieuMuon: [],
     taiLieuNoiBat: [],
-    taiLieuMoiNhat: []
+    taiLieuMoiNhat: [],
+    traSach: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -216,6 +217,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_ALL_TLMN_FAIL:
             state.taiLieuMoiNhat = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_THUE_SACH_SUCCESS:
+            state.traSach = action.dataTraSach;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_THUE_SACH_FAIL:
+            state.traSach = [];
             return {
                 ...state,
             }
