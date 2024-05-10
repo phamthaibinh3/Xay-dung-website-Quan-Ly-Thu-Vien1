@@ -80,6 +80,19 @@ export const adminMenu = [
             {
                 name: 'menu.admin.quan-ly-tra-sach', link: '/system/quan-ly-tra-sach',
             },
+            
+        ]
+    },
+    { //quan ly tai lieu moi
+        name: 'menu.admin.thongKe',
+        menus: [
+           
+            {
+                name: 'menu.admin.quan-ly-thong-ke', link: '/system/quan-ly-thong-ke',
+            },
+            {
+                name: 'menu.admin.quan-ly-thong-ke-thang-hien-tai', link: '/system/quan-ly-thong-ke-thang-hien-tai',
+            },
         ]
     },
 ];

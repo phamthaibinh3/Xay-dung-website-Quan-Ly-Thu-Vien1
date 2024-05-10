@@ -173,7 +173,16 @@ let layTraSach = () => {
     return axios.get('/api/lay-tra-sach')
 }
 
+let thongKeSoLuongSachTraTheoThang = () => {
+    return axios.get('/api/lay-thong-ke-theo-tung-thang')
+}
 
+let thongKeSoLuongSachTraTrongThangHienTai = () => {
+    return axios.get('/api/lay-thong-ke')
+}
+let thongKeSoLuongSachTraTrongThang = (data) => {
+    return axios.post('/api/lay-thong-ke-theo-thang',data)
+}
 
 export {
     handleLoginApi, getAllUsers, createNewUserService,
@@ -186,6 +195,7 @@ export {
     layNhaXuatBan, themNhaXuatBan, xoaNhaXuatBan, suaNhaXuatBan,
     layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    getAllTLNB, getAllTLMN, traSach, layTraSach
+    getAllTLNB, getAllTLMN, traSach, layTraSach, thongKeSoLuongSachTraTheoThang,
+    thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang
 
 }

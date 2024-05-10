@@ -79,8 +79,50 @@ let layTraSach = async (req,res) => {
     }
 }
 
+let thongKeSoLuongSachTraTrongThangHienTai = async (req,res) => {
+    try {
+        let data = await phieuMuonService.thongKeSoLuongSachTraTrongThangHienTai(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let thongKeSoLuongSachTraTrongThang = async (req,res) => {
+    try {
+        let data = await phieuMuonService.thongKeSoLuongSachTraTrongThang(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let thongKeSoLuongSachTraTheoThang = async (req,res) => {
+    try {
+        let data = await phieuMuonService.thongKeSoLuongSachTraTheoThang(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+
+
 module.exports = {
     layPhieuMuon, taoPhieuMuon,
     duyetPhieuMuon, huyPhieuMuon,
-    traSach, layTraSach
+    traSach, layTraSach, thongKeSoLuongSachTraTrongThangHienTai,
+    thongKeSoLuongSachTraTrongThang, thongKeSoLuongSachTraTheoThang
 }

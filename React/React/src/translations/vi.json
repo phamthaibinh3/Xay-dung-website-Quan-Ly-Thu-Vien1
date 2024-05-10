@@ -41,7 +41,10 @@
             "quan-ly-nha-xuat-ban": "Quản lý nhà xuất bản",
             "theSach": "Quản lý thuê sách",
             "quan-ly-the-sach": "Quản lý thuê sách",
-            "quan-ly-tra-sach": "Quản lý trả sách"
+            "quan-ly-tra-sach": "Quản lý trả sách",
+            "quan-ly-thong-ke": "Quản lý thống kê",
+            "thongKe": "Thống kê",
+            "quan-ly-thong-ke-thang-hien-tai": "Thống kê tháng hiện tại"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

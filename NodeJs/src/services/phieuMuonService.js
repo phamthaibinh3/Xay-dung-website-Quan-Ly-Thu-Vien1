@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import db from '../models/index';
 const moment = require('moment');
 let layPhieuMuon = () => {
@@ -257,10 +258,10 @@ let layTraSach = () => {
                     { model: db.PhieuMuon, as: 'phieuMuon' }
                 ],
                 order: [['createdAt', 'DESC']],
-                raw:false,
+                raw: false,
                 nest: true
             })
-            
+
             resolve({
                 errCode: 0,
                 data: data
@@ -271,8 +272,125 @@ let layTraSach = () => {
     })
 }
 
+let thongKeSoLuongSachTraTrongThangHienTai = async () => {
+    try {
+        // Tạo ngày bắt đầu và kết thúc của tháng hiện tại
+        let startDate = moment().startOf('month');
+        let endDate = moment().endOf('month');
+
+        // Lấy danh sách các phiếu trả sách trong tháng hiện tại
+        let phieuTraSach = await db.PhieuTra.findAll({
+            where: {
+                ngayTra: {
+                    [db.Sequelize.Op.between]: [startDate.format('DD/MM/YYYY'), endDate.format('DD/MM/YYYY')]
+                }
+            }
+        });
+
+        // Đếm số lượng sách đã trả
+        let soLuongSachTra = phieuTraSach.length;
+
+        return {
+            errCode: 0,
+            errMessage: 'Thành công',
+            soLuongSachTra: soLuongSachTra
+        };
+    } catch (error) {
+        return {
+            errCode: 1,
+            errMessage: 'Đã xảy ra lỗi khi thực hiện thống kê số lượng sách trả trong tháng: ' + error.message
+        };
+    }
+};
+
+let thongKeSoLuongSachTraTrongThang = async (data) => {
+    let { selectedMonth, selectedYear } = data
+    try {
+        // Khởi tạo mảng đếm số lượng sách trả theo từng tháng
+        let thongKe = Array(1).fill(0); // Chỉ cần 1 phần tử để lưu trữ số lượng sách trả trong tháng
+
+        // Lấy danh sách các phiếu trả sách trong tháng và năm đã chọn
+        let startDate = moment().set('month', selectedMonth - 1).set('year', selectedYear).startOf('month');
+        let endDate = moment().set('month', selectedMonth - 1).set('year', selectedYear).endOf('month');
+        let phieuTraSach = await db.PhieuTra.findAll({
+            where: {
+                ngayTra: {
+                    [db.Sequelize.Op.between]: [startDate.format('DD/MM/YYYY'), endDate.format('DD/MM/YYYY')]
+                }
+            }
+        });
+
+        // Lặp qua từng phiếu trả sách
+        phieuTraSach.forEach((phieu) => {
+            // Lấy tháng của phiếu trả sách
+            let month = moment(phieu.ngayTra, 'DD/MM/YYYY').month();
+
+            // Nếu tháng của phiếu trả sách trùng với tháng được chọn, tăng số lượng sách trả của tháng tương ứng
+            if (month === selectedMonth - 1) {
+                thongKe[0]++;
+            }
+        });
+
+        return {
+            errCode: 0,
+            errMessage: 'Thành công',
+            soLuongSachTra: thongKe[0]
+        };
+    } catch (error) {
+        return {
+            errCode: 1,
+            errMessage: 'Đã xảy ra lỗi khi thực hiện thống kê số lượng sách trả trong tháng: ' + error.message
+        };
+    }
+};
+
+
+
+let thongKeSoLuongSachTraTheoThang = async () => {
+    try {
+        // Khởi tạo mảng đếm số lượng sách trả theo từng tháng
+        let thongKe = Array(12).fill(0);
+
+        // Lặp qua danh sách phiếu trả sách
+        let phieuTraSach = await db.PhieuTra.findAll();
+
+        // Lặp qua từng phiếu trả sách
+        phieuTraSach.forEach((phieu) => {
+            // Lấy tháng của phiếu trả sách
+            let month = moment(phieu.ngayTra, 'DD/MM/YYYY').month();
+
+            // Tăng số lượng sách trả của tháng tương ứng
+            thongKe[month]++;
+        });
+
+        // Format dữ liệu thống kê
+        let formattedThongKe = thongKe.map((soLuong, index) => {
+            return {
+                month: moment().set('month', index).format('MM/YYYY'),
+                soLuongSachTra: soLuong
+            };
+        });
+
+        return {
+            errCode: 0,
+            errMessage: 'Thành công',
+            thongKe: formattedThongKe
+        };
+    } catch (error) {
+        return {
+            errCode: 1,
+            errMessage: 'Đã xảy ra lỗi khi thực hiện thống kê số lượng sách trả theo tháng: ' + error.message
+        };
+    }
+};
+
+
+
+
+
 module.exports = {
     layPhieuMuon, taoPhieuMuon,
     duyetPhieuMuon, huyPhieuMuon,
-    traSach, layTraSach
+    traSach, layTraSach, thongKeSoLuongSachTraTrongThangHienTai,
+    thongKeSoLuongSachTraTrongThang, thongKeSoLuongSachTraTheoThang
 }

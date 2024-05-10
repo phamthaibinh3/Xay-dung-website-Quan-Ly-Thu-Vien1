@@ -13,6 +13,8 @@ import TaiLieuNoiBat from '../containers/System/TaiLieuMoiNhat/TaiLieuNoiBat';
 import NhaXuatBan from '../containers/System/NhaXuatBan/NhaXuatBan';
 import ThueSach from '../containers/System/ThueSach/ThueSach';
 import TraSach from '../containers/System/ThueSach/TraSach';
+import ThongKe from '../containers/System/ThueSach/ThongKe';
+import ThongKeThangHienTai from '../containers/System/ThueSach/ThongKeThangHienTai';
 
 class System extends Component {
     render() {
@@ -34,6 +36,8 @@ class System extends Component {
                             <Route path="/system/quan-ly-tai-nha-xuat-ban" component={NhaXuatBan}/>
                             <Route path="/system/quan-ly-thue-sach" component={ThueSach}/>
                             <Route path="/system/quan-ly-tra-sach" component={TraSach}/>
+                            <Route path="/system/quan-ly-thong-ke" component={ThongKe}/>
+                            <Route path="/system/quan-ly-thong-ke-thang-hien-tai" component={ThongKeThangHienTai}/>
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>
