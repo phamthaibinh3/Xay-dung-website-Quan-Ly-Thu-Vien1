@@ -184,6 +184,14 @@ let thongKeSoLuongSachTraTrongThang = (data) => {
     return axios.post('/api/lay-thong-ke-theo-thang',data)
 }
 
+let fectchNhanVien = () => {
+    return axios.get('/api/qua-ly-nhan-vien')
+}
+
+let fectchKhachHang = () => {
+    return axios.get('/api/qua-ly-khach-hang')
+}
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -196,6 +204,7 @@ export {
     layTheThanhVien, taoTheThanhVien, xoaTheThanhVien, taoLuotThich,
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     getAllTLNB, getAllTLMN, traSach, layTraSach, thongKeSoLuongSachTraTheoThang,
-    thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang
+    thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang, fectchNhanVien,
+    fectchKhachHang
 
 }

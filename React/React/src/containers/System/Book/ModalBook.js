@@ -20,16 +20,19 @@ class ModalBook extends Component {
             anh: '',
             loaiSach: '',
             moTa: '',
+            maNXB: '',
 
             previewImgUrl: '',
             allChuyenMuc: [],
             allLoaiSach: [],
+            allNhaCungCap: [],
         }
     }
 
     componentDidMount() {
         this.props.fetchChuyenMucStart();
         this.props.fectchAllKindOfBook();
+        this.props.getNXB();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,6 +48,13 @@ class ModalBook extends Component {
                 loaiSach: this.props.loaiSach[0].id
             })
         }
+        if (prevProps.nhaXB !== this.props.nhaXB) {
+            this.setState({
+                allNhaCungCap: this.props.nhaXB,
+                maNXB: this.props.nhaXB[0].tenNXB
+            })
+        }
+
     }
 
     toggle = () => {
@@ -67,7 +77,7 @@ class ModalBook extends Component {
     handleThemUser = async (data) => {
         let valid = this.checkValideInput();
         if (valid === true) {
-            this.props.createbook(this.state)
+            await this.props.createbook(this.state)
             this.setState({
                 tieuDe: '',
                 soLuong: '',
@@ -77,6 +87,7 @@ class ModalBook extends Component {
                 anh: '',
                 loaiSach: '',
                 moTa: '',
+                maNXB: ''
             })
         }
         this.toggle()
@@ -106,9 +117,9 @@ class ModalBook extends Component {
 
     //toggle khi kick ra ngoai thi` ra khoi form
     render() {
-        console.log('check state: ', this.state);
+        console.log('check state: ', this.state.maNXB);
         let { language } = this.props
-        let { allChuyenMuc, allLoaiSach } = this.state
+        let { allChuyenMuc, allLoaiSach,allNhaCungCap } = this.state
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -175,6 +186,23 @@ class ModalBook extends Component {
 
                         </div>
                         <div className='input-container'>
+                            <label htmlFor='loaiSach'>Nhà xuất bản:</label>
+                            <select className="form-select"
+                                value={this.state.maNXB}
+                                onChange={(event) => this.isChange(event, 'maNXB')}
+                            >
+                                {allNhaCungCap && allNhaCungCap.length > 0 && allNhaCungCap.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.tenNXB}>
+                                            {item.tenNXB}
+                                        </option>
+
+                                    )
+                                })}
+                            </select>
+
+                        </div>
+                        <div className='input-container'>
                             <label>Giá:</label>
                             <input value={this.state.gia} type='number' onChange={(event) => this.isChange(event, 'gia')} />
                         </div>
@@ -221,7 +249,8 @@ const mapStateToProps = state => {
     return {
         chuyenMuc: state.admin.chuyenMuc,
         language: state.app.language,
-        loaiSach: state.admin.loaiSach
+        loaiSach: state.admin.loaiSach,
+        nhaXB: state.admin.nhaXB
     };
 };
 
@@ -229,6 +258,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart()),
         fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
+        getNXB: () => dispatch(actions.getNXB()),
     };
 };
 

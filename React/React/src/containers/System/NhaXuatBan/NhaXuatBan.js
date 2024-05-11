@@ -100,7 +100,7 @@ class NhaXuatBan extends Component {
 
     render() {
         const { allNXB, diaChi,SDT , tenNXB, editingIndex } = this.state;
-        console.log('check state: ',this.state);
+        // console.log('check state: ',this.state);
         return (
             <div className="manage-folders">
                 <h2 className="title">Quản lý nhà xuất bản</h2>
@@ -114,11 +114,11 @@ class NhaXuatBan extends Component {
                             // value={tenDanhMuc}
                             value={editingIndex === -1 ? tenNXB : ''}
                             onChange={(event) => this.isChange(event, 'tenNXB')}
-                            placeholder="Nhập tên thư mục mới"
+                            placeholder="Nhập tên nhà xuất bản"
                         />
                     </div>
                     <div>
-                        <label htmlFor="folderName">Nhập tên nhà xuất bản: </label>
+                        <label htmlFor="folderName">Nhập địa chỉ nhà xuất bản: </label>
                         <input
                             type="text"
                             id="folderName"
@@ -126,7 +126,7 @@ class NhaXuatBan extends Component {
                             // value={tenDanhMuc}
                             value={diaChi}
                             onChange={(event) => this.isChange(event, 'diaChi')}
-                            placeholder="Nhập tên thư mục mới"
+                            placeholder="Nhập địa chỉ nhà xuất bản"
                         />
                     </div>
                     <div>

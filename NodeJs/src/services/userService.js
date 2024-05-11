@@ -314,6 +314,38 @@ let doiMatKhau = async (data) => {
     }
 };
 
+let quanLyNhanVien = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let nhanVien = await db.User.findAll({
+                where: { vaiTro: 'R2' }
+            })
+            resolve({
+                errCode: 0,
+                data: nhanVien
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let quanLyKhachHang = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let nhanVien = await db.User.findAll({
+                where: { vaiTro: 'R3' }
+            })
+            resolve({
+                errCode: 0,
+                data: nhanVien
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
@@ -322,5 +354,7 @@ module.exports = {
     updateUser: updateUser,
     loginFacebook: loginFacebook,
     getAllCodeService: getAllCodeService,
-    doiMatKhau: doiMatKhau
+    doiMatKhau: doiMatKhau,
+    quanLyNhanVien: quanLyNhanVien,
+    quanLyKhachHang: quanLyKhachHang
 }

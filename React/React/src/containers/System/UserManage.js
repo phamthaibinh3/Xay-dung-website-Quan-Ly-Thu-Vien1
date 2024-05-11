@@ -153,7 +153,7 @@ class UserManage extends Component {
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
                                 />
                             </div>
-                            <div className='col-4'>
+                            {/* <div className='col-4'>
                                 <label>Ngày cấp</label>
                                 <DatePicker
                                     onChange={this.handleOnchangeNgayCap}
@@ -161,8 +161,8 @@ class UserManage extends Component {
                                     value={this.state.currentDate}
                                     minDate={yesterday}
                                 />
-                            </div>
-                            <div className='col-4'>
+                            </div> */}
+                            {/* <div className='col-4'>
                                 <label>Ngày hết hạn</label>
                                 <DatePicker
                                     onChange={this.handleOnchangeNgayHetHan}
@@ -170,7 +170,7 @@ class UserManage extends Component {
                                     value={this.state.currentDate}
                                     minDate={yesterday}
                                 />
-                            </div>
+                            </div> */}
 
                             <div className='col-12 my-3 '>
                                 <button className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning px-3' : 'btn btn-primary px-3'}

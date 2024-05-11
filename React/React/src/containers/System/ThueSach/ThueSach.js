@@ -11,6 +11,7 @@ class ThueSach extends Component {
         super(props);
         this.state = {
             allPhieuMuon: [],
+            searchQuery: ''
         }
     }
 
@@ -49,9 +50,16 @@ class ThueSach extends Component {
         });
     }
 
+    handleSearchInputChange = (event) => {
+        this.setState({
+            searchQuery: event.target.value // Cập nhật trạng thái searchQuery
+        });
+    };
+
     render() {
         let { allPhieuMuon } = this.state;
         // console.log('check id nguoi dung: ', this.props.userInfo.id)
+        const filteredBooks = allPhieuMuon.filter(arrbook => arrbook.ngayMuon.toLowerCase().includes(this.state.searchQuery.toLowerCase()));
         return (
             <>
                 <div className="contener">
@@ -60,6 +68,12 @@ class ThueSach extends Component {
 
                     </div> */}
                     <div className="table-container">
+                        <input
+                            type="text"
+                            value={this.state.searchQuery}
+                            onChange={this.handleSearchInputChange}
+                            placeholder="Nhập từ khóa để tìm kiếm..."
+                        />
                         <table>
                             <thead>
                                 <tr>
@@ -68,13 +82,13 @@ class ThueSach extends Component {
                                     <th>Ngày mượn</th>
                                     <th>Tình trạng</th>
                                     <th>Ngày dự kiến trả</th>
-                                    <th>Số tiền phạt</th>
+                                    {/* <th>Số tiền phạt</th> */}
                                     <th>Hàng động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {allPhieuMuon && allPhieuMuon.length > 0 &&
-                                    allPhieuMuon.map((item, index) => {
+                                {filteredBooks && filteredBooks.length > 0 &&
+                                    filteredBooks.map((item, index) => {
                                         return (
                                             <tr key={index}>
                                                 <td>

@@ -17,7 +17,8 @@ class ChuyenMuc extends Component {
             previewImgUrl: '',
             anh: '',
 
-            editingIndex: -1
+            editingIndex: -1,
+            searchQuery: ''
         }
     }
 
@@ -98,8 +99,15 @@ class ChuyenMuc extends Component {
         }
     }
 
+    handleSearchInputChange = (event) => {
+        this.setState({
+            searchQuery: event.target.value // Cập nhật trạng thái searchQuery
+        });
+    };
+
     render() {
         const { allChuyenMuc, maDanhMuc, tenDanhMuc, editingIndex } = this.state;
+        const filteredBooks = allChuyenMuc.filter(arrbook => arrbook.tenDanhMuc.toLowerCase().includes(this.state.searchQuery.toLowerCase()));
         return (
             <div className="manage-folders">
                 <h2 className="title">Quản lý Thư mục</h2>
@@ -143,10 +151,15 @@ class ChuyenMuc extends Component {
                     )}
                     <button className="add-folder-button" onClick={() => this.handleCreateCategory()}>Thêm Thư mục</button>
                 </div>
-
+                <input
+                    type="text"
+                    value={this.state.searchQuery}
+                    onChange={this.handleSearchInputChange}
+                    placeholder="Nhập từ khóa để tìm kiếm..."
+                />
                 <ul className="folder-list">
-                    {allChuyenMuc && allChuyenMuc.length > 0 &&
-                        allChuyenMuc.map((item, index) => {
+                    {filteredBooks && filteredBooks.length > 0 &&
+                        filteredBooks.map((item, index) => {
                             return (
                                 <li key={index} className="folder-item">
                                     <div className="folder-details">

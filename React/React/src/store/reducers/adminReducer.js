@@ -18,7 +18,9 @@ const initialState = {
     phieuMuon: [],
     taiLieuNoiBat: [],
     taiLieuMoiNhat: [],
-    traSach: []
+    traSach: [],
+    nhanVien: [],
+    khachHang: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -228,6 +230,28 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_THUE_SACH_FAIL:
             state.traSach = [];
+            return {
+                ...state,
+            }
+            
+        case actionTypes.FETCH_NHANVIEN_SUCESS:
+            state.nhanVien = action.dataNhanVien;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_NHANVIEN_FAIL:
+            state.nhanVien = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_KHACHHANG_SUCESS:
+            state.khachHang = action.dataKhachHang;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_KHACHHANG_FAIL:
+            state.khachHang = [];
             return {
                 ...state,
             }

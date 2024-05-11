@@ -33,7 +33,10 @@ class UserRedux extends Component {
             phuongXa: '',
 
             action: '',
-            userEditId: ''
+            userEditId: '',
+
+
+            
         }
     }
 
@@ -190,18 +193,19 @@ class UserRedux extends Component {
 
     render() {
         // console.log('check lisuer: ', this.props.listUser);
+        const { listUser, searchQuery } = this.state;
         console.log('check state: ', this.state);
         let vaiTroArr = this.state.vaiTroArr;
         let genders = this.state.genderArr;
         let language = this.props.language;
-
+        // const filteredBooks = listUser.filter(listUser => listUser.hoTen.toLowerCase().includes(searchQuery.toLowerCase()));
 
         let { taiKhoan, matKhau, hoTen, dienThoai, vaiTro, anh, gioiTinh, email } = this.state
         // console.log('asghduiashduaishdu asdasd: ', this.props.genderRedux);
         return (
             <div className='user-redux-container'>
                 <div className='title'>
-                    Redux
+                    Quản lý người dùng
                 </div>
                 <div className="user-redux-body" >
                     <div className='container'>
@@ -328,7 +332,7 @@ class UserRedux extends Component {
                                     }
                                 </button>
                             </div>
-
+                            
                             <div className='col-12'>
                                 <TableMangeUser
                                     handleEditUserFromParent={this.handleEditUserFromParent}

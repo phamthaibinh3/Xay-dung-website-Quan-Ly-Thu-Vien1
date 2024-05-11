@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            NhaXuatBan.hasMany(models.Sach, {
+                foreignKey: 'maNXB',
+                as: 'SachCuaNXB', // Tên tùy chọn cho mối quan hệ
+            });
         }
     };
     NhaXuatBan.init({

@@ -22,6 +22,7 @@ class ManageBook extends Component {
             bookEdit: {},
 
             allChuyenMuc: '',
+            searchQuery: ''
         }
     }
 
@@ -129,10 +130,15 @@ class ManageBook extends Component {
         }
     }
 
-
+    handleSearchInputChange = (event) => {
+        this.setState({
+            searchQuery: event.target.value // Cập nhật trạng thái searchQuery
+        });
+    };
 
     render() {
         let arrbook = this.state.arrbook;
+        const filteredBooks = arrbook.filter(arrbook => arrbook.tieuDe.toLowerCase().includes(this.state.searchQuery.toLowerCase()));
         return (
             <>
                 {/* <div className='book-container'>
@@ -224,6 +230,12 @@ class ManageBook extends Component {
                         > <i className="fas fa-plus"></i> Thêm sách
                         </button>
                     </div>
+                    <input
+                        type="text"
+                        value={this.state.searchQuery}
+                        onChange={this.handleSearchInputChange}
+                        placeholder="Nhập từ khóa để tìm kiếm..."
+                    />
                     <div className="table-container">
                         <table>
                             <thead>
@@ -239,8 +251,9 @@ class ManageBook extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {arrbook && arrbook.length > 0 &&
-                                    arrbook.map((item, index) => {
+                                
+                                {filteredBooks && filteredBooks.length > 0 &&
+                                    filteredBooks.map((item, index) => {
                                         let imageBase64 = '';
                                         if (item.anh) {
                                             imageBase64 = new Buffer(item.anh, 'base64').toString('binary')

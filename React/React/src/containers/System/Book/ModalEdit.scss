@@ -1,0 +1,28 @@
+.modal-book-container {
+    .modal-book-body {
+        .input-container {
+            margin-bottom: 15px;
+
+            label {
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            select,
+            input,
+            textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+        }
+
+        .product-img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    }
+}

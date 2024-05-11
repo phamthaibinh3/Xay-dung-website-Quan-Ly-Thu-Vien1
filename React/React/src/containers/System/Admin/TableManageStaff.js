@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './TableMangeUser.scss'
+import './TableManageStaff.scss'
 import actionTypes from '../../../store/actions/actionTypes';
 import * as actions from '../../../store/actions'
 
@@ -9,7 +9,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
-
+import { fectchNhanVien } from '../../../services/userService'
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
@@ -23,24 +23,29 @@ function handleEditorChange({ html, text }) {
 
 
 
-class TableMangeUser extends Component {
+class TableManageStaff extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             userRedux: [],
-            searchQuery: ''
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.fetchAllUserRedux();
+        // let res = await fectchNhanVien();
+        // if(res && res.length > 0){
+        //    this.setState({
+        //        userRedux:res.data
+        //    })
+        // }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.listUser !== this.props.listUser) {
+        if (prevProps.nhanVien !== this.props.nhanVien) {
             this.setState({
-                userRedux: this.props.listUser
+                userRedux: this.props.nhanVien
             })
         }
     }
@@ -55,26 +60,12 @@ class TableMangeUser extends Component {
         // handleEditUserFromParent
     }
 
-    handleSearchInputChange = (event) => {
-        this.setState({
-            searchQuery: event.target.value // Cập nhật trạng thái searchQuery
-        });
-    };
-
     render() {
-        // console.log('check data redux ', this.props.listUser);
+        // console.log('check data redux ', this.props.nhanVien);
         let arrUser = this.state.userRedux
-        let { listUser, searchQuery } = this.state;
-        const filteredBooks = arrUser.filter(arrUser => arrUser.hoTen.toLowerCase().includes(searchQuery.toLowerCase()));
         return (
             <>
-                <input
-                    type="text"
-                    value={this.state.searchQuery}
-                    onChange={this.handleSearchInputChange}
-                    placeholder="Nhập từ khóa để tìm kiếm..."
-                />
-                <table id='TableMangeUser'>
+                <table id='TableManageStaff'>
                     <tr>
                         <th>Tài khoản</th>
                         <th>Họ tên</th>
@@ -83,8 +74,8 @@ class TableMangeUser extends Component {
                         <th>Hành động</th>
                     </tr>
                     <>
-                        {filteredBooks && filteredBooks.length > 0 &&
-                            filteredBooks.map((item, index) => {
+                        {arrUser && arrUser.length > 0 &&
+                            arrUser.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{item.taiKhoan}</td>
@@ -103,7 +94,7 @@ class TableMangeUser extends Component {
                                 )
                             })
                         }
-                       
+
                     </>
                 </table>
                 <div className="a"></div>
@@ -117,16 +108,16 @@ class TableMangeUser extends Component {
 
 const mapStateToProps = state => {
     return {
-        listUser: state.admin.users
+        nhanVien: state.admin.nhanVien
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllUserRedux: () => dispatch(actions.fetchAllUserStart()),
+        fetchAllUserRedux: () => dispatch(actions.layNhanVien()),
         deleteUserRedux: (data) => dispatch(actions.deleteUser(data)),
         updateUserRedux: (data) => dispatch(actions.updateUser(data))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableMangeUser);
+export default connect(mapStateToProps, mapDispatchToProps)(TableManageStaff);

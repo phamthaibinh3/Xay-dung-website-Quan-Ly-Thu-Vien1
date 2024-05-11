@@ -16,8 +16,9 @@ class LoaiSach extends Component {
             tenLoaiSach: '',
             moTa: '',
 
-            allLoaiSach: '',
+            allLoaiSach: [],
             editingIndex: -1,
+            searchQuery: ''
         }
     }
 
@@ -58,9 +59,17 @@ class LoaiSach extends Component {
         this.props.history.push(`/detail-kind-of-book-admin/${item.id}`)
     }
 
+    handleSearchInputChange = (event) => {
+        this.setState({
+            searchQuery: event.target.value.toLowerCase()
+        });
+    };
     render() {
         // console.log('check state: ', this.state);
-        const { maLoaiSach, tenLoaiSach, editingIndex, allLoaiSach, moTa } = this.state;
+        const { maLoaiSach, tenLoaiSach, editingIndex, allLoaiSach, moTa, searchQuery } = this.state;
+        const filteredLoaiSach = allLoaiSach.filter(item =>
+            item.tenTheLoai.toLowerCase().includes(searchQuery)
+        );
         return (
             <div className="manage-folders">
                 <h2 className="title">Quản lý Loại Sách</h2>
@@ -99,10 +108,15 @@ class LoaiSach extends Component {
                     </div>
                     <button className="add-folder-button" onClick={() => this.handleCreateLoaiSach()}>Thêm Loại sách</button>
                 </div>
-
+                <input
+                    type="text"
+                    value={this.state.searchQuery}
+                    onChange={this.handleSearchInputChange}
+                    placeholder="Nhập từ khóa để tìm kiếm..."
+                />
                 <ul className="folder-list">
-                    {allLoaiSach && allLoaiSach.length > 0 &&
-                        allLoaiSach.map((item, index) => {
+                    {filteredLoaiSach && filteredLoaiSach.length > 0 &&
+                        filteredLoaiSach.map((item, index) => {
                             return (
                                 <li key={index} className="folder-item">
                                     <div className="folder-details">

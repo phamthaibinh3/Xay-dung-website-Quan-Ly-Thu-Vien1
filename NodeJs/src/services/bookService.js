@@ -50,7 +50,8 @@ let CreateBook = (data) => {
                         gia: data.gia,
                         anh: data.anh,
                         maLoaiSach: data.loaiSach,
-                        moTa: data.moTa
+                        moTa: data.moTa,
+                        maNXB: data.maNXB,
                     })
                     resolve({
                         errCode: 0,
@@ -118,7 +119,9 @@ let updateBook = (data) => {
                     book.gia = data.gia;
                     book.tacGia = data.tacGia;
                     book.maDanhMuc = data.maDanhMuc;
-
+                    book.maLoaiSach = data.loaiSach;
+                    book.maNXB = data.maNXB;
+                    book.moTa = data.moTa;
                     await book.save();
 
                     resolve({
@@ -331,7 +334,7 @@ let likeBook = async (idBook) => {
 }
 
 let getAllBookOutstanding = () => {
-    return new Promise(async(resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let data = await db.Sach.findAll({
                 order: [['luotThich', 'DESC']],
@@ -347,7 +350,7 @@ let getAllBookOutstanding = () => {
 }
 
 let getAllTaiLieuMoiNhat = () => {
-    return new Promise(async (resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let data = await db.Sach.findAll({
                 order: [['createdAt', 'DESC']],

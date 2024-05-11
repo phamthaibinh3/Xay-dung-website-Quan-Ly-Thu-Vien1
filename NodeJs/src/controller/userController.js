@@ -98,6 +98,32 @@ let doiMatKhau = async (req, res) => {
     }
 }
 
+let quanLyNhanVien = async (req, res) => {
+    try {
+        let data = await userService.quanLyNhanVien();
+        return res.status(200).json(data);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+let quanLyKhachHang = async (req, res) => {
+    try {
+        let data = await userService.quanLyKhachHang();
+        return res.status(200).json(data);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
@@ -106,5 +132,7 @@ module.exports = {
     handleUpdateUser: handleUpdateUser,
     loginFacebook: loginFacebook,
     getAllcode: getAllcode,
-    doiMatKhau: doiMatKhau
+    doiMatKhau: doiMatKhau,
+    quanLyNhanVien: quanLyNhanVien,
+    quanLyKhachHang: quanLyKhachHang
 }

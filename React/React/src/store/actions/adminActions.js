@@ -7,7 +7,7 @@ import {
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach
+    phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach, fectchNhanVien, fectchKhachHang
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -1090,6 +1090,56 @@ export const layTraThueSach = () => {
             console.log('GET_THUE_SACH_FAIL', e);
             dispatch({
                 type: actionTypes.GET_THUE_SACH_FAIL
+            })
+        }
+    }
+}
+
+export const layNhanVien = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await fectchNhanVien();
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.FETCH_NHANVIEN_SUCESS,
+                    dataNhanVien: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.FETCH_NHANVIEN_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_NHANVIEN_FAIL', e);
+            dispatch({
+                type: actionTypes.FETCH_NHANVIEN_FAIL
+            })
+        }
+    }
+}
+
+export const layKhachHang = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await fectchKhachHang();
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.FETCH_KHACHHANG_SUCESS,
+                    dataKhachHang: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.FETCH_KHACHHANG_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_KHACHHANG_FAIL', e);
+            dispatch({
+                type: actionTypes.FETCH_KHACHHANG_FAIL
             })
         }
     }

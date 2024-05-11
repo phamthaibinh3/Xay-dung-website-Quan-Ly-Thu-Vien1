@@ -1,207 +1,126 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import './ManageStaffSchedule.scss'
-import Select from 'react-select';
+import actionTypes from '../../../store/actions/actionTypes';
 import * as actions from '../../../store/actions'
-import DatePicker from '../../../components/Input/DatePicker'
-import moment from 'moment';
-import { LANGUAGES, dateFormat } from '../../../utils';
-import { toast } from 'react-toastify'
-import _ from 'lodash';
-import { saveBulkScheduleStaff } from '../../../services/userService'
 
-class ManageSchedule extends Component {
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+import { fectchNhanVien } from '../../../services/userService'
+// Register plugins if required
+// MdEditor.use(YOUR_PLUGINS_HERE);
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+// Finish!
+function handleEditorChange({ html, text }) {
+    console.log('handleEditorChange', html, text);
+}
+
+
+
+class ManageStaffSchedule extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            listStaff: [],
-            selectedStaff: {},
-            currentDate: '',
-            rangeTime: [],
-            minDate: moment().subtract(1, 'days')
+            userRedux: [],
         }
     }
 
-    componentDidMount() {
-        this.props.fetchAllStaff();
-        this.props.fetchAllSchedule();
+    async componentDidMount() {
+        this.props.fetchAllUserRedux();
+        // let res = await fectchNhanVien();
+        // if(res && res.length > 0){
+        //    this.setState({
+        //        userRedux:res.data
+        //    })
+        // }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.allStaff !== this.props.allStaff) {
-            let dataSelect = this.buildDataInputSelect(this.props.allStaff)
+        if (prevProps.nhanVien !== this.props.nhanVien) {
             this.setState({
-                listStaff: dataSelect
-            })
-        }
-        if (prevProps.allSchedule !== this.props.allSchedule) {
-            let data = this.props.allSchedule;
-            if (data && data.length > 0) {
-                data = data.map(item => ({ ...item, isSeleted: false }))
-            }
-            this.setState({
-                rangeTime: data,
+                userRedux: this.props.nhanVien
             })
         }
     }
 
-    buildDataInputSelect = (inputData) => {
-        let result = [];
-        if (inputData && inputData.length > 0) {
-            inputData.map((item, index) => {
-                let object = {};
-                object.label = item.hoTen
-                object.value = item.id;
-                result.push(object)
-            })
-        }
-        return result;
+    handleDeleteUser = (user) => {
+        this.props.deleteUserRedux(user.id);
+
     }
 
-    handleChangeSelect = async (selectedOption) => {
-        this.setState({ selectedStaff: selectedOption })
-    };
-
-    handleOnchangeDatePicker = (date) => {
-        this.setState({
-            currentDate: date[0]
-        })
-    }
-
-    handleClickBtnTim = (time) => {
-        let { rangeTime } = this.state;
-        if (rangeTime && rangeTime.length > 0) {
-            rangeTime = rangeTime.map(item => {
-                if (item.id === time.id) { item.isSeleted = !item.isSeleted };
-                return item
-            })
-            this.setState({
-                rangeTime: rangeTime
-            })
-        }
-    }
-
-    handleSaveSchedule = async () => {
-        let { rangeTime, selectedStaff, currentDate } = this.state;
-        let result = [];
-
-        if (!currentDate) {
-            toast.error('Bạn bỏ lỡ thông tin ngày');
-            return;
-        }
-        if (!selectedStaff && !_.isEmpty(selectedStaff)) {
-            toast.error('Bạn bỏ lỡ thông tin nhân viên');
-            return;
-        }
-        // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
-        // = moment(currentDate).unix();
-        let formatedDate = new Date(currentDate).getTime();
-
-        if (rangeTime && rangeTime.length > 0) {
-            let selectTime = rangeTime.filter(item => item.isSeleted === true);
-            if (selectTime && selectTime.length > 0) {
-                selectTime.map((item, index) => {
-                    let object = {};
-                    object.nhanVienId = selectedStaff.value;
-                    object.ngay = formatedDate;
-                    object.timeType = item.keyMap;
-                    result.push(object);
-                })
-            } else {
-                toast.error('Bạn chưa nhập thông tin thời gian');
-                return;
-            }
-        }
-
-        let res = await saveBulkScheduleStaff({
-            arrSchedule: result,
-            nhanVienId: selectedStaff.value,
-            formatedDate: formatedDate
-        })
-
-        if (res && res.errCode === 0) {
-            toast.success('Thành công');
-        } else {
-            toast.error('Thất bại');
-            console.log('Lỗi res: ', res);
-        }
+    handleEditUser = (user) => {
+        this.props.handleEditUserFromParent(user);
+        // handleEditUserFromParent
     }
 
     render() {
-        console.log('check state: ',this.state);
-        let { rangeTime } = this.state
-        let { language } = this.props;
-        let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+        // console.log('check data redux ', this.props.nhanVien);
+        let arrUser = this.state.userRedux
         return (
-            <div className='manage-schedule-container'>
-                <div className='m-s-title'>
-                    <FormattedMessage id="manage-schedule.tieuDe" />
+            <>
+                <div className='title mb-4'>
+                    Quản lý người dùng
                 </div>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-6'>
-                            <label>Chọn nhân viên</label>
-                            <Select
-                                value={this.state.selectedStaff}
-                                onChange={this.handleChangeSelect}
-                                options={this.state.listStaff}
-                            />
-                        </div>
-                        <div className='col-6'>
-                            <label>Chọn ngày</label>
-                            <DatePicker
-                                onChange={this.handleOnchangeDatePicker}
-                                className='form-control'
-                                value={this.state.currentDate}
-                                minDate={yesterday}
-                            />
-                        </div>
-                        <div className='col-12 pick-hour-container'>
-                            {rangeTime && rangeTime.length > 0 &&
-                                rangeTime.map((item, index) => {
-                                    return (
-                                        <button
-                                            onClick={() => this.handleClickBtnTim(item)}
-                                            className={item.isSeleted === true ? 'btn btn-schedule active' : 'btn btn-schedule'}
-                                            key={index}
-                                        >
-                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn
-                                            }
-                                        </button>
-                                    )
-                                })
-                            }
-                        </div>
-                        <div className='col-12'>
-                            <button
-                                onClick={() => this.handleSaveSchedule()}
-                                className='btn btn-primary'>
-                                Lưu thông tin
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div >
+                <table id='ManageStaffSchedule'>
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Họ tên</th>
+                        <th>Địa chỉ</th>
+                        <th>SĐT</th>
+                        <th>Hành động</th>
+                    </tr>
+                    <>
+                        {arrUser && arrUser.length > 0 &&
+                            arrUser.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.taiKhoan}</td>
+                                        <td>{item.hoTen}</td>
+                                        <td>{item.tinhThanh}</td>
+                                        <td>{item.dienThoai}</td>
+                                        <td>
+                                            {/* <button
+                                                onClick={() => this.handleEditUser(item)}
+                                                className='btn-edit'><i className="fas fa-pencil-alt"></i></button> */}
+                                            <button
+                                                onClick={() => this.handleDeleteUser(item)}
+                                                className='btn-delete'><i className="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+
+                    </>
+                </table>
+                <div className="a"></div>
+                {/* <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /> */}
+
+            </>
         );
     }
+
 }
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn,
-        allStaff: state.admin.allStaff,
-        language: state.app.language,
-        allSchedule: state.admin.allSchedule,
+        nhanVien: state.admin.khachHang
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllStaff: () => dispatch(actions.fetchAllStaff()),
-        fetchAllSchedule: () => dispatch(actions.fetchAllSchedule())
+        fetchAllUserRedux: () => dispatch(actions.layKhachHang()),
+        deleteUserRedux: (data) => dispatch(actions.deleteUser(data)),
+        updateUserRedux: (data) => dispatch(actions.updateUser(data))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSchedule);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageStaffSchedule);
