@@ -192,6 +192,12 @@ let fectchKhachHang = () => {
     return axios.get('/api/qua-ly-khach-hang')
 }
 
+let tongTien = () => {
+    return axios.get('/api/thanh-toan-hoa-don')
+}
+
+
+
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -205,6 +211,6 @@ export {
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     getAllTLNB, getAllTLMN, traSach, layTraSach, thongKeSoLuongSachTraTheoThang,
     thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang, fectchNhanVien,
-    fectchKhachHang
+    fectchKhachHang, tongTien
 
 }

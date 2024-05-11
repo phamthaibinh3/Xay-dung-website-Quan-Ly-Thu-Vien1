@@ -154,6 +154,9 @@ const actionTypes = Object.freeze({
     
     FETCH_KHACHHANG_SUCESS: 'FETCH_KHACHHANG_SUCESS',
     FETCH_KHACHHANG_FAIL: 'FETCH_KHACHHANG_FAIL',
+
+    GIA_SUCESS: 'GIA_SUCESS',
+    GIA_FAIL: 'GIA_FAIL',
 })
 
 export default actionTypes;

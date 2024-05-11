@@ -7,7 +7,8 @@ import {
     getHoaDonTamThoi, taoHoaDonTamThoi, xoaHoaDonTamThoi, layNhaXuatBan, themNhaXuatBan,
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
-    phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach, fectchNhanVien, fectchKhachHang
+    phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach, fectchNhanVien, fectchKhachHang,
+    tongTien
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -581,6 +582,7 @@ export const handleHoaDon = (data) => {
         try {
             let res = await hoaDon(data);
             // console.log('check res: ', res);
+            toast.success('Thành công')
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.HOA_DON_SUCCESS,
@@ -1140,6 +1142,32 @@ export const layKhachHang = () => {
             console.log('FETCH_KHACHHANG_FAIL', e);
             dispatch({
                 type: actionTypes.FETCH_KHACHHANG_FAIL
+            })
+        }
+    }
+}
+
+export const Gia = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await tongTien();
+            if (res && res.errCode === 0) {
+                console.log('checkasdas  res: ',res.data);
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.GIA_SUCESS,
+                    gia: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.GIA_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('GIA_FAIL', e);
+            dispatch({
+                type: actionTypes.GIA_FAIL
             })
         }
     }

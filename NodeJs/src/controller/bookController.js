@@ -215,6 +215,18 @@ let getAllTaiLieuMoiNhat = async(req,res) => {
         })
     }
 }
+let layDanhMucTheoData = async(req,res) => {
+    try {
+        let data = await bookService.layDanhMucTheoData(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
 
 module.exports = {
     getAllBook: getAllBook,
@@ -231,5 +243,6 @@ module.exports = {
     likeBook: likeBook,
     unlikeBook: unlikeBook,
     getAllBookOutstanding: getAllBookOutstanding,
-    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat
+    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat,
+    layDanhMucTheoData: layDanhMucTheoData
 }

@@ -51,6 +51,7 @@ const initWebRoutes = (app) => {
     router.post('/api/add-danh-muc', bookController.addDanhMuc);
     router.delete('/api/delete-danh-muc', bookController.deleteDanhMuc);
     router.put('/api/update-danh-muc', bookController.updateDanhMuc);
+    router.post('/api/lay-danh-muc-theo-data',bookController.layDanhMucTheoData)
     router.get('/api/get-book-new', bookController.getBookNew)
     router.get('/api/get-book-id', bookController.getBookId);
     router.get('/api/get-book-outstanding', bookController.getBookOutstanding);
@@ -78,6 +79,7 @@ const initWebRoutes = (app) => {
 
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);
+    router.get('/api/thanh-toan-hoa-don', hoaDonController.thanhToanHoaDon);
 
     router.get('/api/lay-hoa-don-tam-thoi', hoaDonController.layHoaDonTT);
     router.post('/api/tao-hoa-don-tam-thoi', hoaDonController.taoHoaDonTT);

@@ -146,6 +146,7 @@ let getAllDanhMuc = () => {
         try {
             let data = await db.DanhMuc.findAll({
                 order: [['createdAt', 'DESC']],
+                
             });
             resolve({
                 errCode: 0,
@@ -364,7 +365,41 @@ let getAllTaiLieuMoiNhat = () => {
         }
     })
 }
+let layDanhMucTheoData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let danhMuc = await db.DanhMuc.findOne({
+                where: { tenDanhMuc: data.tenDanhMuc } 
+            });
 
+            if (danhMuc) {
+                let sach = await db.Sach.findAll({
+                    where: { maDanhMuc: danhMuc.id }, // Lọc sách theo mã danh mục
+                    include: [
+                        {
+                            model: db.DanhMuc,
+                            as: 'SachData',
+                        }
+                    ],
+                    raw: true,
+                    nest: true
+                });
+
+                resolve({
+                    errCode: 0,
+                    data: sach
+                });
+            } else {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Không tìm thấy danh mục'
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -379,5 +414,6 @@ module.exports = {
     getBookOutstanding: getBookOutstanding,
     likeBook: likeBook,
     getAllBookOutstanding: getAllBookOutstanding,
-    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat
+    getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat,
+    layDanhMucTheoData: layDanhMucTheoData
 }

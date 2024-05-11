@@ -14,6 +14,7 @@ let taoHoaDon = (data) => {
                     maNguoiDung: data.idUser,
                     gia: data.gia
                 })
+                await xoaTatCaHoaDonTT();
                 resolve({
                     errCode: 0,
                     errMessage: 'Thanh cong'
@@ -23,6 +24,25 @@ let taoHoaDon = (data) => {
             reject(e)
         }
     })
+}
+
+let xoaTatCaHoaDonTT = async () => {
+    try {
+        await db.HoaDonTT.destroy({
+            where: {},
+            truncate: true
+        });
+
+        return {
+            errCode: 0,
+            errMessage: 'Xóa tất cả hóa đơn thành công'
+        };
+    } catch (error) {
+        return {
+            errCode: 1,
+            errMessage: 'Lỗi khi xóa tất cả hóa đơn: ' + error.message
+        };
+    }
 }
 
 let layHoaDonTT = () => {
@@ -124,7 +144,38 @@ let xoaHoaDonTamThoi = (inputId) => {
     })
 }
 
+let thanhToanHoaDon = async () => {
+    try {
+        // Lấy danh sách các hóa đơn từ database
+        let danhSachHoaDon = await db.HoaDonTT.findAll();
+
+        // Tính tổng giá của các hóa đơn
+        let tongGia = 0;
+        for (let hoaDon of danhSachHoaDon) {
+            tongGia += hoaDon.gia;
+        }
+
+        // Cập nhật giá của các hóa đơn thành tổng giá
+        // for (let hoaDon of danhSachHoaDon) {
+        //     // Cập nhật giá của hóa đơn thành tổng giá
+        //     await hoaDon.update({ gia: tongGia });
+        // }
+
+        return {
+            errCode: 0,
+            data: tongGia
+        };
+    } catch (error) {
+        return {
+            errCode: 1,
+            errMessage: 'Lỗi khi thanh toán hóa đơn: ' + error.message
+        };
+    }
+}
+
+
+
 module.exports = {
     taoHoaDon, layHoaDonTT, taoHoaDonTT,
-    xoaHoaDonTamThoi
+    xoaHoaDonTamThoi, thanhToanHoaDon
 }

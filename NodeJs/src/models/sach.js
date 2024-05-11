@@ -30,11 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             Sach.hasMany(models.PhieuMuon, { foreignKey: 'maSach', as: 'SachMuon' });
 
             Sach.hasMany(models.HoaDonTT, { foreignKey: 'maSach', as: 'HoaDonTTSach' });
-
-            Sach.belongsTo(models.NhaXuatBan, {
-                foreignKey: 'maNXB',
-                as: 'NhaXuatBanSach',
-            });
         }
     };
     Sach.init({

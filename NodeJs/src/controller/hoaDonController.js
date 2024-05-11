@@ -51,7 +51,19 @@ let xoaHoaDonTamThoi = async (req, res) => {
         })
     }
 }
+let thanhToanHoaDon = async (req, res) => {
+    try {
+        let data = await hoaDonService.thanhToanHoaDon(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
 
 module.exports = {
-    taoHoaDon, layHoaDonTT, taoHoaDonTT, xoaHoaDonTamThoi
+    taoHoaDon, layHoaDonTT, taoHoaDonTT, xoaHoaDonTamThoi, thanhToanHoaDon
 }

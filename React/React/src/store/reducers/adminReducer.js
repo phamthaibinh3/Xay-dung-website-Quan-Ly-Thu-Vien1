@@ -21,6 +21,7 @@ const initialState = {
     traSach: [],
     nhanVien: [],
     khachHang: [],
+    gia: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -252,6 +253,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_KHACHHANG_FAIL:
             state.khachHang = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.GIA_SUCESS:
+            state.gia = action.gia;
+            return {
+                ...state,
+            }
+        case actionTypes.GIA_FAIL:
+            state.gia = [];
             return {
                 ...state,
             }
