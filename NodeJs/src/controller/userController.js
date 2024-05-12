@@ -1,3 +1,4 @@
+import mail from '../services/mail';
 import userService from '../services/userService'
 
 let handleLogin = async (req, res) => {
@@ -72,7 +73,7 @@ let getAllcode = async (req, res) => {
     }
 }
 
-let loginFacebook = async(req,res) => {
+let loginFacebook = async (req, res) => {
     try {
         let data = await userService.loginFacebook(req.body);
         return res.status(200).json(data);
@@ -123,6 +124,27 @@ let quanLyKhachHang = async (req, res) => {
         })
     }
 }
+let sendMail = async (req, res) => {
+    try {
+        const { email } = req.params
+        if (email) {
+            let data = await mail.sendMail(email);
+            return res.status(200).json(data);
+        }
+        else res.json({
+            errCode: '1',
+            errMessage: 'Ko co email'
+        })
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Lỗi máy chủ khi gửi email'
+        });
+    }
+}
+
 
 module.exports = {
     handleLogin: handleLogin,
@@ -134,5 +156,6 @@ module.exports = {
     getAllcode: getAllcode,
     doiMatKhau: doiMatKhau,
     quanLyNhanVien: quanLyNhanVien,
-    quanLyKhachHang: quanLyKhachHang
+    quanLyKhachHang: quanLyKhachHang,
+    sendMail: sendMail
 }

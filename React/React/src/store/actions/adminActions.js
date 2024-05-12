@@ -8,7 +8,7 @@ import {
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach, fectchNhanVien, fectchKhachHang,
-    tongTien
+    tongTien,quenMatKhau
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -1168,6 +1168,32 @@ export const Gia = () => {
             console.log('GIA_FAIL', e);
             dispatch({
                 type: actionTypes.GIA_FAIL
+            })
+        }
+    }
+}
+
+export const resetMatKhau = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await quenMatKhau(data);
+            if (res && res.errCode === 0) {
+                console.log('checkasdas  res: ',res.data);
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.QUENMATKHAU_SUCCESS,
+                    // gia: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.QUENMATKHAU_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('QUENMATKHAU_FAIL', e);
+            dispatch({
+                type: actionTypes.QUENMATKHAU_FAIL
             })
         }
     }

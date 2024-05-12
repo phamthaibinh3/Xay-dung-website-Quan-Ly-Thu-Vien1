@@ -15,6 +15,7 @@ let handleUserLogin = (taiKhoan, matKhau) => {
                     where: { taiKhoan: taiKhoan }
                 })
                 if (user) {
+                    // user.matKhau = data.matKhau
                     let check = await bcrypt.compareSync(matKhau, user.matKhau); // true
                     if (check) {
                         userData.errCode = 0;

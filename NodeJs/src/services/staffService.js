@@ -8,7 +8,7 @@ let getTopStaffHome = (limitInput) => {
         try {
             let users = await db.User.findAll({
                 limit: limitInput,
-                where: { vaiTro: 'R2' },
+                where: { vaiTro: 'R1' },
                 order: [['createdAt', 'DESC']],
                 attributes: {
                     exclude: ['matKhau']

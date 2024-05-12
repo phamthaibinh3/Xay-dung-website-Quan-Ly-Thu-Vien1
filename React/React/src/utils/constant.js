@@ -11,7 +11,8 @@ export const path = {
     GIO_HANG: '/gio-hang/:id',
     THUE_SACH: '/thue-sach/:id',
     ALL_TLNB: '/all-TLNB',
-    ALL_TLMN: '/all-TLMN'
+    ALL_TLMN: '/all-TLMN',
+    QUEN_MAT_KHAU: '/quen-mat-khau'
 };
 
 export const LANGUAGES = {

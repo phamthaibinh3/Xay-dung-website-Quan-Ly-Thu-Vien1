@@ -157,6 +157,9 @@ const actionTypes = Object.freeze({
 
     GIA_SUCESS: 'GIA_SUCESS',
     GIA_FAIL: 'GIA_FAIL',
+
+    QUENMATKHAU_SUCCESS: 'QUENMATKHAU_SUCCESS',
+    QUENMATKHAU_FAIL: 'QUENMATKHAU_FAIL'
 })
 
 export default actionTypes;

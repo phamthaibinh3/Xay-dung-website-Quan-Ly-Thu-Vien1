@@ -9,6 +9,7 @@ import phieuMuonController from '../controller/phieuMuonController'
 import hoaDonController from '../controller/hoaDonController'
 import nhaXuatBanController from '../controller/nhaXuatBanController'
 import theThuVienController from '../controller/theThuVienController'
+import { sendEmailController } from '../controller/mailController';
 
 let router = express.Router();
 
@@ -31,7 +32,10 @@ const initWebRoutes = (app) => {
     router.post('/api/loginFacebook', userController.loginFacebook);
     router.post('/api/doi-mat-khau', userController.doiMatKhau);
     router.get('/api/qua-ly-nhan-vien', userController.quanLyNhanVien)
-    router.get('/api/qua-ly-khach-hang', userController.quanLyKhachHang)
+    router.get('/api/qua-ly-khach-hang', userController.quanLyKhachHang);
+
+    router.post('/api/quen-mat-khau', sendEmailController);
+
 
     router.get('/api/top-staff-home', staffController.getTopStaffHome);
     router.get('/api/get-all-staff', staffController.getAllStaff);
@@ -51,7 +55,7 @@ const initWebRoutes = (app) => {
     router.post('/api/add-danh-muc', bookController.addDanhMuc);
     router.delete('/api/delete-danh-muc', bookController.deleteDanhMuc);
     router.put('/api/update-danh-muc', bookController.updateDanhMuc);
-    router.post('/api/lay-danh-muc-theo-data',bookController.layDanhMucTheoData)
+    router.post('/api/lay-danh-muc-theo-data', bookController.layDanhMucTheoData)
     router.get('/api/get-book-new', bookController.getBookNew)
     router.get('/api/get-book-id', bookController.getBookId);
     router.get('/api/get-book-outstanding', bookController.getBookOutstanding);
@@ -74,8 +78,8 @@ const initWebRoutes = (app) => {
     router.post('/api/lay-thong-ke-theo-thang', phieuMuonController.thongKeSoLuongSachTraTrongThang);
     router.get('/api/lay-thong-ke-theo-tung-thang', phieuMuonController.thongKeSoLuongSachTraTheoThang);
 
-    
-    
+
+
 
 
     router.post('/api/tao-hoa-don', hoaDonController.taoHoaDon);

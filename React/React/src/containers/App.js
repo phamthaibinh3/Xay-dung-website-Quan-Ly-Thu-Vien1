@@ -29,6 +29,7 @@ import ThueSach from './KhachHang/Sach/ThueSach.js';
 import ThueSach1 from './KhachHang/Sach/ThueSach1.js';
 import AllTLNB from './HomePage/Section/AllTLNB.js';
 import AllTMN from './HomePage/Section/AllTMN.js';
+import QuenMatKhau from './Auth/QuenMatKhau.js';
 class App extends Component {
 
     // handlePersistorState = () => {
@@ -70,6 +71,7 @@ class App extends Component {
                                     <Route path={path.THUE_SACH} component={ThueSach1} />
                                     <Route path={path.ALL_TLNB} component={AllTLNB} />
                                     <Route path={path.ALL_TLMN} component={AllTMN} />
+                                    <Route path={path.QUEN_MAT_KHAU} component={QuenMatKhau} />
 
                                 </Switch>
                             </CustomScrollbars>

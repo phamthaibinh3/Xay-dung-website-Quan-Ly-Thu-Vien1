@@ -196,6 +196,10 @@ let tongTien = () => {
     return axios.get('/api/thanh-toan-hoa-don')
 }
 
+let quenMatKhau = (data) => {
+    return axios.post('/api/quen-mat-khau',data)
+}
+
 
 
 export {
@@ -211,6 +215,6 @@ export {
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     getAllTLNB, getAllTLMN, traSach, layTraSach, thongKeSoLuongSachTraTheoThang,
     thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang, fectchNhanVien,
-    fectchKhachHang, tongTien
+    fectchKhachHang, tongTien, quenMatKhau
 
 }

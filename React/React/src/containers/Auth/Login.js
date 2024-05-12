@@ -105,6 +105,11 @@ class Login extends Component {
         }
     }
 
+
+    handleQuenMatKhau = () => {
+        this.props.history.push(`/quen-mat-khau`)
+    }
+
     render() {
         console.log('check id: ', this.props.idFB);
 
@@ -149,7 +154,7 @@ class Login extends Component {
                             <button className='btn-login' onClick={() => this.handleLogin()}>Login</button>
                         </div>
                         <div className='col-12'>
-                            <span className='forgot-password'>Forgot your password?</span>
+                            <span onClick={() => this.handleQuenMatKhau()} className='forgot-password'>Forgot your password?</span>
                         </div>
                         <div className='col-12 text-center mt-3'>
 
