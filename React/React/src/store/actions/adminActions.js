@@ -8,7 +8,7 @@ import {
     xoaNhaXuatBan, suaNhaXuatBan, layTheThanhVien, taoTheThanhVien, xoaTheThanhVien,
     taoLuotThich, loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     phieuMuon, getAllTLNB, getAllTLMN, traSach, layTraSach, fectchNhanVien, fectchKhachHang,
-    tongTien,quenMatKhau
+    tongTien, quenMatKhau, doiMatKhau, sachTheoDanhMuc, thanhToan
 }
     from '../../services/userService';
 import { getBookByID } from '../../services/bookService'
@@ -630,7 +630,7 @@ export const getHoaDonTT = () => {
         try {
             let res = await getHoaDonTamThoi();
             if (res && res.errCode === 0) {
-                console.log('check res: ',res);
+                // console.log('check res: ', res);
                 // toast.success('Thêm thành công');
                 dispatch({
                     type: actionTypes.GET_HOA_DON_TT_SUCCESS,
@@ -935,7 +935,7 @@ export const duyetMuonSach = (data) => {
         try {
             let res = await duyetPhieuMuon(data);
             if (res && res.errCode === 0) {
-                console.log('check res: ',res);
+                console.log('check res: ', res);
                 toast.success('Thành công')
                 dispatch({
                     type: actionTypes.DUYET_PHIEUMUON_SUCCESS,
@@ -1152,7 +1152,7 @@ export const Gia = () => {
         try {
             let res = await tongTien();
             if (res && res.errCode === 0) {
-                console.log('checkasdas  res: ',res.data);
+                // console.log('checkasdas  res: ', res.data);
                 // toast.success('Thành công')
                 dispatch({
                     type: actionTypes.GIA_SUCESS,
@@ -1178,7 +1178,7 @@ export const resetMatKhau = (data) => {
         try {
             let res = await quenMatKhau(data);
             if (res && res.errCode === 0) {
-                console.log('checkasdas  res: ',res.data);
+                console.log('checkasdas  res: ', res.data);
                 toast.success('Thành công')
                 dispatch({
                     type: actionTypes.QUENMATKHAU_SUCCESS,
@@ -1194,6 +1194,80 @@ export const resetMatKhau = (data) => {
             console.log('QUENMATKHAU_FAIL', e);
             dispatch({
                 type: actionTypes.QUENMATKHAU_FAIL
+            })
+        }
+    }
+}
+export const thayDoiMatKhau = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await doiMatKhau(data);
+            if (res && res.errCode === 0) {
+                console.log('checkasdas  res: ', res.data);
+                toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.DOI_MK_SUCCESS,
+                    // gia: res.data
+                })
+            } else {
+                // toast.error(res.errMessage)
+                dispatch({
+                    type: actionTypes.DOI_MK_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('DOI_MK_FAIL', e);
+            dispatch({
+                type: actionTypes.DOI_MK_FAIL
+            })
+        }
+    }
+}
+
+export const timSachTheoDanhMuc = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await sachTheoDanhMuc(data);
+            // console.log('check res: ',res);
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.SACH_THEO_DANH_MUC_SUCCESS,
+                    dataSach_DanhMuc: res.data
+                })
+            }else{
+                dispatch({
+                    type: actionTypes.SACH_THEO_DANH_MUC_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('SACH_THEO_DANH_MUC_FAIL', e);
+            dispatch({
+                type: actionTypes.SACH_THEO_DANH_MUC_FAIL
+            })
+        }
+    }
+}
+export const thanhToanQR = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await thanhToan(data);
+            // console.log('check res: ',res);
+            if (res && res.errCode === 0) {
+                // toast.success('Thành công')
+                dispatch({
+                    type: actionTypes.QRCODE_SUCCESS,
+                    dataSach_DanhMuc: res.data
+                })
+            }else{
+                dispatch({
+                    type: actionTypes.QRCODE_FAIL
+                })
+            }
+        } catch (e) {
+            console.log('QRCODE_FAIL', e);
+            dispatch({
+                type: actionTypes.QRCODE_FAIL
             })
         }
     }

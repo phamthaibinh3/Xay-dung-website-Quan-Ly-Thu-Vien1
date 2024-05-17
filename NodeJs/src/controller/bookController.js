@@ -228,6 +228,21 @@ let layDanhMucTheoData = async(req,res) => {
     }
 }
 
+let allSach = async(req,res) => {
+    try {
+        let data = await bookService.allSach(req.body);
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Loi Server'
+        })
+    }
+}
+
+
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -244,5 +259,6 @@ module.exports = {
     unlikeBook: unlikeBook,
     getAllBookOutstanding: getAllBookOutstanding,
     getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat,
-    layDanhMucTheoData: layDanhMucTheoData
+    layDanhMucTheoData: layDanhMucTheoData,
+    allSach: allSach
 }

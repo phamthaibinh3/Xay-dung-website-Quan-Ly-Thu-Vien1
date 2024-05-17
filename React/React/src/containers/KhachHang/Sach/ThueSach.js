@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { CommonUtils, LANGUAGES } from '../../../utils';
 import HomeHeader from '../../HomePage/HomeHeader';
 import { tongTien } from '../../../services/userService'
+import { thanhToan } from '../../../services/userService';
 
 class ThueSach extends Component {
 
@@ -46,6 +47,7 @@ class ThueSach extends Component {
             })
         }
         this.props.getHoaDonTT();
+        this.props.Gia()
     }
 
     toggle = () => {
@@ -122,12 +124,37 @@ class ThueSach extends Component {
     };
 
     handleThanhToan = async () => {
-        let { userInfo } = this.props;
-        this.props.handleHoaDon({
-            idSach: this.state.book.id,
-            idUser: userInfo.id,
-            gia: this.state.book.gia * this.state.quantity + this.state.book.gia * this.state.quantity * 0.1
-        })
+        // let { userInfo } = this.props;
+        // this.props.handleHoaDon({
+        //     idSach: this.state.book.id,
+        //     idUser: userInfo.id,
+        //     gia: this.state.book.gia * this.state.quantity + this.state.book.gia * this.state.quantity * 0.1
+        // })
+        // Kiểm tra xem giá sách và số lượng đã được thiết lập chưa
+        if (!this.state.book || !this.state.quantity) {
+            toast.error("Vui lòng chọn sách và nhập số lượng trước khi thanh toán!");
+            return;
+        }
+
+        // Tính toán giá cuối cùng dựa trên giá sách, số lượng và thuế
+        // const totalPrice = this.props.gia * this.state.quantity + this.state.book.gia * this.state.quantity ;
+
+        // Gọi hàm thanhToan với giá tính toán
+        let res = await thanhToan({
+            maNguoiDung: this.props.userInfo.id
+        });
+
+        // console.log('check gia: ', totalPrice);
+        // console.log('check res: ', res);
+
+        // Xử lý kết quả trả về từ yêu cầu thanh toán
+        if (res && res.return_code === 1 && res.order_url) {
+            // Chuyển hướng đến đường link đơn hàng
+            window.location.href = res.order_url;
+        } else {
+            // Xử lý khi có lỗi hoặc không có đường link đơn hàng
+            toast.error("Đã xảy ra lỗi khi thực hiện thanh toán!");
+        }
     }
 
     handleDeleteHoaDonTT = (item) => {
@@ -138,7 +165,6 @@ class ThueSach extends Component {
     render() {
         let { book, quantity, hoaDonTT } = this.state
 
-        console.log('check hoa don tam thoi: ', this.props.gia);
 
         return (
 
@@ -217,7 +243,7 @@ class ThueSach extends Component {
                         </div>
                         <div className="final">
                             <div className="title-tongsotien"> Tổng Số Tiền (gồm VAT)</div>
-                            <span className="gias">{this.props.gia * this.state.quantity + book.gia * this.state.quantity * 0.1}đ</span>
+                            <span className="gias">{this.props.gia}đ</span>
                         </div>
                         <button onClick={() => this.handleThanhToan()} className="thanhtoan">THANH TOÁN</button>
                     </div>
@@ -243,7 +269,9 @@ const mapDispatchToProps = dispatch => {
         handleHoaDon: (data) => dispatch(actions.handleHoaDon(data)),
         getHoaDonTT: () => dispatch(actions.getHoaDonTT()),
         deleteHoaDonTT: (id) => dispatch(actions.deleteHoaDonTT(id)),
-        Gia: () => dispatch(actions.Gia())
+        Gia: () => dispatch(actions.Gia()),
+        // thanhToanQR: () => dispatch(actions.thanhToanQR()),
+
     };
 };
 

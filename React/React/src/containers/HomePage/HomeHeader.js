@@ -9,6 +9,13 @@ import { withRouter } from 'react-router-dom'
 
 class HomeHeader extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            allBook: [],
+            searchQuery: ''
+        }
+    }
     changeLanguage = (language) => {
         this.props.changeLanguageAppredux(language)
         // alert(language)
@@ -20,8 +27,18 @@ class HomeHeader extends Component {
         }
     }
 
+    handleSearchInputChange = (event) => {
+        this.setState({
+            searchQuery: event.target.value
+        });
+        this.props.updateSearchQuery(event.target.value); // Gọi prop updateSearchQuery
+    };
+
     render() {
         let language = this.props.language
+
+        // console.log('check state: ', this.state.searchQuery);
+        // this.props.updateSearchQuery(this.tate.searchQuery);
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -62,7 +79,10 @@ class HomeHeader extends Component {
                             <div className='title2'><FormattedMessage id="banner.tieuDe2" /></div>
                             <div className='search'>
                                 <i className="fas fa-search"></i>
-                                <input type='text' placeholder='tìm kiếm' />
+                                <input type="text"
+                                    value={this.state.searchQuery}
+                                    onChange={this.handleSearchInputChange}
+                                    placeholder="Nhập từ khóa để tìm kiếm..." />
                             </div>
                         </div>
                         <div className='content-down'>
@@ -110,7 +130,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeLanguageAppredux: (language) => dispatch(changeLanguageApp(language))
+        changeLanguageAppredux: (language) => dispatch(changeLanguageApp(language)),
     };
 };
 

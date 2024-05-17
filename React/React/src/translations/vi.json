@@ -44,7 +44,9 @@
             "quan-ly-tra-sach": "Quản lý trả sách",
             "quan-ly-thong-ke": "Quản lý thống kê",
             "thongKe": "Thống kê",
-            "quan-ly-thong-ke-thang-hien-tai": "Thống kê tháng hiện tại"
+            "quan-ly-thong-ke-thang-hien-tai": "Thống kê tháng hiện tại",
+            "quan-ly-hoa-don":"Quản lý hóa đơn",
+            "hoaDon": "Hóa đơn"
         },
         "staff": {
             "quan-ly-ke-hoach": "Quản lý kế hoạch thuê sách"

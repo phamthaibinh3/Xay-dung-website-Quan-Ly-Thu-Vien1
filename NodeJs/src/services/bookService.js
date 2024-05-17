@@ -400,6 +400,21 @@ let layDanhMucTheoData = (data) => {
         }
     });
 }
+
+let allSach = () => {
+    return new Promise(async (resolve,reject) => {
+        try {
+            let data = await db.Sach.findAll();
+            resolve({
+                errCode:0,
+                data: data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllBook: getAllBook,
     CreateBook: CreateBook,
@@ -415,5 +430,6 @@ module.exports = {
     likeBook: likeBook,
     getAllBookOutstanding: getAllBookOutstanding,
     getAllTaiLieuMoiNhat: getAllTaiLieuMoiNhat,
-    layDanhMucTheoData: layDanhMucTheoData
+    layDanhMucTheoData: layDanhMucTheoData,
+    allSach: allSach
 }

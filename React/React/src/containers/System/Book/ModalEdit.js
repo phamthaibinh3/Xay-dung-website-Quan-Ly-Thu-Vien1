@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import _ from 'lodash';
-import './ModalEdit.scss';
-
+import _ from 'lodash'
+import * as actions from '../../../store/actions'
+import { LANGUAGES } from '../../../utils';
 class ModalEditUser extends Component {
 
     constructor(props) {
@@ -234,4 +236,20 @@ class ModalEditUser extends Component {
 
 }
 
-export default ModalEditUser;
+const mapStateToProps = state => {
+    return {
+        chuyenMuc: state.admin.chuyenMuc,
+        language: state.app.language,
+        loaiSach: state.admin.loaiSach
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchChuyenMucStart: () => dispatch(actions.fetchChuyenMucStart()),
+        fectchAllKindOfBook: () => dispatch(actions.fectchAllKindOfBook()),
+        getNXB: () => dispatch(actions.getNXB()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditUser);

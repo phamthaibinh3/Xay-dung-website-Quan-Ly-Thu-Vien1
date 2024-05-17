@@ -13,7 +13,19 @@ import HomeFooter from './HomeFooter';
 import HomeDanhMuc from './HomeDanhMuc';
 
 class HomePage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchQuery: '' // Khởi tạo trạng thái searchQuery trong HomePage
+        };
+    }
 
+    updateSearchQuery = (query) => {
+        this.setState({ searchQuery: query }); // Cập nhật giá trị tìm kiếm khi người dùng nhập vào ô tìm kiếm
+        // console.log('New search query on HomePage:', query);
+    };
+
+    
     render() {
         let settings = {
             dots: true,
@@ -23,9 +35,10 @@ class HomePage extends Component {
             slidesToScroll: 1,
 
         };
+        // console.log('Current props:', this.state.searchQuery);
         return (
             <div>
-                <HomeHeader isShowBanner = {true}/>
+                <HomeHeader isShowBanner={true} updateSearchQuery={this.updateSearchQuery} />
                 <TaiLieuMoiNhat
                     settings={settings}
                 />
@@ -36,10 +49,11 @@ class HomePage extends Component {
                     settings={settings}
                 />
                 <CamNang
+                    searchQuery={this.state.searchQuery}
                     settings={settings}
                 />
                 <About />
-                <HomeDanhMuc/>
+                <HomeDanhMuc />
                 <HomeFooter />
             </div>
         );

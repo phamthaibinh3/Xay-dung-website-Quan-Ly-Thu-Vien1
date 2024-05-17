@@ -26,6 +26,27 @@ let taoHoaDon = (data) => {
     })
 }
 
+let layHoaDon = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+           let data = await db.HoaDon.findAll({
+               include: [
+                   { model: db.Sach, as: 'Sach', attributes: ['anh'] },
+                   { model: db.User, as: 'NguoiDung', attributes: ['anh'] }
+               ],
+               raw:true,
+               nest:false
+           })
+           resolve({
+            errCode:0,
+            data: data
+           })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 let xoaTatCaHoaDonTT = async () => {
     try {
         await db.HoaDonTT.destroy({
@@ -177,5 +198,5 @@ let thanhToanHoaDon = async () => {
 
 module.exports = {
     taoHoaDon, layHoaDonTT, taoHoaDonTT,
-    xoaHoaDonTamThoi, thanhToanHoaDon
+    xoaHoaDonTamThoi, thanhToanHoaDon, layHoaDon
 }

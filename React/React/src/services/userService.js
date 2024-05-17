@@ -200,8 +200,24 @@ let quenMatKhau = (data) => {
     return axios.post('/api/quen-mat-khau',data)
 }
 
+let doiMatKhau = (data) => {
+    return axios.post('/api/doi-mat-khau', data)
+}
 
+let sachTheoDanhMuc = (data) => {
+    return axios.post('/api/lay-danh-muc-theo-data', data)
+}
+let allSach = () => {
+    return axios.get('/api/all-sach', )
+}
 
+let thanhToan = (data) => {
+    return axios.post('/payment', data);
+}
+
+let getThanhToan = () => {
+    return axios.get('/api/get-thanh-toan');
+}
 export {
     handleLoginApi, getAllUsers, createNewUserService,
     delteUserService, updateUserService, getAllCodeService,
@@ -215,6 +231,6 @@ export {
     loginFacebook, getLuotThich, layPhieuMuon, duyetPhieuMuon, huyPhieuMuon,
     getAllTLNB, getAllTLMN, traSach, layTraSach, thongKeSoLuongSachTraTheoThang,
     thongKeSoLuongSachTraTrongThangHienTai, thongKeSoLuongSachTraTrongThang, fectchNhanVien,
-    fectchKhachHang, tongTien, quenMatKhau
+    fectchKhachHang, tongTien, quenMatKhau, doiMatKhau, sachTheoDanhMuc, allSach, thanhToan, getThanhToan
 
 }

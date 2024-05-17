@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            HoaDon.belongsTo(models.Sach, { foreignKey: 'maSach', as: 'Sach' });
+            HoaDon.belongsTo(models.User, { foreignKey: 'maNguoiDung', as: 'NguoiDung' });
         }
     };
     HoaDon.init({

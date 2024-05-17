@@ -15,6 +15,7 @@ import ThueSach from '../containers/System/ThueSach/ThueSach';
 import TraSach from '../containers/System/ThueSach/TraSach';
 import ThongKe from '../containers/System/ThueSach/ThongKe';
 import ThongKeThangHienTai from '../containers/System/ThueSach/ThongKeThangHienTai';
+import HoaDon from '../containers/System/HoaDon/HoaDon';
 
 class System extends Component {
     render() {
@@ -38,6 +39,7 @@ class System extends Component {
                             <Route path="/system/quan-ly-tra-sach" component={TraSach}/>
                             <Route path="/system/quan-ly-thong-ke" component={ThongKe}/>
                             <Route path="/system/quan-ly-thong-ke-thang-hien-tai" component={ThongKeThangHienTai}/>
+                            <Route path="/system/quan-ly-hoa-don" component={HoaDon}/>
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

@@ -95,6 +95,16 @@ export const adminMenu = [
             },
         ]
     },
+    { //hoa don
+        name: 'menu.admin.hoaDon',
+        menus: [
+           
+            {
+                name: 'menu.admin.quan-ly-hoa-don', link: '/system/quan-ly-hoa-don',
+            },
+           
+        ]
+    },
 ];
 
 export const staffMenu = [
@@ -113,7 +123,25 @@ export const staffMenu = [
         name: 'menu.admin.sach',
         menus: [
             {
-                name: 'menu.admin.quan-ly-sach', link: '/system/quan-ly-sach',
+                name: 'menu.admin.crud', link: '/system/user-manage',
+            },
+            {
+                name: 'menu.admin.crud-redux', link: '/system/user-redux',
+            },
+            {
+                name: 'menu.admin.quan-ly-nhan-vien', link: '/system/manage-nhanvien',
+                // subMenus: [
+                //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
+                //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
+                // ]
+            },
+            // {
+            //     name: 'menu.admin.quan-ly-admin', link: '/system/user-admin',
+            // },
+
+            { //quan ly kế hoạch ddatwj sach
+
+                name: 'menu.staff.quan-ly-ke-hoach', link: '/staff/manage-schedule',
             },
         ]
     },
@@ -122,6 +150,26 @@ export const staffMenu = [
         menus: [
             {
                 name: 'menu.admin.quan-ly-docNew', link: '/system/quan-ly-tai-lieu-moi',
+            },
+
+        ]
+    },
+    { //quan ly sách
+        name: 'menu.admin.sach',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-sach', link: '/system/quan-ly-sach',
+            },
+        ]
+    },
+    { //quan ly tai lieu moi
+        name: 'menu.admin.theSach',
+        menus: [
+            {
+                name: 'menu.admin.quan-ly-the-sach', link: '/system/quan-ly-thue-sach',
+            },
+            {
+                name: 'menu.admin.quan-ly-tra-sach', link: '/system/quan-ly-tra-sach',
             },
 
         ]

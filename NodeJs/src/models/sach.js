@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
             Sach.hasMany(models.PhieuMuon, { foreignKey: 'maSach', as: 'SachMuon' });
 
             Sach.hasMany(models.HoaDonTT, { foreignKey: 'maSach', as: 'HoaDonTTSach' });
+
+            Sach.hasMany(models.HoaDon, { foreignKey: 'maSach', as: 'HoaDon' });
         }
     };
     Sach.init({
